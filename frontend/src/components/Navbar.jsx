@@ -4,7 +4,7 @@ export const Navbar = ({sidebarToggle,setSidebarToggle}) => {
   return (
     <nav className={`${sidebarToggle?"":""} bg-gray-800 flex justify-between items-center px-4 py-2 w-full`}>
       <div className='items-center flex text-xl my-2'>
-          <div className={`${sidebarToggle?"block":"hidden"}`}><FaBars className='text-white me-4 cursor-pointer' onClick={()=>setSidebarToggle(!sidebarToggle)}/> </div>
+          <div className={`${sidebarToggle?"hidden":"block"}`}><FaBars className='text-white me-4 cursor-pointer' onClick={()=>setSidebarToggle(!sidebarToggle)}/> </div>
           <span className='text-white font-semibold'>Customer</span>
       </div>
       <div className='flex item-center gap-x-5 '>
