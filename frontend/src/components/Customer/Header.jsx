@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../public/Elitez.png'
+import logo from '../../../public/Elitez.png'
 import { FaUser ,FaInfoCircle, FaUserCircle} from "react-icons/fa";
 export default function Header() {
   return (

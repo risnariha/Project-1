@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import { Dashboard } from './components/Dashboard'
-import Header from './components/Header'
-import { Sidebar } from './components/Sidebar'
+// import { Dashboard } from './components/Dashboard'
+import Header from './components/Customer/Header'
+import { Sidebar } from './components/Customer/Sidebar'
 
 function App() {
   const [sidebarToggle,setSidebarToggle]=useState(false)
