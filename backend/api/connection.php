@@ -9,7 +9,7 @@
     $con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
-        $sql='SELECT * FROM customerdetails';
+        $sql='SELECT * FROM customerdetails ORDER by rand()';
         $stmt = $con->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

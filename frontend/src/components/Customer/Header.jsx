@@ -3,7 +3,7 @@ import logo from '../../../public/Elitez.png'
 import { FaUser, FaInfoCircle, FaUserCircle } from "react-icons/fa";
 export default function Header() {
   return (
-    <div className='d-flex w-100 bg-white justify-content-between align-items-center'>
+    <div className='d-flex w-full bg-white justify-content-between align-items-center'>
       <div className='d-flex '>
         <div className=''>
           <img src={logo} alt="" className='h-14 w-14 d-felx my-2 ms-3' />
@@ -23,6 +23,7 @@ export default function Header() {
         </div>
 
       </div>
+
     </div>
   )
 }
