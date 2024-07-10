@@ -19,7 +19,7 @@ function Customerdetails() {
 
   const fetchCustomerData = () => {
     setLoading(true);
-    axios.post('http://localhost/Project/Project-1/backend/Listcustomer.php')
+    axios.post('http://localhost:8080/backend/Listcustomer.php')
       .then(response => {
         setRecords(response.data);
         setLoading(false);
