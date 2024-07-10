@@ -1,9 +1,10 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import logo from '../../../public/Elitez.png'
 import { FaUser, FaInfoCircle, FaUserCircle } from "react-icons/fa";
 export default function Header() {
   return (
-    <div className='d-flex w-100 bg-white justify-content-between align-items-center'>
+    <div className='d-flex w-100 bg-light justify-content-between align-items-center'>
       <div className='d-flex '>
         <div className=''>
           <img src={logo} alt="" className='h-14 w-14 d-felx my-2 ms-3' />
@@ -12,14 +13,14 @@ export default function Header() {
       </div>
       <div className='d-flex justify-content-between '>
         <div className='d-flex px-3'>
-          <a href="" className='text-black text-decoration-none'> About
+          <Link to ="/Aboutus" className='text-black text-decoration-none'> About
             <FaInfoCircle className=' mx-2' />
-          </a>
+          </Link>
         </div>
         <div className='d-flex px-3'>
-          <a href="" className='text-black text-decoration-none'> Contact
+          <Link to ="/Contactus" className='text-black text-decoration-none'> Contact
             <FaUser className=' mx-2' />
-          </a>
+          </Link>
         </div>
 
       </div>
