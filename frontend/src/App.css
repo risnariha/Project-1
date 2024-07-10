@@ -2,8 +2,12 @@
   background-color: rgb(25, 25, 60);
 }
 
+.sidebar {
+  background-color: rgb(25, 25, 60);
+}
+
 .fabar:hover {
-  color: blue;
+  color:rgb(75, 75, 137);
 }
 
 .focus-outline-none:focus {
