@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import 'Home.css'
+import './Home.css';
 
 export const Home = () => {
   return (
@@ -30,25 +30,25 @@ export const Home = () => {
                 </div>
                 <p className="homeBannerTagline">Track your goods throughout your entire supply chain, from purchasing to production to end sales.</p>
                 <div className="homeBannerIcons">
-                    <a href="https://www.apple.com"><i class="fa-brands fa-apple"></i></a>
-                    <a href="https://www.android.com"><i class="fa-brands fa-android"></i></a>
-                    <a href="https://www.microsoft.com"><i class="fa-brands fa-windows"></i></a>
+                    <a href="https://www.apple.com"><i className="fa-brands fa-apple"></i></a>
+                    <a href="https://www.android.com"><i className="fa-brands fa-android"></i></a>
+                    <a href="https://www.microsoft.com"><i className="fa-brands fa-windows"></i></a>
                 </div>
             </div>
         </div>
         <div className="homePageFeatures">
             <div className="homePageFeature">
-                <span className="homePageFeatureIcon"><i class="fa-solid fa-gear"></i></span>
+                <span className="homePageFeatureIcon"><i className="fa-solid fa-gear"></i></span>
                 <h3>Editable Theme</h3>
                 <p>An editable theme provides users with the flexibility to customize the visual appearance of their application. This feature allows users to modify colors, fonts, and layout settings according to their preferences.</p>
             </div>
             <div className="homePageFeature">
-                <span className="homePageFeatureIcon"><i class="fa-solid fa-star"></i></span>
+                <span className="homePageFeatureIcon"><i className="fa-solid fa-star"></i></span>
                 <h3>Flat Design</h3>
                 <p>Flat design is a minimalist design approach that emphasizes usability and simplicity. It features clean, open spaces, crisp edges, bright colors, and two-dimensional illustrations.</p>
             </div>
             <div className="homePageFeature">
-                <span className="homePageFeatureIcon"><i class="fa-solid fa-globe"></i></span>
+                <span className="homePageFeatureIcon"><i className="fa-solid fa-globe"></i></span>
                 <h3>Reach Your Audience</h3>
                 <p>Reaching your audience involves leveraging various digital channels and strategies to connect with potential customers effectively.</p>
             </div>
@@ -69,12 +69,12 @@ export const Home = () => {
         <h3>Say Hi & Get in Touch</h3>
             <p>Connect with us on social media and stay engaged with the EliteZ community. Follow us for updates, share your feedback, and join the conversation. We value your input and look forward to hearing from you!</p>
             <div className="homePageSocialsIconsContainer">
-                <a href=""><i class="fa-brands fa-twitter"></i></a>
-                <a href=""><i class="fa-brands fa-facebook"></i></a>
-                <a href=""><i class="fa-brands fa-pinterest"></i></a>
-                <a href=""><i class="fa-brands fa-google-plus"></i></a>
-                <a href=""><i class="fa-brands fa-linkedin"></i></a>
-                <a href=""><i class="fa-brands fa-youtube"></i></a>
+                <a href=""><i className="fa-brands fa-twitter"></i></a>
+                <a href=""><i className="fa-brands fa-facebook"></i></a>
+                <a href=""><i className="fa-brands fa-pinterest"></i></a>
+                <a href=""><i className="fa-brands fa-google-plus"></i></a>
+                <a href=""><i className="fa-brands fa-linkedin"></i></a>
+                <a href=""><i className="fa-brands fa-youtube"></i></a>
             </div>
         </div>
         <div className="homeFooter">

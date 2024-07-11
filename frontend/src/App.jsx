@@ -33,6 +33,7 @@ import Customerregister from './components/Admin/Customerregister';
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import Companyregister from './components/Admin/Companyregister';
+import { Home } from './components/Home/Home';
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false)
@@ -44,38 +45,13 @@ function App() {
 
       <Router>
         <Header className='' />
-        <Sidebar
-          sidebarToggle={sidebarToggle}
-          setSidebarToggle={setSidebarToggle} />
-        {/* <CompanyHeader />
-        <CompanySidebar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} /> */}
         <Routes>
-          {/* <Route path="/" element={<ProuductList sidebarToggle={sidebarToggle}
-            setSidebarToggle={setSidebarToggle} />} /> */}
+          <Route index element={<Home/>}/>
           <Route path="/products" element={<ProuductList sidebarToggle={sidebarToggle}
             setSidebarToggle={setSidebarToggle} />} />
           <Route path="/cart" element={<CartDetails />} />
           <Route path="/profile" element={<CustomerProfile />} />
           <Route path="/productDetail" element={<ProductDetail sidebarToggle={sidebarToggle} />} />
-
-
-          {/* <main className={`content ${sidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}> */}
-          {/* <Routes> */}
-          {/* <Route exact path="/" element={<CompanyDashboard />} />  */}
-          {/* // <div className=''> */}
-    //  {/* <Header/>
-    //  <Sidebar 
-    //  sidebarToggle={sidebarToggle}
-    //  setSidebarToggle={setSidebarToggle}/>
-    //  <Dashboard/> */}
-          {/* // </div> */}
-
-
-          {/* <CompanyHeader />
-    <CompanySidebar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} />
-    <main className={`content ${sidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}> */}
-          {/* <Routes> */}
-          {/* <Route exact path="/" element={<CompanyDashboard />} />  */}
           <Route exact path="/add-product" element={<AddProduct />} />
           <Route exact path="/display-product" element={<ViewProducts />} />
           <Route exact path="/update/:product_id" element={<UpdateProduct />} />
@@ -85,12 +61,40 @@ function App() {
           <Route exact path="/review" element={<Review />} />
           <Route exact path="/reviewlayout/:product_id" element={<ReviewLayout />} />
 
-          <Route path='/' element={<Dash />} />
+          <Route path='/dash' element={<Dash />} />
           <Route path='/Customerdetails' element={<Customerdetails />} />
           <Route path='/Order' element={<AdminOrder />} />
         </Routes>
 
       </Router>
+      {/* <Sidebar
+          sidebarToggle={sidebarToggle}
+          setSidebarToggle={setSidebarToggle} /> */}
+      {/* <CompanyHeader />
+        <CompanySidebar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} /> */}
+
+      {/* <Route path="/" element={<ProuductList sidebarToggle={sidebarToggle}
+            setSidebarToggle={setSidebarToggle} />} /> */}
+
+
+
+      {/* <main className={`content ${sidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}> */}
+      {/* <Routes> */}
+      {/* <Route exact path="/" element={<CompanyDashboard />} />  */}
+      {/* // <div className=''> */}
+    //  {/* <Header/>
+    //  <Sidebar 
+    //  sidebarToggle={sidebarToggle}
+    //  setSidebarToggle={setSidebarToggle}/>
+    //  <Dashboard/> */}
+      {/* // </div> */}
+
+
+      {/* <CompanyHeader />
+    <CompanySidebar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} />
+    <main className={`content ${sidebarToggle ? 'sidebar-open' : 'sidebar-closed'}`}> */}
+      {/* <Routes> */}
+      {/* <Route exact path="/" element={<CompanyDashboard />} />  */}
 
       {/* </Routes> */}
       {/* </main> */}
