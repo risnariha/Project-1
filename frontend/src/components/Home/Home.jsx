@@ -11,7 +11,7 @@ export const Home = () => {
                     <Link to="/">Home</Link>
                     <Link to="/products">Products</Link>
                     <Link to="/faqs">FAQs</Link>
-                    <Link to="/adminLogin">Log in</Link>
+                    <Link to="/Login">Log in</Link>
                 </div>
             </div>
             <div className="homeBanner  background-opacity">

@@ -1,5 +1,8 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./components/Company/CompanyApp.css";
+import "./components/Company/CompanyProduct.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Ensure Router is imported
 import Header from './components/Customer/Header'
 // import { Sidebar } from './components/Customer/Sidebar'
 import CustomerProfile from './components/Customer/CustomerProfile';
@@ -7,13 +10,11 @@ import { CartDetails } from './components/Customer/CartDetails';
 import ProuductList from './components/Customer/ProuductList';
 import ProductDetail from './components/Customer/ProductDetail';
 import { useState } from 'react';
-import "./components/Company/CompanyApp.css";
-import "./components/Company/CompanyProduct.css";
+
 // import { BrowserRouter as Router,Routes, Route} from 'react-router-dom'; // Ensure Router is imported
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "./components/Company/CompanyApp.css";
 import "./components/Company/CompanyProduct.css";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Ensure Router is imported
 import CompanyHeader from './components/Company/CompanyHeader';
 import CompanySidebar from './components/Company/CompanySidebar';
 import AddProduct from './components/Company/AddProduct';
@@ -26,7 +27,6 @@ import { CompanyDashboard } from './components/Company/CompanyDashbord';
 import Review from './components/Company/review/Review';
 import ReviewLayout from './components/Company/review/ReviewLayout';
 import Dash from './components/Admin/Dash';
-import { Sidebar } from './components/Admin/Sidebar'
 import AdminOrder from './components/Admin/Order';
 import Customerdetails from './components/Admin/Customerdetails';
 import Customerregister from './components/Admin/Customerregister';
@@ -34,6 +34,8 @@ import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import Companyregister from './components/Admin/Companyregister';
 import { Home } from './components/Home/Home';
+import { Login } from './components/Home/Login';
+import AdminLayout from './components/Admin/AdminLayout';
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false)
@@ -44,14 +46,29 @@ function App() {
     <div className=''>
 
       <Router>
-        <Header className='' />
+        <Header />
         <Routes>
-          <Route index element={<Home/>}/>
-          <Route path="/products" element={<ProuductList sidebarToggle={sidebarToggle}
+          {/* home */}
+          <Route index element={<Home />} />
+          <Route path="/Login" element={<Login />} />
+          {/* admin */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="" element={<Dash  />} />
+            <Route path="Customerdetails" element={<Customerdetails />} />
+            <Route path='Order' element={<AdminOrder />} />
+            {/* <Route path='/adminSidebar' element={<AdminSidebar
+              sidebarToggle={sidebarToggle}
+              setSidebarToggle={setSidebarToggle} />} /> */}
+          </Route>
+          {/* customer */}
+          <Route path="/products" element={<ProuductList
+            sidebarToggle={sidebarToggle}
             setSidebarToggle={setSidebarToggle} />} />
           <Route path="/cart" element={<CartDetails />} />
           <Route path="/profile" element={<CustomerProfile />} />
-          <Route path="/productDetail" element={<ProductDetail sidebarToggle={sidebarToggle} />} />
+          <Route path="/productDetail" element={<ProductDetail
+            sidebarToggle={sidebarToggle} />} />
+          {/* company */}
           <Route exact path="/add-product" element={<AddProduct />} />
           <Route exact path="/display-product" element={<ViewProducts />} />
           <Route exact path="/update/:product_id" element={<UpdateProduct />} />
@@ -60,10 +77,6 @@ function App() {
           <Route exact path="/order" element={<Order />} />
           <Route exact path="/review" element={<Review />} />
           <Route exact path="/reviewlayout/:product_id" element={<ReviewLayout />} />
-
-          <Route path='/dash' element={<Dash />} />
-          <Route path='/Customerdetails' element={<Customerdetails />} />
-          <Route path='/Order' element={<AdminOrder />} />
         </Routes>
 
       </Router>
@@ -82,12 +95,16 @@ function App() {
       {/* <Routes> */}
       {/* <Route exact path="/" element={<CompanyDashboard />} />  */}
       {/* // <div className=''> */}
-    //  {/* <Header/>
-    //  <Sidebar 
-    //  sidebarToggle={sidebarToggle}
-    //  setSidebarToggle={setSidebarToggle}/>
-    //  <Dashboard/> */}
-      {/* // </div> */}
+      {/* <Router>
+        <Header />
+        <Sidebar
+          sidebarToggle={sidebarToggle}
+          setSidebarToggle={setSidebarToggle} />
+        <Routes>
+          <Route path='/' element={<Dash />} />
+          <Route path='/Order' element={<AdminOrder />} />
+        </Routes>
+      </Router> */}
 
 
       {/* <CompanyHeader />

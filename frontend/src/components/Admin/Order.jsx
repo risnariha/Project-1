@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-function Order() {
+const  AdminOrder=(()=> {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,6 +31,7 @@ function Order() {
   if (error) return <div>Error: {error}</div>;
 
   return (
+
     <div className='container mt-5'>
       <div className='row justify-content-center'>
         <div className='col-md-12 col-lg-9'>
@@ -74,7 +75,8 @@ function Order() {
         </div>
       </div>
     </div>
+  
   )
 }
-
-export default Order;
+)
+export default AdminOrder;
