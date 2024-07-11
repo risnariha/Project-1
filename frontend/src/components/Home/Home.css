@@ -89,13 +89,15 @@
 
 .homeHeader{
     width: 100%;
-    background: #dc143c;
+    background: #490365;
     padding: 15px 0px;
     text-align: right;
+    justify-content: center;
+    display: flex;
 } 
 
 .homeHeaderLinks a{
-    font-size: 20px;
+    font-size: 10px;
     font-weight: 600;
     color: #fff;
     text-decoration: none;
@@ -107,14 +109,31 @@
 }
 
 .homeHeaderLinks a:hover{
-    background-color: #f64e70;
+    background-color: hsl(0, 0%, 93%);
+    color: #490365;
 }
-
+.background-opacity {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Adjust height as needed */
+  }
+  
+  .background-opacity::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../../../public/images/home/smart-inventory-management-system-1200x627.jpg') no-repeat center center ;
+    opacity: 0.5; /* Set your desired opacity level */
+    z-index: -1; /* Place the pseudo-element behind the content */
+  }
 .homeBanner{
-    background: url('../homeImages/home-bg.jpg') no-repeat center center ;
     background-size: cover;
     padding-top: 100px;
     padding-bottom: 100px;
+   
 }
 
 .homePageContainer{
@@ -128,7 +147,7 @@
     text-align: center;
     font-size: 50px;
     font-weight: 700;
-    color: #fff;
+    color:#490365;
     line-height: 100%;
 }
 

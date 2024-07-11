@@ -6,7 +6,7 @@ export const Home = () => {
   return (
     <div>
         <div className="homeHeader">
-            <div className="homeHeaderLogo">
+            {/* <div className="homeHeaderLogo">
                 <div id="logoContainer">
                     <div id="ring"></div>
                     <div id="ring"></div>
@@ -14,7 +14,7 @@ export const Home = () => {
                      <div id="ring"></div>
                 </div>
             <div id="logoTitle">EliteZ</div>
-            </div>
+            </div> */}
             <div className="homeHeaderLinks">
                 <Link to ="/">Home</Link>
                 <Link to ="/products">Products</Link>
@@ -22,7 +22,7 @@ export const Home = () => {
                 <Link to ="/adminLogin">Log in</Link>
             </div>
         </div>
-        <div className="homeBanner">
+        <div className="homeBanner  background-opacity">
             <div className="homePageContainer">
                 <div className="homeBannerHeader">
                     <h1>EliteZ</h1>
@@ -77,14 +77,14 @@ export const Home = () => {
                 <a href=""><i className="fa-brands fa-youtube"></i></a>
             </div>
         </div>
-        <div className="homeFooter">
+        {/* <div className="homeFooter">
             <a href="">Contacts</a>
             <a href="">Download</a>
             <a href="">Press</a>
             <a href="">Email</a>
             <a href="">Support</a>
             <a href="">Privacy Policy</a>
-        </div>
+        </div> */}
     </div>
   )
 }
