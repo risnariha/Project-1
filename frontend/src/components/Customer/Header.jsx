@@ -6,8 +6,8 @@ export default function Header() {
   return (
     <div className='d-flex w-full bg-white justify-content-between align-items-center'>
       <div className='d-flex '>
-        <div className=''>
-          <img src={logo} alt="" className='h-14 w-14 d-felx my-2 ms-3' />
+        <div className='align-items-center d-flex'>
+          <img src={logo} alt="" className='h-10 w-10 d-felx ms-3' />
         </div>
         <div className='fs-1 fw-bold ms-2 my-2 '>EliteZ</div>
       </div>
