@@ -4,15 +4,14 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET");
 header("Access-Control-Allow-Headers: Content-Type");
 
-include 'dbconnect.php';
+include '../Connection/connection.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = json_decode(file_get_contents('php://input'));
 
     if ($user) {
-        $dbcon = new dbconnect();
-        $con = $dbcon->connection();
+        
         $sql = "INSERT INTO company (fname, lname, email, phone, place, district, pw, refno) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $pstmt = $con->prepare($sql);
         $pstmt->bindParam(1, $user->fname);
