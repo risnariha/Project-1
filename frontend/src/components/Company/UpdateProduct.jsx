@@ -16,8 +16,7 @@ const UpdateProduct = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios
-      .get(`http://localhost/Project-1/backend/api/Company/view_product.php?product_id=${product_id}`)
+    axios.get(`http://localhost:8080/backend/api/Company/view_product.php?product_id=${product_id}`)
       .then((response) => {
         if (response.data.length > 0) {
           setProduct(response.data[0]);
@@ -113,8 +112,8 @@ const UpdateProduct = () => {
             accept="image/*"
           />
           <div className="btns">
-            <input type="submit" className="edit_btn" value="Update Product" name="update_product" />
-            <input type="reset" id="close-edit" className="cancel_btn" value="Cancel" />
+            <input type="submit" className="edit_btn " value="Update Product" name="update_product" />
+            <input type="reset" id="close-edit" className="cancel_btn " value="Cancel" />
           </div>
         </form>
       </div>

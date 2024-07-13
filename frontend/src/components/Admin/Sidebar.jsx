@@ -7,7 +7,7 @@ import { IoPerson } from 'react-icons/io5';
 import {Link, useNavigate} from 'react-router-dom'
 
 
-const AdminSidebar = ({Children,sidebarToggle,setSidebarToggle}) => {
+const AdminSidebar = ({sidebarToggle,setSidebarToggle}) => {
     const [user , setUser] =useState(true);
     const navigate = useNavigate();
 
@@ -20,6 +20,13 @@ const AdminSidebar = ({Children,sidebarToggle,setSidebarToggle}) => {
             setUser(user);
         }
     },[]);
+
+    const handleLogout = () => {
+        sessionStorage.clear();
+        navigate('/');
+    };
+
+
   return (
    user && (<div className=' d-flex'>
     <Dashboard
@@ -59,14 +66,14 @@ const AdminSidebar = ({Children,sidebarToggle,setSidebarToggle}) => {
                     <AiFillShopping className='w-6 h-6 mx-3 pb-1'/>Orders
                     </Link>
                 </li>
-                <li className='mb-3 hover-bg-blue-500 py-1 rounded align-items-center'>
-                    <Link to="#" className='text-decoration-none text-white fs-5 px-2'>
+                <li className='mb-3 hover-bg-blue-500 py-1 rounded align-items-center' onClick={handleLogout}>
+                    <Link to="#" className='text-decoration-none text-white fs-5 px-2' >
                     <BiLogOutCircle className='w-6 h-6 mx-3 pb-1'/>Logout
                     </Link>
                 </li>
         </ul>
     </div>
-    {Children}
+    
 </div>
 
   ))

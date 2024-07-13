@@ -38,7 +38,7 @@ export const CompanyDashboard = () => {
       </div>
       <div className='container mt-4'>
         <div className='row justify-content-center'>
-          <div className='col-12'>
+          <div className='w-full'>
             <Order />
           </div>
         </div>

@@ -4,7 +4,7 @@ import { Dashboard } from './Dashboard';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
-export const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
+export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle }) => {
 
     const [scrolled, setScrolled] = useState(false);
     const [scrollDirection, setScrollDirection] = useState(null);

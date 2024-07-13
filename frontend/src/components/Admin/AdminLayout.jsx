@@ -3,13 +3,13 @@ import { Outlet } from 'react-router-dom';
 import AdminSidebar from './Sidebar';
 
 const AdminLayout = () => {
-    const [barToggle, setbarToggle] = useState(false);
+    const [sidebarToggle, setSidebarToggle] = useState(false);
 
     return (
         <div className='d-flex flex-column'>
-            <AdminSidebar sidebarToggle={barToggle} setSidebarToggle={setbarToggle} />
+            <AdminSidebar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} />
             <div className=''>
-                <Outlet  context={{ sidebarToggle: barToggle, setSidebarToggle: setbarToggle }} />
+                <Outlet  context={{ sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }} />
             </div>
         </div>
     );

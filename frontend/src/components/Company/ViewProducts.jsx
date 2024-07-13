@@ -8,7 +8,7 @@ const ViewProducts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost/Project-1/backend/api/Company/view_product.php')
+    axios.get('http://localhost:8080/backend/api/Company/view_product.php')
       .then(response => {
         if (Array.isArray(response.data)) {
           setProducts(response.data);
@@ -25,7 +25,7 @@ const ViewProducts = () => {
 
   const handleDelete = (product_id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      axios.get(`http://localhost/Project-1/backend/api/Company/delete_product.php?delete=${product_id}`)
+      axios.get(`http://localhost:8080/backend/api/Company/delete_product.php?delete=${product_id}`)
         .then(response => {
           if (response.data.success) {
             setProducts(products.filter(product => product.product_id !== product_id));

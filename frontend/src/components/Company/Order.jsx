@@ -74,13 +74,13 @@ function Order() {
   }
 
   return (
-    <div className="maincontainer">
+    <div className="maincontainer ">
        <div className="table_heading">
         <h3>Order Details</h3>
         </div>
       <section className="display_product">
-         <table>
-          <thead>
+         <table className="d-felx">
+          <thead className=" fs-5">
             <tr>
               <th>Name</th>
               <th>Ref No</th>
@@ -93,7 +93,7 @@ function Order() {
           </thead>
           <tbody>
             {orders.map((order, index) => (
-              <tr key={order.orderId}>
+              <tr key={order.orderId} className="fs-6">
                 <td>{order.name}</td>
                 <td>{order.refNo}</td>
                 <td>{order.orderId}</td>

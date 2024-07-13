@@ -20,9 +20,9 @@ export const Login = () => {
                 sessionStorage.setItem('user', JSON.stringify({ email, userType }));
 
                 if (userType === 'admin') {
-                    navigate('/adminSidebar');
+                    navigate('/admin');
                 } else if (userType === 'company') {
-                    navigate('/companyDashboard');
+                    navigate('/company');
                 } else if (userType === 'customer') {
                     navigate('/customerDashboard');
                 } else {

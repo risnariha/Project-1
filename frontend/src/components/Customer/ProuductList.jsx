@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Sidebar } from './Sidebar';
-import ProductDetail from './ProductDetail';
 
 function ProductList({ sidebarToggle, setSidebarToggle }) {
   const [products, setProducts] = useState([]);

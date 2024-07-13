@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./components/Company/CompanyApp.css";
 import "./components/Company/CompanyProduct.css";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Ensure Router is imported
-import Header from './components/Customer/Header'
+import Header from './components/Home/Header'
 // import { Sidebar } from './components/Customer/Sidebar'
 import CustomerProfile from './components/Customer/CustomerProfile';
 import { CartDetails } from './components/Customer/CartDetails';
@@ -36,6 +36,8 @@ import Companyregister from './components/Admin/Companyregister';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Home/Login';
 import AdminLayout from './components/Admin/AdminLayout';
+import CompanyLayout from './components/Company/CompanyLayout';
+import CustomerLayout from './components/Customer/CustomerLayout';
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false)
@@ -53,30 +55,31 @@ function App() {
           <Route path="/Login" element={<Login />} />
           {/* admin */}
           <Route path="/admin" element={<AdminLayout />}>
-            <Route path="" element={<Dash  />} />
+            <Route path="" element={<Dash />} />
             <Route path="Customerdetails" element={<Customerdetails />} />
             <Route path='Order' element={<AdminOrder />} />
-            {/* <Route path='/adminSidebar' element={<AdminSidebar
-              sidebarToggle={sidebarToggle}
-              setSidebarToggle={setSidebarToggle} />} /> */}
           </Route>
           {/* customer */}
-          <Route path="/products" element={<ProuductList
-            sidebarToggle={sidebarToggle}
-            setSidebarToggle={setSidebarToggle} />} />
-          <Route path="/cart" element={<CartDetails />} />
-          <Route path="/profile" element={<CustomerProfile />} />
-          <Route path="/productDetail" element={<ProductDetail
-            sidebarToggle={sidebarToggle} />} />
+          <Route path="/customer" element={<CustomerLayout />}>
+            <Route path="products" element={<ProuductList
+              sidebarToggle={sidebarToggle}
+              setSidebarToggle={setSidebarToggle} />} />
+            <Route path="cart" element={<CartDetails />} />
+            <Route path="profile" element={<CustomerProfile />} />
+            <Route path="productDetail" element={<ProductDetail
+              sidebarToggle={sidebarToggle} />} />
+          </Route>
           {/* company */}
-          <Route exact path="/add-product" element={<AddProduct />} />
-          <Route exact path="/display-product" element={<ViewProducts />} />
-          <Route exact path="/update/:product_id" element={<UpdateProduct />} />
-          {/* <Route exact path="/dashboard" element={<CompanyDashboard/>}/> */}
-          <Route exact path="/customer" element={<Customer />} />
-          <Route exact path="/order" element={<Order />} />
-          <Route exact path="/review" element={<Review />} />
-          <Route exact path="/reviewlayout/:product_id" element={<ReviewLayout />} />
+          <Route path="/company" element={<CompanyLayout />} >
+            <Route exact path="" element={<CompanyDashboard />} />
+            <Route exact path="add-product" element={<AddProduct />} />
+            <Route exact path="display-product" element={<ViewProducts />} />
+            <Route exact path="update/:product_id" element={<UpdateProduct />} />
+            <Route exact path="customer" element={<Customer />} />
+            <Route exact path="order" element={<Order />} />
+            <Route exact path="review" element={<Review />} />
+            <Route exact path="reviewlayout/:product_id" element={<ReviewLayout />} />
+          </Route>
         </Routes>
 
       </Router>

@@ -114,8 +114,8 @@ const Customer = () => {
                   <td>{item.refno}</td>
 
                   <td>
-                         <button className="btn btn-success m-2">View</button>
-                         <button className="btn btn-danger">Delete</button>  
+                         <button className="btn btn-success w-100 mb-1">View</button>
+                         <button className="btn btn-danger w-100">Delete</button>  
                  </td>
                 </tr>
               ))}

@@ -31,11 +31,11 @@ const Dash = () => {
                     <Card title="Today Sales" icon={BsTruck} count={10000} />
                 </div>
             </div>
-            <div className='row justify-content-end '>
-                <div className='col-11 col-sm-7 col-lg-6  ml-4'>
+            <div className='row justify-content-center d-flex'>
+                <div className='w-75'>
                     <Barchart />
                 </div>
-                <div className='col-11 col-sm-6 col-lg-4 mr-4'>
+                <div className='w-25'>
                     <Piechart />
                 </div>
             </div>

@@ -71,7 +71,9 @@
 .cursor-pointer {
   cursor: pointer;
 }
-
+.h-100vh{
+  height: 100vh;
+}
 .h-full {
   height: 100%;
 }
@@ -125,4 +127,7 @@
 
 .hover-bg-blue-500:hover {
   background-color: rgb(5, 5, 20);
+}
+.z-1000{
+  z-index: 1000;
 }

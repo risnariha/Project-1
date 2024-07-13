@@ -1,14 +1,14 @@
 import React from 'react'
 import {FaBars} from 'react-icons/fa'
 import { IoLogOut } from "react-icons/io5";
-export const CompanyNavbar = ({sidebarToggle,setSidebarToggle}) => {
+export const CompanyNavbar = ({sidebarToggle,setSidebarToggle,user}) => {
 
   
   return (
-    <nav className='d-flex w-full justify-content-between px-4 align-itmes-center navbar text-white'>
+    <nav className={`${sidebarToggle?"ml-25":""} d-flex w-full justify-content-between px-4 align-itmes-center navbar text-white`}>
     <div className='d-flex align-items-center my-1 fs-5'>
         <div className='d-flex text-white me-1'><FaBars className={`fabar ${sidebarToggle?"d-none":""}`} onClick={()=>setSidebarToggle(!sidebarToggle)}/></div>
-        <div className='d-flex text-white align-items-center'>Company Name</div>
+        <div className='d-flex text-white align-items-center'>{user.companyName}</div>
     </div>
     <div className='d-flex align-items-center'>
         

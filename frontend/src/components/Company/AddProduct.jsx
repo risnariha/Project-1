@@ -143,7 +143,7 @@ function AddProduct() {
     };
 
     return (
-        <div className="maincontainer mt-5">
+        <div className="maincontainer rounded mt-5 w-75 " >
             {isMessageVisible && message && (
                 <div className="display_message">
                     {message}
@@ -151,7 +151,7 @@ function AddProduct() {
                 </div>
             )}
             <h3 className="heading">Add Products</h3>
-            <form onSubmit={handleSubmit} className="add_product">
+            <form onSubmit={handleSubmit} className="add_product justify-content-center">
                 <div className="form-group">
                     <input
                         type="text"
