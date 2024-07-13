@@ -4,9 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET");
 header("Access-Control-Allow-Headers: Content-Type");
 
-include 'dbconnect.php';
-$dbcon=new dbconnect();
-$con=$dbcon->connection();
+include '../Connection/connection.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     try {
