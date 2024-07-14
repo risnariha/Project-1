@@ -9,10 +9,10 @@ import { CompanyDashboard } from './CompanyDashbord';
 import { CompanyNavbar } from './CompanyNavbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Login } from '../Home/Login';
 
-const CompanySidebar = ({ sidebarToggle, setSidebarToggle }) => {
-    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
-    const [error, setError] = useState(null);
+const CompanySidebar = ({ sidebarToggle, setSidebarToggle,error, user }) => {
+
     const [scrolled, setScrolled] = useState(false);
     const [scrollDirection, setScrollDirection] = useState(null);
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
@@ -47,26 +47,6 @@ const CompanySidebar = ({ sidebarToggle, setSidebarToggle }) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [prevScrollPos]);
-    useEffect(() => {
-        
-        if (!user) {
-            handleLogout();
-        } else {
-            console.log('before user values:', user);
-            const getUserDetails = async () => {
-                try {
-                    const email = user['email'];
-                    const userType = 'companyowners';
-                    const response = await axios.post('http://localhost:8080/backend/api/Home/getUserDetails.php', { email,userType });
-                    setUser(response.data);
-                    console.log('data success:', response.data);
-                } catch (error) {
-                    console.error('Error fetching user details : ', error);
-                }
-            };
-            getUserDetails();
-        }
-    }, []);
 
 
     const handleLogout = () => {
@@ -79,7 +59,7 @@ const CompanySidebar = ({ sidebarToggle, setSidebarToggle }) => {
     }
 
     return (
-        <div className={`${scrolled ? "sticky-top" : ""} d-flex z-3`}>
+       <div className={`${scrolled ? "sticky-top" : ""} d-flex z-3`}>
             {/* <CompanyDashboard
     sidebarToggle={sidebarToggle}
     setSidebarToggle={setSidebarToggle}
