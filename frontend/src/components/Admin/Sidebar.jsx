@@ -5,21 +5,40 @@ import { BiLogOutCircle } from 'react-icons/bi';
 import { AiFillDashboard, AiFillShopping } from 'react-icons/ai';
 import { IoPerson } from 'react-icons/io5';
 import {Link, useNavigate} from 'react-router-dom'
+import { Login } from '../Home/Login';
 
 
-const AdminSidebar = ({sidebarToggle,setSidebarToggle}) => {
-    const [user , setUser] =useState(true);
-    const navigate = useNavigate();
+const AdminSidebar = ({sidebarToggle,setSidebarToggle,user}) => {
+
+    const [scrolled, setScrolled] = useState(false);
+    const [scrollDirection, setScrollDirection] = useState(null);
+    const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+    const navigate=useNavigate();
+    const handleScroll = () => {
+        const currentScrollPos = window.pageYOffset;
+       
+        if (prevScrollPos < currentScrollPos) {
+            setScrollDirection('up');
+            setScrolled(false);
+            setSidebarToggle(false);
+        } else if (prevScrollPos > currentScrollPos) {
+            setScrollDirection('down');
+            setScrolled(true);
+        } else {
+            setScrolled(false);
+        }
+
+        setPrevScrollPos(currentScrollPos);
+    };
 
     useEffect(() => {
-        const user =JSON.parse(sessionStorage.getItem('user'));
-        console.log("user from session storage");
-        if(!user){
-            navigate('/login');
-        } else{
-            setUser(user);
-        }
-    },[]);
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [prevScrollPos]);
+
+    
 
     const handleLogout = () => {
         sessionStorage.clear();
@@ -28,13 +47,13 @@ const AdminSidebar = ({sidebarToggle,setSidebarToggle}) => {
 
 
   return (
-   user && (<div className=' d-flex'>
+<div className={`${scrolled ? "sticky-top" : ""} d-flex z-3`}>
     <Dashboard
     sidebarToggle={sidebarToggle}
     setSidebarToggle={setSidebarToggle}
     />
    
-    <div className={`${sidebarToggle?"":"d-none"} w-64 d-felx fixed sidebar h-full`}>
+    <div className={`${sidebarToggle?"":"d-none"} w-25 d-felx fixed sidebar  h-full`}>
         <div className='mx-2 d-flex fs-5 fw-bold h-12 text-white align-items-center justify-content-between'>
             <span>Admin Dashboard</span>
             <FaWindowClose className='fabar w-6 h-6'onClick={()=> setSidebarToggle(!sidebarToggle)}/>
@@ -42,7 +61,7 @@ const AdminSidebar = ({sidebarToggle,setSidebarToggle}) => {
         <hr className='text-white m-0'></hr>
         <ul className='mt-3  text-white list-unstyled fw-bold '> 
                 <li className='mb-3 hover-bg-blue-500 py-1 rounded align-items-center active'>
-                    <Link to="/admin/" className='text-decoration-none text-white fs-5 px-2'>
+                    <Link to="/admin/dash" className='text-decoration-none text-white fs-5 px-2'>
                     <AiFillDashboard className='w-6 h-6 mx-3 pb-1'/>Dashboard
                     </Link>
                 </li>
@@ -75,7 +94,6 @@ const AdminSidebar = ({sidebarToggle,setSidebarToggle}) => {
     </div>
     
 </div>
-
-  ))
+  )
 }
 export default AdminSidebar;
