@@ -116,7 +116,7 @@ function CustomerProfile() {
               <img src="./../../../public/Elitez.png" alt="upload image" className="w-32 h-32 rounded-circle" />
             )}
           </div>
-          <div className='justify-content-center d-flex w-100'>
+          <div className='justify-content-center fs-6 d-flex w-100'>
             <form className='mt-5 w-75'>
                 <div className="mb-3">
                 <label htmlFor="inputFirstName" className="form-label">First Name</label>

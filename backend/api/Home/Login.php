@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin:*');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Methods: POST');
 
@@ -50,10 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($userType) {
-        $_SESSION['user'] = [
-            'email' => $user['email'],
-            'type' => $userType
-        ];
+        // $_SESSION['user'] = [
+        //     'email' => $user['email'],
+        //     'type' => $userType
+        // ];
         $response['success'] = true;
         $response['userType'] = $userType;
         $response['message'] = 'Login successful';

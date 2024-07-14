@@ -115,7 +115,7 @@
 
 .homeHeaderLinks a:hover{
     background-color: hsl(0, 0%, 93%);
-    color: #490365;
+    color: #400358;
 }
 .background-opacity {
     position: relative;
@@ -142,9 +142,9 @@
 
 .homePageContainer{
     width: 100%;
-    max-width: 900px;
+    /* max-width: 900px; */
     height: 65vh;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     /* margin-top: 50px; */
     display: flex;
     flex-direction: column;
@@ -153,6 +153,8 @@
 .homeBannerHeader{
     display: flex;
     flex-direction: column;
+}
+.mt-150{
     margin-top: 150px;
 }
 .homeBannerHeader h1{

@@ -15,7 +15,7 @@ const Login = () => {
     event.preventDefault();
     
     try {
-      const response = await fetch('http://localhost/Project-1/backend/api/Company/LoginRegister/login.php', {
+      const response = await fetch('http://localhost:8080/backend/api/Home/Login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo json_encode($user);
         
         }else{
-            echo json_encode(array('error' => 'data is null: '));
+            echo json_encode(array('error' => 'data is null: ',$user));
         }
         } catch (PDOException $e) {
             echo json_encode(array('error' => 'Database error: ' . $e->getMessage()));

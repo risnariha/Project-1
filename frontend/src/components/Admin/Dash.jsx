@@ -12,7 +12,7 @@ const Dash = () => {
     const { sidebarToggle, setSidebarToggle } = useOutletContext();
     return (
 
-        <div className={`${sidebarToggle ? "ml-25": "w-100" } `}>
+        <div className={` `}>
             {/* <AdminSidebar
                 sidebarToggle={sidebarToggle}
                 setSidebarToggle={setSidebarToggle}
@@ -31,11 +31,11 @@ const Dash = () => {
                     <Card title="Today Sales" icon={BsTruck} count={10000} />
                 </div>
             </div>
-            <div className='row justify-content-center d-flex'>
-                <div className='w-75'>
+            <div className=' justify-content-center d-flex w-full sm-flex-column xs-flex-column'>
+                <div className='md-w-75 sm-w-100 justify-content-center'>
                     <Barchart />
                 </div>
-                <div className='w-25'>
+                <div className='md-w-25 sm-w-100'>
                     <Piechart />
                 </div>
             </div>

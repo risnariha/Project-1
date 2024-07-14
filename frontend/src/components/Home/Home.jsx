@@ -14,9 +14,9 @@ export const Home = () => {
                     <Link to="/Login">Log in</Link>
                 </div>
             </div>
-            <div className="homeBanner  background-opacity">
+            <div className="homeBanner background-opacity">
                 <div className="homePageContainer">
-                    <div className="homeBannerHeader">
+                    <div className="homeBannerHeader mt-150 ">
                         <h1>EliteZ</h1>
                         <div className="homeHeaderLogo">
                             <div id="logoContainer">

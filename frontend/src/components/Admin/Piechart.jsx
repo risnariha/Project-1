@@ -52,8 +52,8 @@ const data = {
 
 function Piechart() {
   return (
-    // <div style={{ width: '400px', height: '300px' }}>
-    <div className='w-100'>
+    // <div style={{ width: '100%', height: '100%' }}>
+    <div className='d-flex h-50vh justify-content-center'>
       <Pie data={data} options={options} />
      
     </div>

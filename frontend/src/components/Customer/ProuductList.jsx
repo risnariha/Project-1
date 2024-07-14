@@ -11,7 +11,7 @@ function ProductList({ sidebarToggle, setSidebarToggle }) {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8080/backend/api/connection.php')
+    axios.get('http://localhost:8080/backend/api/Customer/products.php')
       .then((res) => {
         setProducts(res.data);
       });

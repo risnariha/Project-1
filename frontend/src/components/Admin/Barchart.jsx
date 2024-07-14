@@ -59,7 +59,7 @@ const data = {
 function Barchart() {
   return (
     // <div style={{width : 600, height : 300}}>
-    <div className='d-flex w-full'>
+    <div className='d-flex h-50vh justify-content-center'>
       <Bar options ={options} data ={data} />
      
       

@@ -10,7 +10,7 @@ const CustomerLayout = () => {
                 sidebarToggle={sidebarToggle}
                 setSidebarToggle={setSidebarToggle}
             />
-            <div className=''>
+            <div className={`${sidebarToggle? "ml-25" : "w-full"}`}>
                 <Outlet
                     context={{ sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }}
                 />
