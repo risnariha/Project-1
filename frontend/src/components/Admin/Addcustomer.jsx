@@ -24,7 +24,7 @@ const Addcustomer = ({ showAddModal, handleCloseAddModal, handleSaveAddModal }) 
     const {fname, email, contact, shopname, place, district, refno } = inputs;
 
     try {
-      const response = await axios.post('http://localhost:8080/backend/Admin/Addcustomer.php', { fname, email, contact, shopname, place, district, refno });
+      const response = await axios.post('http://localhost:8080/backend/api/Admin/Addcustomer.php', { fname, email, contact, shopname, place, district, refno });
       const data = response.data;
       if (data.success) {
         alert("Customer added successfully");
@@ -41,12 +41,12 @@ const Addcustomer = ({ showAddModal, handleCloseAddModal, handleSaveAddModal }) 
   };
 
   return (
-    <Modal show={showAddModal} onHide={handleCloseAddModal}>
+    <Modal show={showAddModal} onHide={handleCloseAddModal} className=''>
       <Modal.Header closeButton>
         <Modal.Title>Add Customer</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className=''>
           
           <Form.Group className="mb-2">
             <Form.Label>Name</Form.Label>

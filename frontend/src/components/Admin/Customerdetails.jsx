@@ -53,7 +53,7 @@ function Customerdetails() {
   return (
     <div className='container mt-5' style={{ bodyBackground: '#eaeaea' }}>
       <div className='row justify-content-center'>
-        <div className='col-md-12 col-lg-9'>
+        <div className='col-md-11   col-lg-11'>
           <div className='card'>
             <div className='card-header bg-dark text-white d-flex justify-content-between align-items-center'>
                 <form className="d-flex" role="search">
@@ -97,10 +97,10 @@ function Customerdetails() {
                         <td>{customer.email}</td>
                         <td>{customer.customerContactNumber}</td>
                         
-                        <td>
-                          <button className="btn btn-primary m-1" onClick={() => handleShowViewModal(customer)}>View</button>
-                          <button className="btn btn-success m-1">Edit</button>
-                          <button className="btn btn-danger m-1">Delete</button>
+                        <td className='d-flex justify-content-center'>
+                          <button className="btn btn-primary me-1" onClick={() => handleShowViewModal(customer)}>View</button>
+                          <button className="btn btn-success me-1">Edit</button>
+                          <button className="btn btn-danger me-1 ">Delete</button>
                         </td>
                       </tr>
                     ))}

@@ -1,7 +1,7 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization");
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Origin ,Content-Type, Authorization, X-Requested-With");
 header('Content-Type: application/json');
 
 include '../Connection/connection.php';
@@ -83,14 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $PW = bin2hex(random_bytes(4));
 
         $sql = "INSERT INTO customers (customerID, customerName, email, password, customerContactNumber, customerShopName, customerAddress, customerDistrict, customerShopReferenceNo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $pstmt = $con->prepare($sql);
+        $pstmt = $conn->prepare($sql);
         $pstmt->bindParam(1, $ID);
         $pstmt->bindParam(2, $fname);
         $pstmt->bindParam(3, $email);
         $pstmt->bindParam(4, $PW);
         $pstmt->bindParam(5, $contact);
         $pstmt->bindParam(6, $shopname);
-        $pstmt->bindParam(7, $place);
+        $pstmt->bindParam(7, $address);
         $pstmt->bindParam(8, $district);
         $pstmt->bindParam(9, $refno);
 
