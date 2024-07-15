@@ -8,11 +8,6 @@ export const Navbar = ({sidebarToggle,setSidebarToggle}) => {
         <div className='d-flex text-white'>Admin</div>
     </div>
     <div className='d-flex align-items-center'>
-        {/* <div className='position-relative align-items-center'>
-          <span className='sm-relative md-absolute  align-items-center '>
-            <button className='btn btn-none d-flex align-items-center' ><FaSearch className='text-md-black text-sm-white'/></button></span>
-          <input type='text' className=' rounded focus-outline-none w-full ps-5 px-4 d-none d-md-block'/>
-        </div> */}
         <div className='d-flex ms-2 align-items-center cursor-pointer'><FaUserCircle style={{height:'20px',width:'20px'}}/><span className='px-1 d-none d-md-block d-flex' >Sign In</span></div>
     </div>
   </nav>

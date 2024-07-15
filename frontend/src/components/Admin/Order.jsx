@@ -9,21 +9,25 @@ const  AdminOrder=(()=> {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchCustomerData = () => {
+  const fetchOrderData = async () => {
     setLoading(true);
-    axios.post('url')
-      .then(response => {
-        setOrders(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }
+    try {
+      const response = await fetch('http://localhost:8080/backend/api/Admin/Recentorder.php');
+      const jsonData = await response.json();
+      if (jsonData.success) {
+        setOrders(jsonData.data);
+      } else {
+        setError(jsonData.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetchCustomerData();
+    fetchOrderData();
   }, []);
   
 
@@ -43,23 +47,23 @@ const  AdminOrder=(()=> {
               <div className='table-responsive'>
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
-                    <tr>
+                    <tr style={{fontSize:'145%'}}>
                       <th>Order_ID</th>
-                      <th>Ref_NO</th>
-                      <th>Quantity</th>
+                      <th>Customer_ID</th>
+                      <th>Order_Date</th>
                       <th>Amount</th>
                       <th>Status</th>
                       
                     </tr>
                   </thead>
                   <tbody>
-                  {orders.map((item) => (
-                      <tr key={item.refno}>
-                        <td>{item.orderid}</td>
-                        <td>{item.refno}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.totalamount}</td>
-                        <td>{item.status}</td>
+                  {orders.map((order) => (
+                      <tr key={order.orderID} style={{fontSize:'135%'}}>
+                        <td>{order.orderID}</td>
+                        <td>{order.customerID}</td>
+                        <td>{order.orderDate}</td>
+                        <td>{order.totalAmount}</td>
+                        <td>{order.status}</td>
                       
                         
                       </tr>

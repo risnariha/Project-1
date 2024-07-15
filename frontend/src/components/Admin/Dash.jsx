@@ -17,7 +17,7 @@ const Dash = () => {
                 sidebarToggle={sidebarToggle}
                 setSidebarToggle={setSidebarToggle}
             /> */}
-            <div className={` row justify-content-center`} >
+            <div className={` row justify-content-between`} >
                 <div className='col-11 col-sm-5 col-lg-2 m-4 '>
                     <Card title="Company" icon={AiOutlineStock} count={10} />
                 </div>
@@ -25,10 +25,10 @@ const Dash = () => {
                     <Card title="Customers" icon={AiOutlineUser} count={30} />
                 </div>
                 <div className='col-12 col-sm-5 col-lg-2 m-4 '>
-                    <Card title="Today Orders" icon={BsCartFill} count={15} />
+                    <Card title="Orders" icon={BsCartFill} count={15} />
                 </div>
                 <div className='col-12 col-sm-5 col-lg-2 m-4'>
-                    <Card title="Today Sales" icon={BsTruck} count={10000} />
+                    <Card title="Sales" icon={BsTruck} count={10000} />
                 </div>
             </div>
             <div className=' justify-content-center d-flex w-full sm-flex-column xs-flex-column'>
