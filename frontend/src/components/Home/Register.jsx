@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import './LoginRegister.css';
 import './Login.css';
 import { FaUser, FaLock, FaEnvelope, FaHome, FaCheck, FaRegAddressCard, FaPhone } from "react-icons/fa";
+// import { IoIosArrowDown } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const [userName, setUserName] = useState(null);
-  const [selectedUserType, setSelectedUserType] = useState(null);
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
+  const [selectedUserType, setSelectedUserType] = useState('');
+  const [shopName, setShopname] = useState('');
+  const [companyName, setCompanyName] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -29,7 +31,7 @@ const Register = () => {
       //     'Content-Type': 'application/json'
       //   },
 
-      sessionStorage.setItem('stepOne', JSON.stringify({ companyName, companyNumber }))
+      sessionStorage.setItem('stepOne', JSON.stringify({ email, selectedUserType }))
       const response = JSON.parse(sessionStorage.getItem('stepOne'))
 
       if (response) {
@@ -105,34 +107,36 @@ const Register = () => {
         <div className="homeBanner  background-opacity">
           <div className="homePageContainer">
             <div className="homeBannerHeader form-box">
-              {message && <div className={`message ${messageType}`}>{message}</div>}
+              
               {step === 1 && (
                 <form onSubmit={handleFirstStepSubmit} className='form'>
                   <h2 id='h1'>Registration</h2>
+                  {message && <div className={`message ${messageType}`}>{message}</div>}
                   {/* <h3>Validation Form</h3> */}
                   <div className="input-box">
                     <input
-                      type="text"
-                      placeholder="Name"
+                      type="email"
+                      placeholder="Email"
                       value={userName}
-                      onChange={(e) => setUserName(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                     <FaHome className="icon" />
                   </div>
                   <div className="input-box">
 
-                    {/* <div className='option'> */}
+                    <div className='option'>
                       <select id="userType" 
                       value={selectedUserType} 
                       onChange={(e) => setSelectedUserType(e.target.value)}
-                      className='option'>
+                      className='select'>
                         <option value="" >  Please choose an option</option>
                         <option value="Company">Company</option>
                         <option value="Shop">Shop</option>
                       </select>
-                    {/* </div> */}
-                    <FaCheck className="icon" />
+                    </div>
+                    {/* <FaCheck className="icon" /> */}
+                    {/* <IoIosArrowDown className='icon' /> */}
                   </div>
                   <button type="submit" className='submit'>Next</button>
                   <div className="register-link">
@@ -148,9 +152,9 @@ const Register = () => {
                   <div className="input-box">
                     <input
                       type="text"
-                      placeholder="Username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Name"
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
                       required
                     />
                     <FaUser className="icon" />
