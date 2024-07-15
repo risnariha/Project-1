@@ -8,13 +8,12 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include '../Connection/connection.php';
 
 try{
-    $stmt = $conn->prepare('SELECT orders.*, bills.totalAmount 
-    FROM orders 
-    INNER JOIN bills ON orders.orderID = bills.orderID');
+    $sql = 'SELECT orders.*, bills.totalAmount FROM orders INNER JOIN bills ON orders.orderID = bills.orderID';
+    $stmt = $conn->prepare($sql);
     $stmt->execute();
-    $customers = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
-    echo json_encode(['success'=> true, 'data'=>$customers]);
+    echo json_encode(['success'=> true, 'data'=>$orders]);
     
 
 } catch (Exception $e) {

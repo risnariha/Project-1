@@ -21,12 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $input = file_get_contents('php://input');
     $customer = json_decode($input, true);
 
-    
-
-    
-
-
-    if ($customer) {
+     if ($customer) {
 
         $errors = [];
 

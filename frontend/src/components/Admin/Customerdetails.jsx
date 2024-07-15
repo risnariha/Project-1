@@ -69,7 +69,7 @@ function Customerdetails() {
               <div className='table-responsive'>
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
-                    <tr style={{fontSize:'125%'}}>
+                    <tr style={{fontSize:'145%'}}>
                       <th>Customer Name</th>
                       <th>Shop Name</th>
                       <th>Email</th>
@@ -91,7 +91,7 @@ function Customerdetails() {
                         </td>
                     </tr>*/}
                     {customers.map((customer) => (
-                      <tr key={customer.customerID} style={{fontSize:'125%'}}>
+                      <tr key={customer.customerID} style={{fontSize:'145%'}}>
                         <td>{customer.customerName}</td>
                         <td>{customer.customerShopName}</td>
                         <td>{customer.email}</td>
@@ -117,7 +117,7 @@ function Customerdetails() {
           <Modal.Header closeButton>
             <Modal.Title>View Customer</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{fontSize:'125%'}}>
+          <Modal.Body style={{fontSize:'135%'}}>
             <p><strong>ID:</strong> {selectedCustomer.customerID}</p>
             <p><strong>Name:</strong> {selectedCustomer.customerName}</p>
             <p><strong>Shop Name:</strong> {selectedCustomer.customerShopName}</p>

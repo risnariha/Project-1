@@ -9,13 +9,13 @@ const  AdminOrder=(()=> {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchCustomerData = async () => {
+  const fetchOrderData = async () => {
     setLoading(true);
     try {
       const response = await fetch('http://localhost:8080/backend/api/Admin/Recentorder.php');
       const jsonData = await response.json();
       if (jsonData.success) {
-        setCustomers(jsonData.data);
+        setOrders(jsonData.data);
       } else {
         setError(jsonData.message);
       }
@@ -27,11 +27,11 @@ const  AdminOrder=(()=> {
   };
 
   useEffect(() => {
-    //fetchCustomerData();
+    fetchOrderData();
   }, []);
   
 
-  //if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -47,7 +47,7 @@ const  AdminOrder=(()=> {
               <div className='table-responsive'>
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
-                    <tr>
+                    <tr style={{fontSize:'145%'}}>
                       <th>Order_ID</th>
                       <th>Customer_ID</th>
                       <th>Order_Date</th>
@@ -57,13 +57,13 @@ const  AdminOrder=(()=> {
                     </tr>
                   </thead>
                   <tbody>
-                  {orders.map((item) => (
-                      <tr key={item.orderID}>
-                        <td>{item.orderID}</td>
-                        <td>{item.customerID}</td>
-                        <td>{item.orderDate}</td>
-                        <td>{item.totalAmount}</td>
-                        <td>{item.status}</td>
+                  {orders.map((order) => (
+                      <tr key={order.orderID} style={{fontSize:'135%'}}>
+                        <td>{order.orderID}</td>
+                        <td>{order.customerID}</td>
+                        <td>{order.orderDate}</td>
+                        <td>{order.totalAmount}</td>
+                        <td>{order.status}</td>
                       
                         
                       </tr>
