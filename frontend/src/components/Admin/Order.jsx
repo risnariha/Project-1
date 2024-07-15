@@ -9,25 +9,29 @@ const  AdminOrder=(()=> {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchCustomerData = () => {
+  const fetchCustomerData = async () => {
     setLoading(true);
-    axios.post('url')
-      .then(response => {
-        setOrders(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }
+    try {
+      const response = await fetch('http://localhost:8080/backend/api/Admin/Recentorder.php');
+      const jsonData = await response.json();
+      if (jsonData.success) {
+        setCustomers(jsonData.data);
+      } else {
+        setError(jsonData.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetchCustomerData();
+    //fetchCustomerData();
   }, []);
   
 
-  if (loading) return <div>Loading...</div>;
+  //if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -45,8 +49,8 @@ const  AdminOrder=(()=> {
                   <thead className='thead-dark'>
                     <tr>
                       <th>Order_ID</th>
-                      <th>Ref_NO</th>
-                      <th>Quantity</th>
+                      <th>Customer_ID</th>
+                      <th>Order_Date</th>
                       <th>Amount</th>
                       <th>Status</th>
                       
@@ -54,11 +58,11 @@ const  AdminOrder=(()=> {
                   </thead>
                   <tbody>
                   {orders.map((item) => (
-                      <tr key={item.refno}>
-                        <td>{item.orderid}</td>
-                        <td>{item.refno}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.totalamount}</td>
+                      <tr key={item.orderID}>
+                        <td>{item.orderID}</td>
+                        <td>{item.customerID}</td>
+                        <td>{item.orderDate}</td>
+                        <td>{item.totalAmount}</td>
                         <td>{item.status}</td>
                       
                         

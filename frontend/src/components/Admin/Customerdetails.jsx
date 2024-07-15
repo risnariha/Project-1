@@ -5,7 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 import Addcustomer from './Addcustomer';
 
 function Customerdetails() {
-  const [records, setRecords] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
@@ -26,24 +26,28 @@ function Customerdetails() {
   };
 
 
-  const fetchCustomerData = () => {
+  const fetchCustomerData = async () => {
     setLoading(true);
-    axios.post('')
-      .then(response => {
-        setRecords(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }
+    try {
+      const response = await fetch('http://localhost:8080/backend/api/Admin/Listcustomer.php');
+      const jsonData = await response.json();
+      if (jsonData.success) {
+        setCustomers(jsonData.data);
+      } else {
+        setError(jsonData.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    //fetchCustomerData();
+    fetchCustomerData();
   }, []);
 
-  //if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -65,7 +69,7 @@ function Customerdetails() {
               <div className='table-responsive'>
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
-                    <tr>
+                    <tr style={{fontSize:'125%'}}>
                       <th>Customer Name</th>
                       <th>Shop Name</th>
                       <th>Email</th>
@@ -86,15 +90,15 @@ function Customerdetails() {
                           <button className="btn btn-danger m-1">Delete</button>
                         </td>
                     </tr>*/}
-                    {records.map((item,id) => (
-                      <tr key={id}>
-                        <td>{item.name}</td>
-                        <td>{item.shopname}</td>
-                        <td>{item.email}</td>
-                        <td>{item.contact}</td>
+                    {customers.map((customer) => (
+                      <tr key={customer.customerID} style={{fontSize:'125%'}}>
+                        <td>{customer.customerName}</td>
+                        <td>{customer.customerShopName}</td>
+                        <td>{customer.email}</td>
+                        <td>{customer.customerContactNumber}</td>
                         
                         <td>
-                          <button className="btn btn-primary m-1" onClick={() => handleShowViewModal(item)}>View</button>
+                          <button className="btn btn-primary m-1" onClick={() => handleShowViewModal(customer)}>View</button>
                           <button className="btn btn-success m-1">Edit</button>
                           <button className="btn btn-danger m-1">Delete</button>
                         </td>
@@ -113,15 +117,16 @@ function Customerdetails() {
           <Modal.Header closeButton>
             <Modal.Title>View Customer</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <p><strong>ID:</strong> {selectedCustomer.id}</p>
-            <p><strong>Name:</strong> {selectedCustomer.name}</p>
-            <p><strong>Shop Name:</strong> {selectedCustomer.shopname}</p>
+          <Modal.Body style={{fontSize:'125%'}}>
+            <p><strong>ID:</strong> {selectedCustomer.customerID}</p>
+            <p><strong>Name:</strong> {selectedCustomer.customerName}</p>
+            <p><strong>Shop Name:</strong> {selectedCustomer.customerShopName}</p>
             <p><strong>Email:</strong> {selectedCustomer.email}</p>
-            <p><strong>Contact Number:</strong> {selectedCustomer.contact}</p>
-            <p><strong>Address:</strong> {selectedCustomer.place}</p>
-            <p><strong>Reference No:</strong> {selectedCustomer.refno}</p>
-            <p><strong>Password:</strong> {selectedCustomer.pw}</p>
+            <p><strong>Contact Number:</strong> {selectedCustomer.customerContactNumber}</p>
+            <p><strong>Address:</strong> {selectedCustomer.customerAddress}</p>
+            <p><strong>District:</strong> {selectedCustomer.customerDistrict}</p>
+            <p><strong>Reference No:</strong> {selectedCustomer.customerShopReferenceNo}</p>
+            <p><strong>Password:</strong> {selectedCustomer.password}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseViewModal}>Close</Button>

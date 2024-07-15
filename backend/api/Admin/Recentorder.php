@@ -8,7 +8,9 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include '../Connection/connection.php';
 
 try{
-    $stmt = $conn->prepare('SELECT * FROM customers');
+    $stmt = $conn->prepare('SELECT orders.*, bills.totalAmount 
+    FROM orders 
+    INNER JOIN bills ON orders.orderID = bills.orderID');
     $stmt->execute();
     $customers = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
@@ -23,3 +25,4 @@ try{
 
 
 ?>
+
