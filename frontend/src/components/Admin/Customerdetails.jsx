@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
-import Addcustomer from './Addcustomer';
+import Requestcustomer from './Requestcustomer';
 
 function Customerdetails() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showRequestAddModal, setShowRequestAddModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   const handleShowViewModal = (customer) => {
@@ -18,11 +18,11 @@ function Customerdetails() {
   };
 
   const handleCloseViewModal = () => setShowViewModal(false);
-  const handleShowAddModal = () => setShowAddModal(true);
-  const handleCloseAddModal = () => setShowAddModal(false);
+  const handleShowRequestAddModal = () => setShowRequestAddModal(true);
+  const handleCloseRequestAddModal = () => setShowRequestAddModal(false);
   const handleSaveAddModal = () => {
     // Fetch updated records here if necessary
-    setShowAddModal(false);
+    setShowRequestAddModal(false);
   };
 
 
@@ -60,8 +60,8 @@ function Customerdetails() {
                     <input className="form-control" placeholder="Search" aria-label="Search"/>
                 </form>
                 <h1 className='h4 text-center'>Customers Details</h1>
-                <button className="btn btn-info text-dark m-2" onClick={handleShowAddModal}>
-                    Add Customer
+                <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
+                    Customer Request
                 </button>
               
             </div>
@@ -78,18 +78,7 @@ function Customerdetails() {
                     </tr>
                   </thead>
                   <tbody>
-                    {/*<tr>
-                        <td>fgygfy</td>
-                        <td>fgygfy</td>
-                        <td>fgygfy</td>
-                        <td>fgygfy</td>
-                        <td>fgygfy</td>
-                        <td>
-                          <button className="btn btn-primary m-1" onClick={() => handleShowViewModal()}>View</button>
-                          <button className="btn btn-success m-1">Edit</button>
-                          <button className="btn btn-danger m-1">Delete</button>
-                        </td>
-                    </tr>*/}
+          
                     {customers.map((customer) => (
                       <tr key={customer.customerID} style={{fontSize:'145%'}}>
                         <td>{customer.customerName}</td>
@@ -133,10 +122,10 @@ function Customerdetails() {
           </Modal.Footer>
         </Modal>
       )}
-      <Addcustomer
-        showAddModal={showAddModal}
-        handleCloseAddModal={handleCloseAddModal}
-        handleSaveAddModal={handleSaveAddModal}
+      <Requestcustomer
+        showRequestAddModal={showRequestAddModal}
+        handleCloseRequestAddModal={handleCloseRequestAddModal}
+        handleShowViewModal={handleShowViewModal}
       />
     </div>
   );
