@@ -11,7 +11,9 @@ const Requestcustomer = ({ showRequestAddModal, handleCloseRequestAddModal, hand
     const [error, setError] = useState(null);
     const [showCustomerDetailsModal, setShowCustomerDetailsModal] = useState(false);
 
-    const fetchCustomerData = async () => {
+    
+
+    const fetchCustomerrequestData = async () => {
         setLoading(true);
         try {
           const response = await fetch('http://localhost:8080/backend/api/Admin/Requestcustomer.php');
@@ -29,18 +31,22 @@ const Requestcustomer = ({ showRequestAddModal, handleCloseRequestAddModal, hand
       };
     
       useEffect(() => {
-        fetchCustomerData();
+        fetchCustomerrequestData();
+       
       }, []);
     
       if (loading) return <div>Loading...</div>;
       if (error) return <div>Error: {error}</div>;
 
-      const handleViewCustomerDetails = async (customer) => {
+      const handleViewRequestCustomerDetails = async (customer) => {
         try {
           const response = await fetch(`http://localhost:8080/backend/api/Admin/Getrequestcustomer.php?id=${customer.id}`);
           const jsonData = await response.json();
+          console.log('API Response:', jsonData); // Log API response
           if (jsonData.success) {
-            setSelectedCustomer(jsonData.data);
+          
+            setSelectedCustomer(jsonData.data[0]);// Assuming jsonData.data is an array
+            console.log('Selected Customer:', jsonData.data[0]); // Log selected customer
             setShowCustomerDetailsModal(true);
           } else {
             setError(jsonData.message);
@@ -50,13 +56,30 @@ const Requestcustomer = ({ showRequestAddModal, handleCloseRequestAddModal, hand
         }
       };
     
+      
+
       const handleCloseCustomerDetailsModal = () => {
         setSelectedCustomer(null);
         setShowCustomerDetailsModal(false);
       };
     
-      const handleAcceptCustomer = () => {
+      const handleAcceptCustomer = async () => {
         // Implement accept customer logic here
+        try {
+          const response = await axios.post('http://localhost:8080/backend/api/Admin/Addcustomer.php', selectedCustomer);
+          const data = response.data;
+          if (data.success) {
+              alert("Customer added successfully");
+              // Optionally refetch the customer list or update state to remove the accepted customer from the UI
+              fetchCustomerrequestData();
+          } else {
+              alert("Errorc adding customer");
+              console.error(data.message);
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          alert("There was an error!");
+      }
         setShowCustomerDetailsModal(false);
       };
     
@@ -83,11 +106,11 @@ const Requestcustomer = ({ showRequestAddModal, handleCloseRequestAddModal, hand
                 </thead>
                 <tbody>
                   {customers.map((customer) => (
-                    <tr key={customer.customerID} style={{ fontSize: '145%' }}>
+                    <tr key={customer.id} style={{ fontSize: '145%' }}>
                       <td>{customer.id}</td>
                       <td>{customer.username}</td>
                       <td className='d-flex justify-content-center'>
-                        <button className="btn btn-primary me-1" onClick={() => handleViewCustomerDetails(customer)}>View</button>
+                        <button className="btn btn-primary me-1" onClick={() => handleViewRequestCustomerDetails(customer)}>View</button>
                       </td>
                     </tr>
                   ))}
