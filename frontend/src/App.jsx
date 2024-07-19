@@ -46,6 +46,8 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          {/*<Route path='/Aboutus' element={<Aboutus />} />
+          <Route path="/Contactus" element={<Contactus />} />*/}
           {/* home */}
             <Route path='/' element={<Home />} />
             <Route path="/Login" element={<Login />} />

@@ -3,14 +3,14 @@ import React from 'react'
 
 function Contactus() {
   return (
-    <div className="container justify-content-center rounded bg-white mt-5" style={{ width: '70%'}} >
+    <div className="container justify-content-center rounded bg-white mt-5" style={{ width: '70%', fontFamily: 'Poppins' }} >
      
       <div className='card shadow' >
         <div className='card-body'>
         <h2 className='text-center text-primary'>Get in Touch</h2>
         <div className='row'>
             <div className='col-md-6 '>
-                <img src ="public/contact.jpg" width="85%" alt='img'/>
+                <img src ="public/contact.jpg"  alt='img' style={{ width: '90%' }}/>
             </div>
             <div className='col-md-6 border-left mt-4'>
               
