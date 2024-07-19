@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include '../Connection/connection.php';
 
 try{
-    $stmt = $conn->prepare('SELECT * FROM registration_requests');
+    $stmt = $conn->prepare('SELECT * FROM registration_requests WHERE userType="customer"');
     $stmt->execute();
     $Requestcustomers = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 

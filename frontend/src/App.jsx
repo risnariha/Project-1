@@ -25,7 +25,8 @@ import ReviewLayout from './components/Company/review/ReviewLayout';
 import Dash from './components/Admin/Dash';
 import AdminOrder from './components/Admin/Order';
 import Customerdetails from './components/Admin/Customerdetails';
-import Customerregister from './components/Admin/Customerregister';
+import Companydetails from './components/Admin/Companydetails';
+
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import Companyregister from './components/Admin/Companyregister';
@@ -57,6 +58,7 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dash" element={<Dash />} />
               <Route path="Customerdetails" element={<Customerdetails />} />
+              <Route path="Companydetails" element={<Companydetails />} />
               <Route path='Order' element={<AdminOrder />} />
             </Route>
           {/* customer */}
