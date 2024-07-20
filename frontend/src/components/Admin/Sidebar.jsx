@@ -54,13 +54,13 @@ const AdminSidebar = ({sidebarToggle,setSidebarToggle,user}) => {
     setSidebarToggle={setSidebarToggle}
     />
    
-    <div className={`${sidebarToggle?"":"d-none"} w-25 d-felx fixed sidebar  h-full`}>
+   <div className={`${sidebarToggle ? "fixed" : "d-none"} w-25 d-felx   bg-color h-full ${scrolled ? "justify-content-start position-absolute z-1000" : ""}`}>
         <div className='mx-2 d-flex fs-5 fw-bold h-12 text-white align-items-center justify-content-between'>
             <span>Admin Dashboard</span>
             <FaWindowClose className='fabar w-6 h-6'onClick={()=> setSidebarToggle(!sidebarToggle)}/>
         </div>
         <hr className='text-white m-0'></hr>
-        <ul className='mt-3  text-white list-unstyled fw-bold '> 
+        <ul className='text-white list-unstyled fw-bold bg-color pt-3 h-100vh '> 
                 <li className='mb-3 hover-bg-blue-500 py-1 rounded align-items-center active'>
                     <Link to="/admin/dash" className='text-decoration-none text-white fs-5 px-2'>
                     <AiFillDashboard className='w-6 h-6 mx-3 pb-1'/>Dashboard
