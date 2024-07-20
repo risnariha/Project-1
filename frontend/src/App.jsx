@@ -9,7 +9,6 @@ import CustomerProfile from './components/Customer/CustomerProfile';
 import { CartDetails } from './components/Customer/CartDetails';
 import ProuductList from './components/Customer/ProuductList';
 import ProductDetail from './components/Customer/ProductDetail';
-import { useState } from 'react';
 
 // import { BrowserRouter as Router,Routes, Route} from 'react-router-dom'; // Ensure Router is imported
 // import 'bootstrap/dist/css/bootstrap.min.css';
