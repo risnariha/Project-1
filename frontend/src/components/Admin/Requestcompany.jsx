@@ -59,8 +59,24 @@ const Requestcompany = ({ showRequestAddModal, handleCloseRequestAddModal, handl
         setShowCompanyDetailsModal(false);
       };
     
-      const handleAcceptCompany = () => {
-        // Implement accept customer logic here
+      const handleAcceptCompany = async() => {
+        console.log('accept clicked');
+        try {
+          const response = await axios.post('http://localhost:8080/backend/api/Admin/Addcompany.php', selectedCompany);
+          const data = response.data;
+          console.log('data : ', data);
+          if (data.success) {
+            alert("Company added successfully");
+            // Optionally refetch the customer list or update state to remove the accepted customer from the UI
+            fetchCompanyRequestData();
+          } else {
+            alert("Errorc adding customer");
+            console.error(data.message);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert("There was an error!");
+        }
         setShowCompanyDetailsModal(false);
       };
     
