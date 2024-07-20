@@ -62,11 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $district = htmlspecialchars($customer['district']);
         }
 
-        if (empty($customer['customerShopReferenceNo'])) {
-            $errors[] = "Reference number is required";
-        } else {
-            $refno = htmlspecialchars($customer['customerShopReferenceNo']);
-        }
+        // if (empty($customer['customerShopReferenceNo'])) {
+        //     $errors[] = "Reference number is required";
+        // } else {
+        //     $refno = htmlspecialchars($customer['customerShopReferenceNo']);
+        // }
 
         if (!empty($errors)) {
             echo json_encode(['success' => false, 'message' => 'Validation errors', 'errors' => $errors]);
@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Generate a Unique Customer ID
         $ID = uniqid("CUST", true);
 
+$refno='4545';
         // Generate a random password
         $PW = bin2hex(random_bytes(4));
 
@@ -99,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($r) {
                 // Remove from request table
-                $sqlDelete = "DELETE FROM request WHERE customerID = ?";
+                $sqlDelete = "DELETE FROM registration_requests WHERE id = ?";
                 $pstmtDelete = $conn->prepare($sqlDelete);
                 $pstmtDelete->bindParam(1, $customer['id']);
                 $pstmtDelete->execute();
@@ -121,4 +122,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
-?>
+
