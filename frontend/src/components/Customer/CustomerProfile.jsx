@@ -4,31 +4,34 @@ import { FaCircleUser } from "react-icons/fa6";
 import { useOutletContext } from 'react-router-dom';
 
 function CustomerProfile() {
-  const {user} =useOutletContext();
+  const { user } = useOutletContext();
   const [image, setImage] = useState(null);
+  const imagepath = user.image;
   const [edit, setEdit] = useState(false);
-  const [email,setEmail] = useState();
-  const [number, setNumber]=useState();
-  const [address,setAddress]=useState();
-  
+  const [email, setEmail] = useState();
+  const [number, setNumber] = useState();
+  const [address, setAddress] = useState();
+
   const hiddenFileInput = useRef(null);
   const [selectedDistrict, setSelectedDistrict] = useState("1"); // Add state for selected district
 
-  useEffect(()=>{
-    if(!email){
+  useEffect(() => {
+    if (!email) {
       setEmail(user.email);
     }
-    if(!number){
+    if (!number) {
       setNumber(user.customerContactNumber);
     }
-    if(!address){
+    if (!address) {
       setAddress(user.customerAddress);
     }
-    const user_id =user.ID;
-  },[edit])
-useEffect(()=>{
-  console.log('user values : ',user);
-},[user])
+    const user_id = user.ID;
+
+  }, [edit])
+  useEffect(() => {
+    console.log('user values : ', user);
+    console.log('path is ', imagepath);
+  }, [user])
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -65,88 +68,101 @@ useEffect(()=>{
       };
     };
   };
-const handleSubmit= async (e)=>{
-      const response = await axios.put('http://localhost:8080/backend/api/customer',{user_idemail,address,number})
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user_id = user.customerID;
+    try {
+      const response = await axios.post('http://localhost:8080/backend/api/customer/update_profile.php', { email, address, number, image, user_id }, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Profile updated successfully', response.data);
+      setEdit(false); // exit edit mode on successful update
+    } catch (error) {
+      console.error('There was an error updating the profile!', error);
+    }
+  };
 
-};
-
-  const handleClick = (event) => {
+  const handleClick = () => {
     hiddenFileInput.current.click();
   };
-
-  const handleDistrictChange = (event) => {
-    setSelectedDistrict(event.target.value);
-  };
-
   return (
     <>
       <div className={``} >
-      {!edit && ( <div id='myDiv' className=' d-flex py-4 w-100 flex-column justify-content-center'>
+        {!edit && (<div id='myDiv' className=' d-flex py-4 w-100 flex-column justify-content-center'>
           <div className=' d-flex py-4 w-100 xs-flex-column justify-content-center m-auto'>
-          <div className='justify-content-center d-flex w-25 m-auto align-items-center '>
-            {image ? (
-              <img src={URL.createObjectURL(image)} alt="upload image" className="w-75 h-100 rounded-circle align-items-center justify-content-center" />
-            ) : (
-              //  <img src="./../../../public/Elitez.png" alt="upload image" className="w-64 h-64 rounded-circle" />
-              <FaCircleUser className="w-64 h-64 rounded-circle bg-white " />
-            )}
+            <div className='justify-content-center d-flex w-30  align-items-start ms-5'>
+              {image ? (
+                <img src={URL.createObjectURL(image)} alt="upload image" className="w-75 rounded-circle align-items-center justify-content-center" />
+              ) : (
+                imagepath ? (
+                  <img src={imagepath} alt=" image" className="w-100 rounded-circle align-items-start d-flex " />
+                ) : (
+                  <FaCircleUser className="w-64 h-64 rounded-circle bg-white " />
+                ) 
+              )}
 
-            
+
+
+            </div>
+            <div className='md-w-75 sm-w-100 xs-w-100 d-flex m-auto flex-column justify-content-center fs-5 p-4'>
+              <div className='w-100 d-flex mb-1 justify-content-center'>
+                <div className='md-w-25 sm-w-50 xs-w-50'>Name </div>:
+                <div className='w-50 ps-2'>{user.customerName} </div>
+              </div>
+              <div className='w-100 d-flex mb-1 justify-content-center'>
+                <div className='md-w-25 sm-w-50 xs-w-50'>Shop Name</div>:
+                <div className='w-50 ps-2'>{user.customerShopName}</div>
+              </div>
+              <div className='w-100 d-flex mb-1 justify-content-center'>
+                <div className='md-w-25 sm-w-50 xs-w-50'>Email Address</div>:
+                <div className='w-50 ps-2'>{user.email}</div>
+              </div>
+              <div className='w-100 d-flex mb-1 justify-content-center'>
+                <div className='md-w-25 sm-w-50 xs-w-50'>Mobile Number</div>:
+                <div className='w-50 ps-2'>{user.customerContactNumber}</div>
+              </div>
+              <div className='w-100 d-flex mb-1 justify-content-center'>
+                <div className='md-w-25 sm-w-50 xs-w-50'>District</div>:
+                <div className='w-50 ps-2'>{user.customerDistrict}</div>
+              </div>
+              <div className='w-100 d-flex mb-1 justify-content-center'>
+                <div className='md-w-25 sm-w-50 xs-w-50'>Address</div>:
+                <div className='w-50 ps-2'>{user.customerAddress}</div>
+              </div>
+              <div className='w-100 d-flex mb-1 justify-content-center'>
+                <div className='md-w-25 sm-w-50 xs-w-50'>Reference No</div>:
+                <div className='w-50 ps-2'>{user.customerShopReferenceNo}</div>
+              </div>
+              <div className='d-flex mt-5 justify-content-center'>
+                <button className='btn btn-secondary w-25' onClick={() => setEdit(true)}>Edit</button>
+              </div>
+            </div>
           </div>
-          <div className='md-w-75 sm-w-100 xs-w-100 d-flex m-auto flex-column justify-content-center fs-5 p-4'>
-            <div className='w-100 d-flex mb-1 justify-content-center'>
-              <div className='md-w-25 sm-w-50 xs-w-50'>Name </div>: 
-              <div className='w-50 ps-2'>{user.customerName} </div>
-            </div>
-            <div className='w-100 d-flex mb-1 justify-content-center'>
-              <div className='md-w-25 sm-w-50 xs-w-50'>Shop Name</div>: 
-              <div className='w-50 ps-2'>{user.customerShopName}</div>
-            </div>
-            <div className='w-100 d-flex mb-1 justify-content-center'>
-              <div className='md-w-25 sm-w-50 xs-w-50'>Email Address</div>: 
-              <div className='w-50 ps-2'>{user.email}</div>
-            </div>
-            <div className='w-100 d-flex mb-1 justify-content-center'>
-              <div className='md-w-25 sm-w-50 xs-w-50'>Mobile Number</div>: 
-              <div className='w-50 ps-2'>{user.customerContactNumber}</div>
-            </div>
-            <div className='w-100 d-flex mb-1 justify-content-center'>
-              <div className='md-w-25 sm-w-50 xs-w-50'>District</div>: 
-              <div className='w-50 ps-2'>{user.customerDistrict}</div>
-            </div>
-            <div className='w-100 d-flex mb-1 justify-content-center'>
-              <div className='md-w-25 sm-w-50 xs-w-50'>Address</div>: 
-              <div className='w-50 ps-2'>{user.customerAddress}</div>
-            </div>
-            <div className='w-100 d-flex mb-1 justify-content-center'>
-              <div className='md-w-25 sm-w-50 xs-w-50'>Reference No</div>: 
-              <div className='w-50 ps-2'>{user.customerShopReferenceNo}</div>
-            </div>
-            <div className='d-flex mt-5 justify-content-center'>
-            <button className='btn btn-secondary w-25' onClick={()=>setEdit(true)}>Edit</button>
-          </div>
-          </div>
-          </div>
-          
-            
-        </div>)} 
+
+
+        </div>)}
         {edit && (
           <div className=' flex-grow-1 '>
             <div className='d-flex xs-flex-column'>
               <div className='pt-5 d-felx justify-content-center w-50'>
-                {image ? (
-                  <img src={URL.createObjectURL(image)} alt="upload image" className="w-75  rounded-circle align-items-center justify-content-center d-flex m-auto" />
+              {image ? (
+                <img src={URL.createObjectURL(image)} alt="upload image" className="w-75 d-flex m-auto rounded-circle align-items-center justify-content-center" />
+              ) : (
+                imagepath ? (
+                  <img src={imagepath} alt=" image" className="w-75 mb-3 rounded-circle align-items-start d-flex " />
                 ) : (
-                  <FaCircleUser className="w-75 h-50 m-auto rounded-circle bg-white justify-content-center d-flex" />
-
-                )}
+                  <FaCircleUser className="w-64 h-64 rounded-circle bg-white " />
+                ) 
+              )}
                 <input
-              id="image-upload-input"
-              type="file"
-              onChange={handleImageChange}
-              ref={hiddenFileInput}
-              style={{ display: "none" }}
-            />
+                  id="image-upload-input"
+                  type="file"
+                  onChange={handleImageChange}
+                  ref={hiddenFileInput}
+                  style={{ display: "none" }}
+                />
                 <div className=" d-flex justify-content-center">
                   <div className="d-flex row">
                     {/* <button
@@ -168,15 +184,15 @@ const handleSubmit= async (e)=>{
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputLastName" className="form-label">Shop Name</label>
-                    <input type="text" className="form-control" id="fname " disabled value={user.customerShopName}/>
+                    <input type="text" className="form-control" id="fname " disabled value={user.customerShopName} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputEmail1" className="form-label" >Email address</label>
-                    <input type="email" className="form-control" id="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                    <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputMobile" className="form-label">Mobile Number</label>
-                    <input type="number" className="form-control" id="mobile" value={number} onChange={(e)=>setNumber(e.target.value)} />
+                    <input type="number" className="form-control" id="mobile" value={number} onChange={(e) => setNumber(e.target.value)} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputDistrict" className="form-label" >District</label>
@@ -190,13 +206,13 @@ const handleSubmit= async (e)=>{
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputAddress" className="form-label" >Address</label>
-                    <input type="text" className="form-control" id="address" value={address} onChange={(e)=>setAddress(e.target.value)}/>
+                    <input type="text" className="form-control" id="address" value={address} onChange={(e) => setAddress(e.target.value)} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputRefNo" className="form-label">Reffrence No</label>
                     <input type="text" className="form-control" id="refno" disabled value={user.customerShopReferenceNo} />
                   </div>
-                  <button type="submit" className=" save w-50 m-auto justify-content-center d-flex align-items-center fs-4" onClick={handleUploadButtonClick}>Save</button>
+                  <button type="submit" className=" save w-50 m-auto justify-content-center d-flex align-items-center fs-4" onClick={handleSubmit}>Save</button>
                 </form>
               </div>
             </div>
