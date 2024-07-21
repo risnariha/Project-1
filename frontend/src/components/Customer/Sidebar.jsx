@@ -5,9 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle }) => {
-    const [user , setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
-    const [error , setError] = useState(null);
+export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error}) => {
+    // const [user , setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
+    // const [error , setError] = useState(null);
     const [scrolled, setScrolled] = useState(false);
     const [scrollDirection, setScrollDirection] = useState(null);
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
@@ -40,30 +40,11 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle }) => {
         };
     }, [prevScrollPos]);
 
-    useEffect(() =>{
-        if(!user){
-            handleLogout();
-        }else{
-            const getUserDetails = async ()=>{
-                try{
-                    const email = user['email'];
-                    const userType = 'customers';
-                    const response = await axios.post('http://localhost:8080/backend/api/Home/getUserDetails.php', { email,userType });
-                    setUser(response.data);
-                    console.log('data successfuly fetched' , response.data);
-                    }catch (error){
-                        setError(error);
-                        console.error('Error fetching detail : ' ,error);
-                    }
-                };
-                getUserDetails();
-            }
-        },[]);
-    
     const handleLogout = () => {
         sessionStorage.clear();
         navigate('/');
     };
+
 
     if(error){
         return <div> Error : {error.message} </div>;
@@ -104,7 +85,7 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle }) => {
                         </Link>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <Link to="/customer/profile" className='text-decoration-none text-white fs-5 px-2'>
+                        <Link to="" className='text-decoration-none text-white fs-5 px-2' onClick={handleLogout}>
                             <FaUser className='w-6 h-6 mx-3 pb-1' />Logout
                         </Link>
                     </li>
