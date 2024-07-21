@@ -65,7 +65,7 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error}) 
                 
                 <ul className='h-100vh pt-2 bg-color text-white list-unstyled fw-bold  '>
                     <li className='mb-2  hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <Link to={""} className='text-decoration-none text-white fs-5 px-2'>
+                        <Link to={"/customer/dash"} className='text-decoration-none text-white fs-5 px-2'>
                             <FaHome className='w-6 h-6 mx-3 pb-1' />Dashboard
                         </Link>
                     </li>
