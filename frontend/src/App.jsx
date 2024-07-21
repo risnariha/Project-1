@@ -36,6 +36,7 @@ import CompanyLayout from './components/Company/CompanyLayout';
 import CustomerLayout from './components/Customer/CustomerLayout';
 import { Faqs } from './components/Home/Faqs';
 import Register from './components/Home/Register';
+import Footer from './components/Home/Footer';
 
 function App() {
 
@@ -79,7 +80,7 @@ function App() {
               <Route exact path="reviewlayout/:product_id" element={<ReviewLayout />} />
             </Route>
         </Routes>
-
+          <Footer/>
       </Router>
       {/* <Sidebar
           sidebarToggle={sidebarToggle}
