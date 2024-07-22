@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState,useEffect } from 'react'
+import {Link} from 'react-router-dom';
 
 function CartItems(){
     const [Items, setItems]=useState([]);
@@ -18,11 +19,11 @@ function CartItems(){
     return(
 
         <div className="card">
-            <div classname="card-header"> 
+            <div className="card-header"> 
                 <div className="row">
-                    <div classname="col-md-6"><b>CART ITEMS</b></div>
-                     <div classname="col-md-6">
-                                     <Link to=
+                    <div className="col-md-6"><b>CART ITEMS</b></div>
+                     <div className="col-md-6">
+                                     <Link to="/PlaceOrder" className="btn btn-success btn-sm float-end">Place Order</Link>
                      </div>
                 </div>
             </div>
@@ -34,6 +35,7 @@ function CartItems(){
                             <th> Price per Product</th>
                             <th> Quantity</th>
                              <th> Total Price</th>
+                             
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +55,8 @@ function CartItems(){
             </div>
 
         </div>
+
+      
     )
 
 

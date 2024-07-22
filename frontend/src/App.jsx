@@ -35,7 +35,7 @@ import AdminLayout from './components/Admin/AdminLayout';
 import CompanyLayout from './components/Company/CompanyLayout';
 import CustomerLayout from './components/Customer/CustomerLayout';
 import CartItems from './components/Customer/CartItems';
-import PlaceOrder from '';
+import PlaceOrder from './components/Customer/PlaceOrder';
 import { Faqs } from './components/Home/Faqs';
 import Register from './components/Home/Register';
 
@@ -63,6 +63,7 @@ function App() {
             <Route path="/customer" element={<CustomerLayout />}>
               <Route path="dash" element={<ProuductList />} />
               <Route path="CartItems" element={<CartItems />} />
+              <Route path="PlaceOrder" element={<PlaceOrder/>}/>
               <Route path="profile" element={<CustomerProfile />} />
               <Route path="productDetail" element={<ProductDetail/>} />
               
