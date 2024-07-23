@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
-import Requestcustomer from './Requestcustomer';
+import Requestcompany from './Requestcompany';
 
-function Customerdetails() {
-  const [customers, setCustomers] = useState([]);
+function Companydetails() {
+  const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showRequestAddModal, setShowRequestAddModal] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedCompany, setSelectedCompany] = useState(null);
 
-  const handleShowViewModal = (customer) => {
-    setSelectedCustomer(customer);
+  const handleShowViewModal = (company) => {
+    setSelectedCompany(company);
     setShowViewModal(true);
   };
 
@@ -26,13 +26,13 @@ function Customerdetails() {
   };
 
 
-  const fetchCustomerData = async () => {
+  const fetchCompany = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/backend/api/Admin/Listcustomer.php');
+      const response = await fetch('http://localhost:8080/backend/api/Admin/Listcompany.php');
       const jsonData = await response.json();
       if (jsonData.success) {
-        setCustomers(jsonData.data);
+        setCompany(jsonData.data);
       } else {
         setError(jsonData.message);
       }
@@ -44,7 +44,7 @@ function Customerdetails() {
   };
 
   useEffect(() => {
-    fetchCustomerData();
+    fetchCompany();
   }, []);
 
   if (loading) return <div>Loading...</div>;
@@ -59,9 +59,9 @@ function Customerdetails() {
                 <form className="d-flex" role="search">
                     <input className="form-control" placeholder="Search" aria-label="Search"/>
                 </form>
-                <h1 className='h4 text-center'>Customers Details</h1>
+                <h1 className='h4 text-center'>Company Details</h1>
                 <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
-                    Customer Request
+                    Company Request
                 </button>
               
             </div>
@@ -70,26 +70,25 @@ function Customerdetails() {
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
                     <tr style={{fontSize:'145%'}}>
-                      <th>Customer Name</th>
-                      <th>Shop Name</th>
+                      <th>Company Name</th>
+                      <th>Company Owner Name</th>
                       <th>Email</th>
                       <th>Mobile</th>
-                      <th>Option</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
           
-                    {customers.map((customer) => (
-                      <tr key={customer.customerID} style={{fontSize:'145%'}}>
-                        <td>{customer.customerName}</td>
-                        <td>{customer.customerShopName}</td>
-                        <td>{customer.email}</td>
-                        <td>{customer.customerContactNumber}</td>
+                    {company.map((company) => (
+                      <tr key={company.companyOwnerID} style={{fontSize:'145%'}}>
+                        <td>{company.companyName}</td>
+                        <td>{company.companyOwnerName}</td>
+                        <td>{company.email}</td>
+                        <td>{company.companyContactNumber}</td>
                         
                         <td className='d-flex justify-content-center'>
-                          <button className="btn btn-primary me-1" onClick={() => handleShowViewModal(customer)}>View</button>
-                          <button className="btn btn-success me-1">Edit</button>
-                          <button className="btn btn-danger me-1 ">Delete</button>
+                          <button className="btn btn-primary me-1" onClick={() => handleShowViewModal(company)}>View Products</button>
+                          
                         </td>
                       </tr>
                     ))}
@@ -101,7 +100,7 @@ function Customerdetails() {
         </div>
       </div>
 
-      {selectedCustomer && (
+     {/* {selectedCustomer && (
         <Modal show={showViewModal} onHide={handleCloseViewModal}>
           <Modal.Header closeButton>
             <Modal.Title>View Customer</Modal.Title>
@@ -121,8 +120,8 @@ function Customerdetails() {
             <Button variant="secondary" onClick={handleCloseViewModal}>Close</Button>
           </Modal.Footer>
         </Modal>
-      )}
-      <Requestcustomer
+      )}*/}
+      <Requestcompany
         showRequestAddModal={showRequestAddModal}
         handleCloseRequestAddModal={handleCloseRequestAddModal}
         handleShowViewModal={handleShowViewModal}
@@ -131,4 +130,4 @@ function Customerdetails() {
   );
 }
 
-export default Customerdetails;
+export default Companydetails;

@@ -9,7 +9,6 @@ import CustomerProfile from './components/Customer/CustomerProfile';
 
 import ProuductList from './components/Customer/ProuductList';
 import ProductDetail from './components/Customer/ProductDetail';
-import { useState } from 'react';
 
 // import { BrowserRouter as Router,Routes, Route} from 'react-router-dom'; // Ensure Router is imported
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,7 +24,8 @@ import ReviewLayout from './components/Company/review/ReviewLayout';
 import Dash from './components/Admin/Dash';
 import AdminOrder from './components/Admin/Order';
 import Customerdetails from './components/Admin/Customerdetails';
-import Customerregister from './components/Admin/Customerregister';
+import Companydetails from './components/Admin/Companydetails';
+
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import Companyregister from './components/Admin/Companyregister';
@@ -38,6 +38,7 @@ import CartItems from './components/Customer/CartItems';
 import PlaceOrder from './components/Customer/PlaceOrder';
 import { Faqs } from './components/Home/Faqs';
 import Register from './components/Home/Register';
+import Footer from './components/Home/Footer';
 
 function App() {
 
@@ -48,6 +49,8 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          {/*<Route path='/Aboutus' element={<Aboutus />} />
+          <Route path="/Contactus" element={<Contactus />} />*/}
           {/* home */}
             <Route path='/' element={<Home />} />
             <Route path="/Login" element={<Login />} />
@@ -57,6 +60,7 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dash" element={<Dash />} />
               <Route path="Customerdetails" element={<Customerdetails />} />
+              <Route path="Companydetails" element={<Companydetails />} />
               <Route path='Order' element={<AdminOrder />} />
             </Route>
           {/* customer */}
@@ -81,7 +85,7 @@ function App() {
               <Route exact path="reviewlayout/:product_id" element={<ReviewLayout />} />
             </Route>
         </Routes>
-
+          <Footer/>
       </Router>
       {/* <Sidebar
           sidebarToggle={sidebarToggle}

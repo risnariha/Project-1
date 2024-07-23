@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { FaRegTimesCircle } from "react-icons/fa";
+import { BiImageAdd } from "react-icons/bi";
 
 function AddProduct() {
+
     const [productName, setProductName] = useState('');
     const [productPrice, setProductPrice] = useState('');
-    const [productImage, setProductImage] = useState(null);
+    const [image, setImage] = useState(null);
     const [quantity, setQuantity] = useState('');
     const [productCategory, setProductCategory] = useState('');
     const [netWeight, setNetWeight] = useState('');
@@ -20,6 +22,41 @@ function AddProduct() {
     const fileInputRef = useRef(null);
 
     // const companyName = localStorage.getItem('companyName'); // Retrieve company name from local storage
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const imgname = event.target.files[0].name;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          const img = new Image();
+          img.src = reader.result;
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const maxSize = Math.max(img.width, img.height);
+            canvas.width = maxSize;
+            canvas.height = maxSize;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(
+              img,
+              (maxSize - img.width) / 2,
+              (maxSize - img.height) / 2
+            );
+            canvas.toBlob(
+              (blob) => {
+                const file = new File([blob], imgname, {
+                  type: "image/png",
+                  lastModified: Date.now(),
+                });
+    
+                console.log(file);
+                setImage(file);
+              },
+              "image/jpeg",
+              0.8
+            );
+          };
+        };
+      };
 
     useEffect(() => {
         if (productName.trim()) {
@@ -34,10 +71,10 @@ function AddProduct() {
     }, [productPrice]);
 
     useEffect(() => {
-        if (productImage) {
+        if (image) {
             setProductImageError('');
         }
-    }, [productImage]);
+    }, [image]);
 
     useEffect(() => {
         if (quantity.trim()) {
@@ -102,7 +139,7 @@ function AddProduct() {
         // formData.append('company_name', companyName); // Add company name to form data
         formData.append('product_name', productName);
         formData.append('product_price', productPrice);
-        formData.append('product_image', productImage);
+        formData.append('product_image', image);
         formData.append('quantity', quantity);
         formData.append('product_category', productCategory);
         formData.append('net_weight', netWeight);
@@ -152,6 +189,15 @@ function AddProduct() {
             )}
             <h3 className="heading">Add Products</h3>
             <form onSubmit={handleSubmit} className="add_product justify-content-center">
+            <div className='d-flex justify-content-center w-32 h-32 m-auto bg-dark p-1 rounded'>
+            {image ? (
+                
+              <img src={URL.createObjectURL(image)} alt="upload image" className="w-100 h-100  rounded align-items-center justify-content-center" />
+            ) : (
+              //  <img src="./../../../public/Elitez.png" alt="upload image" className="w-64 h-64 rounded-circle" />
+              < BiImageAdd className="w-100 h-100 ps-2 rounded bg-white " />
+            )}
+            </div>
                 <div className="form-group">
                     <input
                         type="text"
@@ -222,7 +268,7 @@ function AddProduct() {
                         type="file"
                         className="input_fields form-control"
                         ref={fileInputRef}
-                        onChange={(e) => setProductImage(e.target.files[0])}
+                        onChange={(e) => setImage(e.target.files[0])}
                     />
                     {productImageError && <div className="error_message">{productImageError}</div>}
                 </div>

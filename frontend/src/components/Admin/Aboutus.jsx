@@ -26,7 +26,7 @@ function Aboutus() {
           </div>
           <div className="col-lg-7 col-md-6">
             <div className="img_1 mt-3">
-              <img src="public/login1.jpg" width="120%" alt="image" />
+              <img src="public/login1.jpg"  alt="image" style={{ width: '110%' }}/>
             </div>
           </div>
         </div>

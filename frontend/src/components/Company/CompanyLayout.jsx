@@ -43,7 +43,7 @@ const CompanyLayout = () => {
 }
 
   return (
- <div className='d-flex flex-column'>
+ <div className='d-flex flex-column min-height-100vh'>
       <CompanySidebar sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
         user={user} error={error}

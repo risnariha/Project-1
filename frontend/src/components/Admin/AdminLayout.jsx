@@ -28,7 +28,7 @@ const AdminLayout = () => {
     }
 
     return (
-    <div className='d-flex flex-column'>
+    <div className='d-flex flex-column min-height-100vh'>
             <AdminSidebar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} user={user}/>
             <div className={`${sidebarToggle?"ml-25":"w-full"}`}>
                 <Outlet  context={{ sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }} />

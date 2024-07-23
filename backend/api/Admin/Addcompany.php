@@ -19,53 +19,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $input = file_get_contents('php://input');
-    $customer = json_decode($input, true);
+    $company = json_decode($input, true);
 
-    if ($customer) {
+    if ($company) {
         $errors = [];
 
-        $sanitizedemail = filter_var($customer['email'], FILTER_SANITIZE_EMAIL);
-        $Validatedemail = filter_var($customer['email'], FILTER_VALIDATE_EMAIL);
+        $sanitizedemail = filter_var($company['email'], FILTER_SANITIZE_EMAIL);
+        $Validatedemail = filter_var($company['email'], FILTER_VALIDATE_EMAIL);
         if ($Validatedemail) {
             $email = $Validatedemail;
         } else {
             $errors[] = "Invalid Email";
         }
 
-        if (empty($customer['username'])) {
-            $errors[] = "Customer name is required";
+        if (empty($company['username'])) {
+            $errors[] = "company name is required";
         } else {
-            $fname = htmlspecialchars($customer['username']);
+            $fname = htmlspecialchars($company['username']);
         }
 
-        if (empty($customer['businessName'])) {
+        if (empty($company['businessName'])) {
             $errors[] = "Shop name is required";
         } else {
-            $shopname = htmlspecialchars($customer['businessName']);
+            $shopname = htmlspecialchars($company['businessName']);
         }
 
-        if (!isset($customer['contactNumber']) || !preg_match("/^\d{10}$/", $customer['contactNumber'])) {
+        if (!isset($company['contactNumber']) || !preg_match("/^\d{10}$/", $company['contactNumber'])) {
             $errors[] = "Invalid Contact Number";
         } else {
-            $contact = $customer['contactNumber'];
+            $contact = $company['contactNumber'];
         }
 
-        if (empty($customer['address'])) {
+        if (empty($company['address'])) {
             $errors[] = "Address is required";
         } else {
-            $address = htmlspecialchars($customer['address']);
+            $address = htmlspecialchars($company['address']);
         }
 
-        if (empty($customer['district'])) {
+        if (empty($company['district'])) {
             $errors[] = "District is required";
         } else {
-            $district = htmlspecialchars($customer['district']);
+            $district = htmlspecialchars($company['district']);
         }
 
-        // if (empty($customer['customerShopReferenceNo'])) {
+        // if (empty($company['companyShopReferenceNo'])) {
         //     $errors[] = "Reference number is required";
         // } else {
-        //     $refno = htmlspecialchars($customer['customerShopReferenceNo']);
+        //     $refno = htmlspecialchars($company['companyShopReferenceNo']);
         // }
 
         if (!empty($errors)) {
@@ -73,8 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        // Generate a Unique Customer ID
-        $ID = uniqid("CUST", true);
+        // Generate a Unique company ID
+           // Generate company ID
+
 
 $refno='4545';
         // Generate a random password
@@ -83,18 +84,28 @@ $refno='4545';
         try {
             $conn->beginTransaction();
 
-            // Insert into customers table
-            $sql = "INSERT INTO customers (customerID, customerName, email, password, customerContactNumber, customerShopName, customerAddress, customerDistrict, customerShopReferenceNo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            // Insert into companys table
+            $sql = "INSERT INTO companyowners 
+                               (companyOwnerName, 
+                                email, 
+                                password, 
+                                companyContactNumber, 
+                                companyName, 
+                                companyAddress, 
+                                district)
+                                 VALUES (?, ?, ?, ?, ?, ?, ?)";
             $pstmt = $conn->prepare($sql);
-            $pstmt->bindParam(1, $ID);
-            $pstmt->bindParam(2, $fname);
-            $pstmt->bindParam(3, $email);
-            $pstmt->bindParam(4, $PW);
-            $pstmt->bindParam(5, $contact);
-            $pstmt->bindParam(6, $shopname);
-            $pstmt->bindParam(7, $address);
-            $pstmt->bindParam(8, $district);
-            $pstmt->bindParam(9, $refno);
+            // $pstmt->bindParam(1, $ID);
+            $pstmt->bindParam(1, $fname);
+            $pstmt->bindParam(2, $email);
+            $pstmt->bindParam(3, $PW);
+            $pstmt->bindParam(4, $contact);
+            $pstmt->bindParam(5, $shopname);
+            $pstmt->bindParam(6, $address);
+            $pstmt->bindParam(7, $district);
+           
+
+
 
             $r = $pstmt->execute();
 
@@ -102,11 +113,11 @@ $refno='4545';
                 // Remove from request table
                 $sqlDelete = "DELETE FROM registration_requests WHERE id = ?";
                 $pstmtDelete = $conn->prepare($sqlDelete);
-                $pstmtDelete->bindParam(1, $customer['id']);
+                $pstmtDelete->bindParam(1, $company['id']);
                 $pstmtDelete->execute();
 
                 $conn->commit();
-                echo json_encode(['success' => true, 'message' => 'Customer added successfully']);
+                echo json_encode(['success' => true, 'message' => 'company added successfully']);
             } else {
                 $conn->rollBack();
                 $errorInfo = $pstmt->errorInfo();
