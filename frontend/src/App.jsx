@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // En
 import Header from './components/Home/Header'
 // import { Sidebar } from './components/Customer/Sidebar'
 import CustomerProfile from './components/Customer/CustomerProfile';
-import { CartDetails } from './components/Customer/CartDetails';
+
 import ProuductList from './components/Customer/ProuductList';
 import ProductDetail from './components/Customer/ProductDetail';
 import { useState } from 'react';
