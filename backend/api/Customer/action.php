@@ -4,7 +4,7 @@ header ("Access-Control-Allow-Origin:* ");
 header("Allow-Control-Allow-Headers:* ");
 header("Allow-Conrol-Allow-Methods");
 
-//Ris/cart
+//Ris/
 
 $servername = "localhost"; 
     $username = "root"; 
