@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // En
 import Header from './components/Home/Header'
 // import { Sidebar } from './components/Customer/Sidebar'
 import CustomerProfile from './components/Customer/CustomerProfile';
-import { CartDetails } from './components/Customer/CartDetails';
+
 import ProuductList from './components/Customer/ProuductList';
 import ProductDetail from './components/Customer/ProductDetail';
 
@@ -34,6 +34,8 @@ import { Login } from './components/Home/Login';
 import AdminLayout from './components/Admin/AdminLayout';
 import CompanyLayout from './components/Company/CompanyLayout';
 import CustomerLayout from './components/Customer/CustomerLayout';
+import CartItems from './components/Customer/CartItems';
+import PlaceOrder from './components/Customer/PlaceOrder';
 import { Faqs } from './components/Home/Faqs';
 import Register from './components/Home/Register';
 import Footer from './components/Home/Footer';
@@ -64,9 +66,12 @@ function App() {
           {/* customer */}
             <Route path="/customer" element={<CustomerLayout />}>
               <Route path="dash" element={<ProuductList />} />
-              <Route path="cart" element={<CartDetails />} />
+              <Route path="CartItems" element={<CartItems />} />
+              <Route path="PlaceOrder" element={<PlaceOrder/>}/>
               <Route path="profile" element={<CustomerProfile />} />
               <Route path="productDetail" element={<ProductDetail/>} />
+              
+              
             </Route>
           {/* company */}
             <Route path="/company/*" element={<CompanyLayout />} >
