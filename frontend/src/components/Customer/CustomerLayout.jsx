@@ -16,7 +16,9 @@ const CustomerLayout = () => {
             const userType = storeduser.userType;
             console.log('before user values:', storeduser);
             if (userType === 'customer') {
-                setUser(storeduser);
+                if (user === null) {
+                    setUser(storeduser);
+                }
                 const getUserDetails = async () => {
                     try {
                         const email = storeduser.email;
@@ -46,11 +48,11 @@ const CustomerLayout = () => {
             <CustomerSidebar
                 sidebarToggle={sidebarToggle}
                 setSidebarToggle={setSidebarToggle}
-                user= {user} error={error}
+                user={user} error={error}
             />
             <div className={`${sidebarToggle ? "ml-25" : "w-full"}`}>
                 <Outlet
-                    context={{user:user, sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }}
+                    context={{ user: user, sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }}
                 />
             </div>
 

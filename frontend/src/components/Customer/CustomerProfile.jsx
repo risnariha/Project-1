@@ -77,8 +77,11 @@ function CustomerProfile() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Profile updated successfully', response.data);
-      setEdit(false); // exit edit mode on successful update
+      if(response.data){
+        console.log('Profile updated successfully');
+        setEdit(false);
+      }
+      // exit edit mode on successful update
     } catch (error) {
       console.error('There was an error updating the profile!', error);
     }

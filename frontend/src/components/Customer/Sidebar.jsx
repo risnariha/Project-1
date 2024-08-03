@@ -70,7 +70,7 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error}) 
                         </Link>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <Link to={"/customer/productDetail"} className='text-decoration-none text-white fs-5 px-2'>
+                        <Link to={"/customer/CartItems"} className='text-decoration-none text-white fs-5 px-2'>
                             <FaShoppingCart className='w-6 h-6 mx-3 pb-1' />Card
                         </Link>
                     </li>
