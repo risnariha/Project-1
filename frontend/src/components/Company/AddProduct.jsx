@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { FaRegTimesCircle } from "react-icons/fa";
 import { BiImageAdd } from "react-icons/bi";
+import { useOutletContext } from 'react-router-dom';
 
 function AddProduct() {
-
+    const { user } = useOutletContext();
     const [productName, setProductName] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [image, setImage] = useState(null);
@@ -21,7 +22,6 @@ function AddProduct() {
     const [isMessageVisible, setIsMessageVisible] = useState(false);
     const fileInputRef = useRef(null);
 
-    // const companyName = localStorage.getItem('companyName'); // Retrieve company name from local storage
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         const imgname = event.target.files[0].name;
@@ -112,7 +112,7 @@ function AddProduct() {
         } else if (!productPrice.trim()) {
             setProductPriceError('Product price is required');
             formValid = false;
-        } else if (!productImage) {
+        } else if (!image) {
             setProductImageError('Product image is required');
             formValid = false;
         } else if (!quantity.trim()) {
@@ -136,7 +136,7 @@ function AddProduct() {
         }
 
         const formData = new FormData();
-        // formData.append('company_name', companyName); // Add company name to form data
+        formData.append('companyOwnerID', user.companyOwnerID); // Add company owner ID to form data
         formData.append('product_name', productName);
         formData.append('product_price', productPrice);
         formData.append('product_image', image);
@@ -145,7 +145,7 @@ function AddProduct() {
         formData.append('net_weight', netWeight);
 
         try {
-            const response = await axios.post('http://localhost/Project-1/backend/api/Company/add_product.php', formData, {
+            const response = await axios.post('http://localhost:8080/backend/api/Company/add_product.php', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -155,7 +155,7 @@ function AddProduct() {
             setIsMessageVisible(true);
             setProductName('');
             setProductPrice('');
-            setProductImage(null);
+            setImage(null);
             setQuantity('');
             setProductCategory('');
             setNetWeight('');
@@ -180,7 +180,7 @@ function AddProduct() {
     };
 
     return (
-        <div className="maincontainer rounded mt-5 w-75 " >
+        <div className="maincontainer rounded mt-5 w-75">
             {isMessageVisible && message && (
                 <div className="display_message">
                     {message}
@@ -189,15 +189,13 @@ function AddProduct() {
             )}
             <h3 className="heading">Add Products</h3>
             <form onSubmit={handleSubmit} className="add_product justify-content-center">
-            <div className='d-flex justify-content-center w-32 h-32 m-auto bg-dark p-1 rounded'>
-            {image ? (
-                
-              <img src={URL.createObjectURL(image)} alt="upload image" className="w-100 h-100  rounded align-items-center justify-content-center" />
-            ) : (
-              //  <img src="./../../../public/Elitez.png" alt="upload image" className="w-64 h-64 rounded-circle" />
-              < BiImageAdd className="w-100 h-100 ps-2 rounded bg-white " />
-            )}
-            </div>
+                <div className='d-flex justify-content-center w-32 h-32 m-auto bg-dark p-1 rounded'>
+                    {image ? (
+                        <img src={URL.createObjectURL(image)} alt="upload image" className="w-100 h-100 rounded align-items-center justify-content-center" />
+                    ) : (
+                        <BiImageAdd className="w-100 h-100 ps-2 rounded bg-white" />
+                    )}
+                </div>
                 <div className="form-group">
                     <input
                         type="text"
@@ -209,18 +207,15 @@ function AddProduct() {
                     {productNameError && <div className="error_message">{productNameError}</div>}
                 </div>
                 <div className="form-group">
-                    
                     <input
                         type="number"
                         className="input_fields form-control"
-                        
                         placeholder="Enter product price"
                         value={productPrice}
                         onChange={(e) => setProductPrice(e.target.value)}
                     />
                     {productPriceError && <div className="error_message">{productPriceError}</div>}
                 </div>
-                
                 <div className="form-group">
                     <input
                         type="number"
@@ -268,7 +263,7 @@ function AddProduct() {
                         type="file"
                         className="input_fields form-control"
                         ref={fileInputRef}
-                        onChange={(e) => setImage(e.target.files[0])}
+                        onChange={handleImageChange}
                     />
                     {productImageError && <div className="error_message">{productImageError}</div>}
                 </div>
@@ -280,5 +275,3 @@ function AddProduct() {
 }
 
 export default AddProduct;
-
-
