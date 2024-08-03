@@ -8,13 +8,14 @@ include '../Connection/connection.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     try {
-        $sql = "SELECT COUNT(*) as count FROM order";
+        $sql = "SELECT COUNT(*) as count FROM orders";
         $pstmt = $con->prepare($sql);
         $pstmt->execute();
         $orders = $pstmt->fetch(PDO::FETCH_ASSOC)['count'];
+        echo json_encode(['count'=>$orders]);
         
     } catch (\Throwable $th) {
-        //throw $th;
+        echo json_encode(['error'=>'Something went wrong']);
     }
     
    
