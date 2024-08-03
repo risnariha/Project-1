@@ -24,6 +24,12 @@ require_once '../Connection/connection.php';
 
 // Get the posted data
 $data = json_decode(file_get_contents("php://input"), true);
+
+if (!isset($data['companyOwnerID'])) {
+    echo json_encode(['error' => $data]);
+    exit;
+}
+
 $companyOwnerID = $data['companyOwnerID'];
 
 try {
