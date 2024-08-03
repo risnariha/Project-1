@@ -1,7 +1,13 @@
 import React from 'react'
 import {FaBars} from 'react-icons/fa'
 import { IoLogOut } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 export const CompanyNavbar = ({sidebarToggle,setSidebarToggle,user}) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate('/');
+};
 
   
   return (
@@ -12,7 +18,8 @@ export const CompanyNavbar = ({sidebarToggle,setSidebarToggle,user}) => {
     </div>
     <div className='d-flex align-items-center'>
         
-        <div className='d-flex ms-2 align-items-center cursor-pointer'><IoLogOut style={{height:'20px',width:'20px'}}/><span className='px-1 d-none d-md-block d-flex' >Log Out</span></div>
+        <div className='d-flex ms-2 align-items-center cursor-pointer'onClick={handleLogout}><IoLogOut style={{height:'20px',width:'20px'}}/><span className='px-1 d-none d-md-block d-flex' >Log Out</span></div>
+        
     </div>
   </nav>
   )

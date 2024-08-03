@@ -49,7 +49,7 @@ const CompanyLayout = () => {
         user={user} error={error}
       />
       <div className={`${sidebarToggle ? "ml-25 w-75" : " w-100"} `}>
-        <Outlet context={{ sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }} />
+        <Outlet context={{ user:user,sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }} />
       </div>
     </div>
   )

@@ -21,8 +21,6 @@ header('Content-Type: application/json');
 
 require_once 'connect.php';
 
-$dbcon = new DbConnector();
-$conn = $dbcon->getConnection();
 
 $response = [];
 
