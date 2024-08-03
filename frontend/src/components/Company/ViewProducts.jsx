@@ -174,7 +174,7 @@ const ViewProducts = () => {
               {products.map((product, index) => (
                 <tr key={product.productID}>
                   <td>{index + 1}</td>
-                  <td><img src={product.productImage} alt={product.product_name} /></td>
+                  <td><img src={product.productImage} alt={product.productName} /></td>
                   <td>{product.productName}</td>
                   <td>{product.productPrice}</td>
                   <td>{product.productQuantity}</td>

@@ -4,19 +4,19 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const UpdateProduct = () => {
-  const { product_id } = useParams();
+  const { productID} = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState({
-    product_name: '',
-    product_price: '',
-    product_quantity: '',
-    product_image: '',
+    productName: '',
+    productPrice: '',
+    productQuantity: '',
+    productImage: '',
   });
   const [newImage, setNewImage] = useState(null);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/backend/api/Company/view_product.php?product_id=${product_id}`)
+    axios.get(`http://localhost:8080/backend/api/Company/view_product.php?product_id=${productID}`)
       .then((response) => {
         if (response.data.length > 0) {
           setProduct(response.data[0]);
@@ -25,7 +25,8 @@ const UpdateProduct = () => {
         }
       })
       .catch((error) => console.error('Error fetching product:', error));
-  }, [product_id]);
+  }, [productID]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,18 +40,18 @@ const UpdateProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('update_product_id', product_id);
-    formData.append('update_product_name', product.product_name);
-    formData.append('update_product_price', product.product_price);
-    formData.append('update_product_quantity', product.product_quantity);
+    formData.append('update_product_id', productID);
+    formData.append('update_product_name', product.productName);
+    formData.append('update_product_price', product.productPrice);
+    formData.append('update_product_quantity', product.productQuantity);
     if (newImage) {
       formData.append('update_product_image', newImage);
     } else {
-      formData.append('current_product_image', product.product_image);
+      formData.append('current_product_image', product.productImage);
     }
 
     axios
-      .post('http://localhost/Project-1/backend/api/Company/update_product.php', formData)
+      .post('http://localhost:8080/backend/api/Company/update_product.php', formData)
       .then((response) => {
         if (response.data.success) {
           setMessage(response.data.success);
@@ -73,16 +74,16 @@ const UpdateProduct = () => {
       <div className="edit_container">
         <form onSubmit={handleSubmit} encType="multipart/form-data" className="update_product product_container_box">
           <img
-            src={`http://localhost/Project-1/images/${product.product_image}`}
-            alt={product.product_name}
+            src={product.productImage}
+            alt={product.productName}
           />
-          <input type="hidden" name="update_product_id" value={product.product_id} />
-          <input type="hidden" name="current_product_image" value={product.product_image} />
+          <input type="hidden" name="update_product_id" value={product.productID} />
+          <input type="hidden" name="current_product_image" value={product.productImage} />
           <input
             type="text"
             className="input_fields fields"
             name="product_name"
-            value={product.product_name}
+            value={product.productName}
             onChange={handleChange}
             required
           />
@@ -91,7 +92,7 @@ const UpdateProduct = () => {
             <input
               type="number"
               name="product_price"
-              value={product.product_price}
+              value={product.productPrice}
               onChange={handleChange}
               required
             />
@@ -100,14 +101,14 @@ const UpdateProduct = () => {
             type="number"
             className="input_fields fields"
             name="product_quantity"
-            value={product.product_quantity}
+            value={product.productQuantity}
             onChange={handleChange}
             required
           />
           <input
             type="file"
             className="input_fields fields"
-            name="product_image"
+            name="productImage"
             onChange={handleFileChange}
             accept="image/*"
           />

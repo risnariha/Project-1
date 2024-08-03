@@ -3,7 +3,7 @@
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
     header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    header('Access-Control-Max-Age: 86400'); // cache for 1 day
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -19,21 +19,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 header('Content-Type: application/json');
 
-require_once 'connect.php';
-
+require_once '../Connection/connection.php';
 
 $response = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product_id'])) {
-    $update_product_id = $_POST['update_product_id'];
-    $update_product_name = htmlspecialchars($_POST['update_product_name']);
-    $update_product_price = htmlspecialchars($_POST['update_product_price']);
-    $update_product_quantity = htmlspecialchars($_POST['update_product_quantity']);
+    $update_product_id = htmlspecialchars(trim($_POST['update_product_id']));
+    $update_product_name = htmlspecialchars(trim($_POST['update_product_name']));
+    $update_product_price = htmlspecialchars(trim($_POST['update_product_price']));
+    $update_product_quantity = htmlspecialchars(trim($_POST['update_product_quantity']));
+    $update_product_category = htmlspecialchars(trim($_POST['update_product_category']));
+    $update_product_netweight = htmlspecialchars(trim($_POST['update_product_netweight']));
 
     if (isset($_FILES['update_product_image']) && $_FILES['update_product_image']['name']) {
         $update_product_image = basename($_FILES['update_product_image']['name']);
         $update_product_image_tmp_name = $_FILES['update_product_image']['tmp_name'];
-        $update_product_image_folder = '/Project-1/images/' . $update_product_image;
+        $imageDir = '../../../frontend/public/images/products/' . $update_product_id;
+        $update_product_image_folder = $imageDir . '/' . $update_product_image;
 
         $allowed_extensions = ['jpg', 'jpeg', 'png'];
         $file_extension = pathinfo($update_product_image, PATHINFO_EXTENSION);
@@ -52,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product_id'])) 
     }
 
     try {
-        $check_name_query = "SELECT * FROM `products` WHERE product_name=:product_name AND product_id != :product_id";
+        $check_name_query = "SELECT * FROM `products` WHERE productName = :product_name AND productID != :product_id";
         $check_name_stmt = $conn->prepare($check_name_query);
         $check_name_stmt->execute([':product_name' => $update_product_name, ':product_id' => $update_product_id]);
 
-        $check_image_query = "SELECT * FROM `products` WHERE product_image=:product_image AND product_id != :product_id";
+        $check_image_query = "SELECT * FROM `products` WHERE productImage = :product_image AND productID != :product_id";
         $check_image_stmt = $conn->prepare($check_image_query);
         $check_image_stmt->execute([':product_image' => $update_product_image, ':product_id' => $update_product_id]);
 
@@ -65,20 +67,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product_id'])) 
         } elseif ($check_image_stmt->rowCount() > 0) {
             $response = ["error" => "Product image already exists."];
         } else {
-            $update_query = "UPDATE `products` SET product_name=:product_name, product_price=:product_price, product_quantity=:product_quantity, product_image=:product_image WHERE product_id=:product_id";
+            $update_query = "UPDATE `products` SET productName = :product_name, productPrice = :product_price, productQuantity = :product_quantity, productImage = :product_image, productCategory = :product_category, productNetweight = :product_netweight WHERE productID = :product_id";
             $update_stmt = $conn->prepare($update_query);
             $update_success = $update_stmt->execute([
                 ':product_name' => $update_product_name,
                 ':product_price' => $update_product_price,
                 ':product_quantity' => $update_product_quantity,
                 ':product_image' => $update_product_image,
+                ':product_category' => $update_product_category,
+                ':product_netweight' => $update_product_netweight,
                 ':product_id' => $update_product_id
             ]);
 
             if ($update_success) {
                 $response = ["success" => "Product updated successfully."];
             } else {
-                $response = ["error" => "There is some error updating the product."];
+                $response = ["error" => "There was an error updating the product."];
             }
         }
     } catch (PDOException $e) {
