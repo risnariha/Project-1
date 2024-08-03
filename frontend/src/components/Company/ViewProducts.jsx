@@ -1,39 +1,53 @@
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import axios from 'axios';
+import { useOutletContext } from 'react-router-dom';
 
 const ViewProducts = () => {
+  const { user } = useOutletContext(); // assuming user context contains companyOwnerID
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/backend/api/Company/view_product.php')
-      .then(response => {
+    const fetchProducts = async () => {
+      try {
+        if(user){
+        const response = await axios.post('http://localhost:8080/backend/api/Company/view_product.php', {
+          companyOwnerID: user.companyOwnerID,
+        });
+        console.log("user-- ",user);
+      
         if (Array.isArray(response.data)) {
           setProducts(response.data);
         } else {
           setError('Invalid response format');
           console.error('Invalid response format:', response.data);
         }
-      })
-      .catch(error => {
+      }
+      } catch (error) {
         setError('Error fetching products');
         console.error('Error fetching products:', error);
-      });
-  }, []);
+      }
+    };
 
-  const handleDelete = (product_id) => {
+    fetchProducts();
+  }, [user.companyOwnerID]);
+
+  const handleDelete = async (productID) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      axios.get(`http://localhost:8080/backend/api/Company/delete_product.php?delete=${product_id}`)
-        .then(response => {
-          if (response.data.success) {
-            setProducts(products.filter(product => product.product_id !== product_id));
-          } else {
-            console.error('Error deleting product:', response.data.error);
-          }
-        })
-        .catch(error => console.error('Error deleting product:', error));
+      try {
+        const response = await axios.get(`http://localhost:8080/backend/api/Company/delete_product.php?delete=${productID}`);
+
+        if (response.data.success) {
+          setProducts(products.filter(product => product.productID !== productID));
+        } else {
+          console.error('Error deleting product:', response.data.error);
+        }
+      } catch (error) {
+        console.error('Error deleting product:', error);
+      }
     }
   };
 
@@ -45,7 +59,7 @@ const ViewProducts = () => {
     <div className="maincontainer">
       <div className="table_heading">
         <h3>Product details</h3>
-        </div>
+      </div>
       <section className="display_product">
         {products.length > 0 ? (
           <table>
@@ -62,16 +76,16 @@ const ViewProducts = () => {
             </thead>
             <tbody>
               {products.map((product, index) => (
-                <tr key={product.product_id}>
+                <tr key={product.productID}>
                   <td>{index + 1}</td>
-                  <td><img src={`http://localhost/Project-1/images/${product.product_image}`} alt={product.product_name} /></td>
-                  <td>{product.product_name}</td>
-                  <td>{product.product_price}</td>
-                  <td>{product.product_quantity}</td>
-                  <td>{product.product_netweight}</td>
+                  <td><img src={product.productImage} alt={product.product_name} /></td>
+                  <td>{product.productName}</td>
+                  <td>{product.productPrice}</td>
+                  <td>{product.productQuantity}</td>
+                  <td>{product.productNetweight}</td>
                   <td>
-                    <button className="delete_product_btn" onClick={() => handleDelete(product.product_id)}><FaTrash/></button>
-                    <Link className="update_product_btn" to={`/update/${product.product_id}`}><FaEdit /></Link>
+                    <button className="delete_product_btn" onClick={() => handleDelete(product.productID)}><FaTrash /></button>
+                    <Link className="update_product_btn" to={`/update/${product.productID}`}><FaEdit /></Link>
                   </td>
                 </tr>
               ))}

@@ -6,21 +6,23 @@ import withAuth from './withAuth';
 
 const CompanyLayout = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storeduser =JSON.parse(sessionStorage.getItem('user'));
+    const storeduser = JSON.parse(sessionStorage.getItem('user'));
     if (storeduser) {
       const userType = storeduser.userType;
       console.log('before user values:', storeduser);
       if (userType === 'company') {
-        setUser(storeduser);
+        if (user == null) {
+          setUser(storeduser);
+        }
         const getUserDetails = async () => {
           try {
             const email = storeduser.email;
-            console.log('fetching email : ',email);
+            console.log('fetching email : ', email);
             const userType = 'companyowners';
             const response = await axios.post('http://localhost:8080/backend/api/Home/getUserDetails.php', { email, userType });
             setUser(response.data);
@@ -33,23 +35,23 @@ const CompanyLayout = () => {
       } else {
         navigate('/login');
       }
-    }else{
-      navigate('/'); 
+    } else {
+      navigate('/');
     }
   }, [navigate]);
 
   if (!user) {
     return null; // or a loading spinner
-}
+  }
 
   return (
- <div className='d-flex flex-column min-height-100vh'>
+    <div className='d-flex flex-column min-height-100vh'>
       <CompanySidebar sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
         user={user} error={error}
       />
       <div className={`${sidebarToggle ? "ml-25 w-75" : " w-100"} `}>
-        <Outlet context={{ sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }} />
+        <Outlet context={{ user: user, sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }} />
       </div>
     </div>
   )

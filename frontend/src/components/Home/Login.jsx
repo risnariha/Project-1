@@ -28,8 +28,10 @@ export const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            console.log("data : ",email);
             const response = await axios.post('http://localhost:8080/backend/api/Home/Login.php', { email, password });
             const data = response.data;
+            console.log("data : ",data);
             if (data.success) {
                 const userType = data.userType;
                 const user = { email, userType };

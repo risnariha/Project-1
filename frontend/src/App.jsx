@@ -25,6 +25,8 @@ import Dash from './components/Admin/Dash';
 import AdminOrder from './components/Admin/Order';
 import Customerdetails from './components/Admin/Customerdetails';
 import Companydetails from './components/Admin/Companydetails';
+import CompanyProfile from './components/Company/CompanyProfile';
+
 
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
@@ -82,6 +84,7 @@ function App() {
               <Route exact path="order" element={<Order />} />
               <Route exact path="review" element={<Review />} />
               <Route exact path="reviewlayout/:product_id" element={<ReviewLayout />} />
+              <Route exact path="profile" element={<CompanyProfile/>}/>
             </Route>
         </Routes>
           <Footer/>

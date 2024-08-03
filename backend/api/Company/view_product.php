@@ -1,6 +1,4 @@
-
-
- <?php
+<?php
 // Enable CORS
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -22,17 +20,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 // Ensure headers are set before any output
 header('Content-Type: application/json');
 
-require_once 'connect.php';
+require_once '../Connection/connection.php';
 
-$dbcon = new DbConnector();
-$conn = $dbcon->getConnection();
+// Get the posted data
+$data = json_decode(file_get_contents("php://input"), true);
+
+if (!isset($data['companyOwnerID'])) {
+    echo json_encode(['error' => $data]);
+    exit;
+}
+
+$companyOwnerID = $data['companyOwnerID'];
 
 try {
-    $stmt = $conn->query("SELECT * FROM `products`");
+    $stmt = $conn->prepare("SELECT * FROM `products` WHERE companyOwnerID = ?");
+    $stmt->execute([$companyOwnerID]);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($products);
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
 ?>
-

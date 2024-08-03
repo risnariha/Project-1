@@ -1,4 +1,4 @@
-<?php
+<!-- 
 
 class DbConnector {
     private $hostname = "localhost";
@@ -17,6 +17,4 @@ class DbConnector {
             die("Connection failed: " . $e->getMessage());
         }
     }
-}
-
-?>
+} -->

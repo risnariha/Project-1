@@ -5,6 +5,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Methods: POST, GET ,OPTIONS');
 
 include('../Connection/connection.php');
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $query ="SELECT * FROM products ";
     $stmt = $conn->prepare($query);

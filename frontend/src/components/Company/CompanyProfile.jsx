@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FaCircleUser } from "react-icons/fa6";
 import { useOutletContext } from 'react-router-dom';
 
-function CustomerProfile() {
+function CompanyProfile() {
   const { user } = useOutletContext();
   const [image, setImage] = useState(null);
   const imagepath = user.image;
@@ -20,10 +20,10 @@ function CustomerProfile() {
       setEmail(user.email);
     }
     if (!number) {
-      setNumber(user.customerContactNumber);
+      setNumber(user.companyContactNumber);
     }
     if (!address) {
-      setAddress(user.customerAddress);
+      setAddress(user.companyAddress);
     }
     const user_id = user.ID;
 
@@ -70,18 +70,15 @@ function CustomerProfile() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user_id = user.customerID;
+    const user_id = user.companyOwnerID;
     try {
-      const response = await axios.post('http://localhost:8080/backend/api/customer/update_profile.php', { email, address, number, image, user_id }, {
+      const response = await axios.post('http://localhost:8080/backend/api/company/update_profile.php', { email, address, number, image, user_id }, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      if(response.data){
-        console.log('Profile updated successfully');
-        setEdit(false);
-      }
-      // exit edit mode on successful update
+      console.log('Profile updated successfully', response.data);
+      setEdit(false); // exit edit mode on successful update
     } catch (error) {
       console.error('There was an error updating the profile!', error);
     }
@@ -112,11 +109,11 @@ function CustomerProfile() {
             <div className='md-w-75 sm-w-100 xs-w-100 d-flex m-auto flex-column justify-content-center fs-5 p-4'>
               <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>Name </div>:
-                <div className='w-50 ps-2'>{user.customerName} </div>
+                <div className='w-50 ps-2'>{user.companyOwnerName} </div>
               </div>
               <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>Shop Name</div>:
-                <div className='w-50 ps-2'>{user.customerShopName}</div>
+                <div className='w-50 ps-2'>{user.companyName}</div>
               </div>
               <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>Email Address</div>:
@@ -124,19 +121,19 @@ function CustomerProfile() {
               </div>
               <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>Mobile Number</div>:
-                <div className='w-50 ps-2'>{user.customerContactNumber}</div>
+                <div className='w-50 ps-2'>{user.companyContactNumber}</div>
               </div>
               <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>District</div>:
-                <div className='w-50 ps-2'>{user.customerDistrict}</div>
+                <div className='w-50 ps-2'>{user.district}</div>
               </div>
               <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>Address</div>:
-                <div className='w-50 ps-2'>{user.customerAddress}</div>
+                <div className='w-50 ps-2'>{user.companyAddress}</div>
               </div>
               <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>Reference No</div>:
-                <div className='w-50 ps-2'>{user.customerShopReferenceNo}</div>
+                <div className='w-50 ps-2'>{user.businessInfo}</div>
               </div>
               <div className='d-flex mt-5 justify-content-center'>
                 <button className='btn btn-secondary w-25' onClick={() => setEdit(true)}>Edit</button>
@@ -182,12 +179,12 @@ function CustomerProfile() {
               <div className='justify-content-center fs-6 d-flex w-full'>
                 <form className='my-5 w-75'>
                   <div className="mb-3">
-                    <label htmlFor="inputFirstName" className="form-label"> Customer Name</label>
-                    <input type="text" className="form-control" id="lname" disabled value={user.customerName} />
+                    <label htmlFor="inputFirstName" className="form-label"> CompanyOwner Name</label>
+                    <input type="text" className="form-control" id="lname" disabled value={user.companyOwnerName} />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="inputLastName" className="form-label">Shop Name</label>
-                    <input type="text" className="form-control" id="fname " disabled value={user.customerShopName} />
+                    <label htmlFor="inputLastName" className="form-label"> Company Name</label>
+                    <input type="text" className="form-control" id="fname " disabled value={user.companyName} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputEmail1" className="form-label" >Email address</label>
@@ -199,7 +196,7 @@ function CustomerProfile() {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputDistrict" className="form-label" >District</label>
-                    <select className="form-select" aria-label="Default select example" disabled value={user.customerDistrict}>
+                    <select className="form-select" aria-label="Default select example" disabled value={user.district}>
                       <option value="1">Jaffna</option>
                       <option value="2">Kilinochchi</option>
                       <option value="3">Mullaitivu</option>
@@ -213,7 +210,7 @@ function CustomerProfile() {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="inputRefNo" className="form-label">Reffrence No</label>
-                    <input type="text" className="form-control" id="refno" disabled value={user.customerShopReferenceNo} />
+                    <input type="text" className="form-control" id="refno" disabled value={user.businessInfo} />
                   </div>
                   <button type="submit" className=" save w-50 m-auto justify-content-center d-flex align-items-center fs-4" onClick={handleSubmit}>Save</button>
                 </form>
@@ -226,4 +223,4 @@ function CustomerProfile() {
   )
 }
 
-export default CustomerProfile
+export default CompanyProfile
