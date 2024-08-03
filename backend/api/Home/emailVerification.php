@@ -6,6 +6,7 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include('../Connection/connection.php');
+    
     $data = json_decode(file_get_contents('php://input'), true);
     $email = $data['email'];
 

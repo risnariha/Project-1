@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom'; // Import Link component from react-router-dom
-import { FaWindowClose, FaUser } from 'react-icons/fa';
+import { FaWindowClose, FaUser,FaUserCircle } from 'react-icons/fa';
 import { IoBagAdd } from "react-icons/io5";
 import { RiLogoutCircleLine, RiMessage2Fill } from "react-icons/ri";
 import { AiFillDashboard, AiFillProduct } from "react-icons/ai";
@@ -78,7 +78,7 @@ const CompanySidebar = ({ sidebarToggle, setSidebarToggle,error, user }) => {
                 <hr className='text-dark m-0'></hr>
                 <ul className=' text-white list-unstyled fw-bold bg-color pt-3 h-100vh '>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <a href="/company" className='text-decoration-none text-white fs-5 px-2'>
+                        <a href="/company/dash" className='text-decoration-none text-white fs-5 px-2'>
                             <AiFillDashboard className='w-6 h-6 mx-3 pb-1' />Dashboard
                         </a>
                     </li>
@@ -107,9 +107,9 @@ const CompanySidebar = ({ sidebarToggle, setSidebarToggle,error, user }) => {
                             <RiMessage2Fill className='w-6 h-6 mx-3 pb-1' />Review
                         </a>
                     </li>
-                    <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center' onClick={handleLogout}>
-                        <a href="#" className='text-decoration-none text-white fs-5 px-2' >
-                            <RiLogoutCircleLine className='w-6 h-6 mx-3 pb-1' />Logout
+                    <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center' >
+                        <a href="/company/profile" className='text-decoration-none text-white fs-5 px-2' >
+                            <FaUserCircle className='w-6 h-6 mx-3 pb-1' />Profile
                         </a>
                     </li>
                 </ul>

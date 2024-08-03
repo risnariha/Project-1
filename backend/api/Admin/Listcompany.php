@@ -7,6 +7,8 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include '../Connection/connection.php';
 
+
+
 try{
     $stmt = $conn->prepare('SELECT * FROM companyowners');
     $stmt->execute();
