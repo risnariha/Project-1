@@ -133,8 +133,8 @@
     /* height: 100%;  */
     background-size:cover;
     background: url('../../../public/images/home/smart-inventory-management-system-1200x627.jpg') no-repeat center center ;
-    background-color: rgb(103, 116, 141);
-    opacity: 0.5; /* Set your desired opacity level */
+    background-color: #fff;
+    opacity: 0.7; /* Set your desired opacity level */
     z-index: -1; /* Place the pseudo-element behind the content */
     /* background-repeat: no-repeat; */
   }
@@ -173,8 +173,8 @@
 }
 
 .homeBannerTagline{
-    font-size: 30px;
-    font-weight: 530;
+    font-size: 20px;
+    font-weight: 500;
     text-align: center;
 }
 
@@ -298,13 +298,13 @@
 .notifyFormContainer button{
     position: absolute;
     font-size: 15px;
+    width: 10%;
     font-weight: bold;
     padding: 10px 20px;
     background-color: #dc143c;
     color: #fff;
     border: none;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-radius: 7px;
 }
 
 .homePageSocials{

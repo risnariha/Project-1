@@ -8,15 +8,11 @@ include '../Connection/connection.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     try {
-        $sql = "SELECT COUNT (*) FROM order";
+        $sql = "SELECT COUNT(*) as count FROM order";
         $pstmt = $con->prepare($sql);
-        $row = $pstmt->execute();
-        if($row>0){
-           
-           
-        } else {
-            echo 0;
-        }
+        $pstmt->execute();
+        $orders = $pstmt->fetch(PDO::FETCH_ASSOC)['count'];
+        
     } catch (\Throwable $th) {
         //throw $th;
     }

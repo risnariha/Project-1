@@ -30,7 +30,6 @@ import CompanyProfile from './components/Company/CompanyProfile';
 
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
-import Companyregister from './components/Admin/Companyregister';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Home/Login';
 import AdminLayout from './components/Admin/AdminLayout';
@@ -51,8 +50,8 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          {/*<Route path='/Aboutus' element={<Aboutus />} />
-          <Route path="/Contactus" element={<Contactus />} />*/}
+          <Route path='/Aboutus' element={<Aboutus />} />
+          <Route path="/Contactus" element={<Contactus />} />
           {/* home */}
             <Route path='/' element={<Home />} />
             <Route path="/Login" element={<Login />} />

@@ -70,7 +70,7 @@ const Requestcompany = ({ showRequestAddModal, handleCloseRequestAddModal, handl
             // Optionally refetch the customer list or update state to remove the accepted customer from the UI
             fetchCompanyRequestData();
           } else {
-            alert("Errorc adding customer");
+            alert("Error adding company");
             console.error(data.message);
           }
         } catch (error) {
