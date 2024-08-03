@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_FILES['image'])) {
         // Check if the user already has an image and delete it
-        
+
         $stmt = $conn->prepare('SELECT * FROM customers WHERE customerID = ?');
         $stmt->bindParam(1, $user_id);
         $stmt->execute();
@@ -29,14 +29,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($user && $user['image']) {
             unlink($user['image']);
         }
-
+        function deleteFilesInDirectory($dir)
+        {
+            if (is_dir($dir)) {
+                $files = scandir($dir);
+                foreach ($files as $file) {
+                    if ($file != '.' && $file != '..') {
+                        unlink($dir . '/' . $file);
+                    }
+                }
+            }
+        }
         // Save new image
         $image = $_FILES['image']['name'];
-
-        $imagePath_move = '../../../frontend/public/images/customer/' . $user_id . '/' . $image;
-        $imagePath='../../../public/images/customer/' . $user_id . '/' . $image;
+        $imageDir = '../../../frontend/public/images/customer/' . $user_id;
+        $imagePath_move = $imageDir . '/' . $image;
+        // $imagePath_move = '../../../frontend/public/images/customer/' . $user_id . '/' . $image;
+        $imagePath = '../../../public/images/customer/' . $user_id . '/' . $image;
         // echo json_encode($imagePath);
         // exit;
+        if (file_exists($imageDir)) {
+            // Delete all files in the directory
+            deleteFilesInDirectory($imageDir);
+            // Remove the directory itself
+            rmdir($imageDir);
+        }
         if (!file_exists(dirname($imagePath_move))) {
             mkdir(dirname($imagePath_move), 0777, true);
         }
@@ -51,12 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $params[] = $imagePath;
     }
     $params[] = $user_id;
-   
+
     $stmt = $conn->prepare($query);
-    echo json_encode($stmt->execute($params));
-    exit;
+    // echo json_encode($stmt->execute($params));
+    // exit;
     if ($stmt->execute($params)) {
-        $sql=" SELECT * FROM customers WHERE customerID = ?";
+        $sql = " SELECT * FROM customers WHERE customerID = ?";
+        $statement = $conn->prepare($sql);
         $statement->bindParam(1, $user_id);
         $statement->execute();
         $user = $statement->fetch(PDO::FETCH_ASSOC);
@@ -66,4 +84,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['error' => 'Failed to update profile']);
     }
 }
-?>

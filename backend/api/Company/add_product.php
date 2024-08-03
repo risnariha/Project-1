@@ -10,7 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
+
 require_once '../Connection/connection.php';
+
 header('Content-Type: application/json');
 
 // Function to create directory if not exists
@@ -128,4 +130,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
-?>
+
