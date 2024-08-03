@@ -72,11 +72,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo json_encode(['success' => false, 'message' => 'Validation errors', 'errors' => $errors]);
             exit;
         }
+        $highest_id_query = $conn->prepare("SELECT customerID FROM `customers` ORDER BY customerID DESC LIMIT 1");
+        $highest_id_query->execute();
+        $highest_id_row = $highest_id_query->fetch(PDO::FETCH_ASSOC);
 
+        if ($highest_id_row) {
+            $highest_id = $highest_id_row['customerID'];
+            $numeric_part = (int)substr($highest_id, 4); // Get the numeric part of the highest ID
+            $new_id = 'CUST' . str_pad($numeric_part + 1, 3, '0', STR_PAD_LEFT); // Increment and pad with zeros
+        } else {
+            $new_id = 'CUST001'; // If no product exists, start with P001
+        }
         // Generate a Unique Customer ID
-        $ID = uniqid("CUST", true);
+        $ID = $new_id;
 
-$refno='4545';
+        $refno = '4545';
         // Generate a random password
         $PW = bin2hex(random_bytes(4));
 
@@ -122,4 +132,3 @@ $refno='4545';
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
-

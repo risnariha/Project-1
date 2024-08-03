@@ -145,7 +145,7 @@ function AddProduct() {
         formData.append('net_weight', netWeight);
 
         try {
-            const response = await axios.post('http://localhost/Project-1/backend/api/Company/add_product.php', formData, {
+            const response = await axios.post('http://localhost:8080/backend/api/Company/add_product.php', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
