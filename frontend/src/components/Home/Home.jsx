@@ -7,11 +7,11 @@ export const Home = () => {
         <div>
             <div className="homeHeader">
 
-                <div className="homeHeaderLinks">
-                    <Link to="/">Home</Link>
-                    <Link to="/products">Products</Link>
-                    <Link to="/faqs">FAQs</Link>
-                    <Link to="/Login">Log in</Link>
+                <div className="homeHeaderLinks" >
+                    <Link to="/" style={{fontSize:'150%'}}>Home</Link>
+                    <Link to="/products" style={{fontSize:'150%'}}>Products</Link>
+                    <Link to="/faqs" style={{fontSize:'150%'}}>FAQs</Link>
+                    <Link to="/Login" style={{fontSize:'150%'}}>Log in</Link>
                 </div>
             </div>
             <div className="homeBanner background-opacity">

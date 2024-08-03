@@ -85,7 +85,7 @@ const Register = () => {
           sessionStorage.clear('stepOne');
           setTimeout(() => navigate('/'), 2000);
         } else {
-          setMessage(result.message || 'Registration failed');
+          setMessage(data.message || 'Registration failed');
           setMessageType('error');
         }
       } else {
