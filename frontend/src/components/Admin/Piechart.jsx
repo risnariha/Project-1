@@ -24,7 +24,7 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Order & Delivery',
+      text: '',
     },
   },
 };
@@ -53,7 +53,7 @@ const data = {
 function Piechart() {
   return (
     // <div >
-    <div className='d-flex' style={{width:'60%', marginLeft:'15%'}}>
+    <div className='d-flex' style={{width:'60%', marginLeft:'16%'}}>
       <Pie data={data} options={options} />
      
     </div>

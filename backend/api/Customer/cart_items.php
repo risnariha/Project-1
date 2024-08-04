@@ -1,47 +1,41 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json; charset=UTF-8");
 
-
 include('../Connection/connection.php');
-// Get the customer ID from the query parameters
-$customer_id = isset($_GET['customer_id']) ? $_GET['customer_id'] : 0;
 
-if ($customer_id != 0) {
-    // Prepare the SQL query to fetch cart items for the given customer ID
-    $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':customer_id', $customer_id);
-    $stmt->execute();
-    
-    $num = $stmt->rowCount();
+// Handle preflight requests
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
-    if ($num > 0) {
-        $cart_items_arr = array();
-        $cart_items_arr["items"] = array();
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (isset($_GET['customer_id'])) {
+        $customer_id = $_GET['customer_id'];
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
+        $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':customer_id', $customer_id);
+        $stmt->execute();
 
-            $item = array(
-                "id" => $id,
-                "product_id" => $product_id,
-                "quantity" => $quantity,
-                "price" => $price,
-                // Add other fields as necessary
-            );
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            array_push($cart_items_arr["items"], $item);
+        if ($data) {
+            http_response_code(200);
+            echo json_encode($data);
+        } else {
+            http_response_code(404);
+            echo json_encode(["message" => "No cart items found for the given customer ID."]);
         }
-
-        http_response_code(200);
-        echo json_encode($cart_items_arr);
     } else {
-        http_response_code(404);
-        echo json_encode(["message" => "No cart items found for the given customer ID."]);
+        http_response_code(400);
+        echo json_encode(["message" => "Invalid or missing customer ID."]);
     }
 } else {
-    http_response_code(400);
-    echo json_encode(["message" => "Invalid customer ID."]);
+    http_response_code(405);
+    echo json_encode(["message" => "Method Not Allowed."]);
 }
 ?>

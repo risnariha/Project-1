@@ -9,7 +9,7 @@ const Card = ({ title, icon: Icon, count }) => {
           <Icon className='me-1 ms-0' size={26} />
           <h5 className='card-title mb-0'>{title}</h5>
         </div>
-        <h2 className='card-text'>{count}</h2>
+        <h4 className='card-text'>{count}</h4>
       </div>
     </div>
   );

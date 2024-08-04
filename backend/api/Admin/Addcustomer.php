@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors = [];
 
         $sanitizedemail = filter_var($customer['email'], FILTER_SANITIZE_EMAIL);
-        $Validatedemail = filter_var($customer['email'], FILTER_VALIDATE_EMAIL);
+        $Validatedemail = filter_var($sanitizedemail, FILTER_VALIDATE_EMAIL);
         if ($Validatedemail) {
-            $email = $Validatedemail;
+            $email = strtolower($Validatedemail);
         } else {
             $errors[] = "Invalid Email";
         }
@@ -79,9 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($highest_id_row) {
             $highest_id = $highest_id_row['customerID'];
             $numeric_part = (int)substr($highest_id, 4); // Get the numeric part of the highest ID
-            $new_id = 'CUST' . str_pad($numeric_part + 1, 3, '0', STR_PAD_LEFT); // Increment and pad with zeros
+            $new_id = 'CUST' . str_pad($numeric_part + 1, '0', STR_PAD_LEFT); // Increment and pad with zeros
         } else {
-            $new_id = 'CUST001'; // If no product exists, start with P001
+            $new_id = 'CUST1'; // If no product exists, start with P001
         }
         // Generate a Unique Customer ID
         $ID = $new_id;
@@ -123,7 +123,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo json_encode(['success' => false, 'message' => 'Error in Register', 'error' => $errorInfo[2]]);
             }
         } catch (Exception $e) {
-            $conn->rollBack();
+            if ($conn->inTransaction()) {
+                $conn->rollBack();
+            }
             echo json_encode(['success' => false, 'message' => 'Transaction failed', 'error' => $e->getMessage()]);
         }
     } else {

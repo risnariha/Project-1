@@ -26,8 +26,6 @@ import AdminOrder from './components/Admin/Order';
 import Customerdetails from './components/Admin/Customerdetails';
 import Companydetails from './components/Admin/Companydetails';
 import CompanyProfile from './components/Company/CompanyProfile';
-
-
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import { Home } from './components/Home/Home';
@@ -40,6 +38,7 @@ import PlaceOrder from './components/Customer/PlaceOrder';
 import { Faqs } from './components/Home/Faqs';
 import Register from './components/Home/Register';
 import Footer from './components/Home/Footer';
+import Products from './components/Home/Products'
 
 function App() {
 
@@ -53,27 +52,29 @@ function App() {
           <Route path='/Aboutus' element={<Aboutus />} />
           <Route path="/Contactus" element={<Contactus />} />
           {/* home */}
-            <Route path='/' element={<Home />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path ="/faqs" element ={<Faqs />} />
+
+          <Route path='/' element={<Home />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/faqs" element={<Faqs />} />
+          <Route path='/products' element={<Products />}/>
           {/* admin */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dash" element={<Dash />} />
-              <Route path="Customerdetails" element={<Customerdetails />} />
-              <Route path="Companydetails" element={<Companydetails />} />
-              <Route path='Order' element={<AdminOrder />} />
-            </Route>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dash" element={<Dash />} />
+            <Route path="Customerdetails" element={<Customerdetails />} />
+            <Route path="Companydetails" element={<Companydetails />} />
+            <Route path='Order' element={<AdminOrder />} />
+          </Route>
           {/* customer */}
-            <Route path="/customer" element={<CustomerLayout />}>
-              <Route path="dash" element={<ProuductList />} />
-              <Route path="CartItems" element={<CartItems />} />
-              <Route path="PlaceOrder" element={<PlaceOrder/>}/>
-              <Route path="profile" element={<CustomerProfile />} />
-              <Route path="productDetail" element={<ProductDetail/>} />
-              
-              
-            </Route>
+          <Route path="/customer" element={<CustomerLayout />}>
+            <Route path="dash" element={<ProuductList />} />
+            <Route path="CartItems" element={<CartItems />} />
+            <Route path="PlaceOrder" element={<PlaceOrder />} />
+            <Route path="profile" element={<CustomerProfile />} />
+            <Route path="productDetail" element={<ProductDetail />} />
+
+
+          </Route>
           {/* company */}
             <Route path="/company/*" element={<CompanyLayout />} >
               <Route exact path="dash" element={<CompanyDashboard />} />
@@ -87,7 +88,7 @@ function App() {
               <Route exact path="profile" element={<CompanyProfile/>}/>
             </Route>
         </Routes>
-          <Footer/>
+        <Footer />
       </Router>
       {/* <Sidebar
           sidebarToggle={sidebarToggle}

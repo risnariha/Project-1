@@ -36,7 +36,7 @@ const Footer = () => {
           <div className="col-md-2 m-3">
             <h5>Quick Links</h5>
             <ul className="list-unstyled" style={{lineHeight:'2'}}>
-              <li><a href="/Home" className="text-secondary text-decoration-none " style={{fontSize:'140%'}}>Home</a></li>
+              <li><a href="/" className="text-secondary text-decoration-none " style={{fontSize:'140%'}}>Home</a></li>
               <li><a href="/services" className="text-secondary text-decoration-none " style={{fontSize:'140%', marginBottom:'80%'}}>Services</a></li>
               <li><a href="/about" className="text-secondary text-decoration-none " style={{fontSize:'140%',marginBottom:'80%'}}>About Us</a></li>
               <li><a href="/contact" className="text-secondary text-decoration-none " style={{fontSize:'140%',marginBottom:'80%'}}>Contact</a></li>

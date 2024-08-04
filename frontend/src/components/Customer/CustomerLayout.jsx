@@ -26,6 +26,7 @@ const CustomerLayout = () => {
                         const userType = 'customers';
                         const response = await axios.post('http://localhost:8080/backend/api/Home/getUserDetails.php', { email, userType });
                         setUser(response.data);
+                        sessionStorage.setItem('userID', JSON.stringify(response.data.customerID));
                         console.log('data success:', response.data);
                     } catch (error) {
                         console.error('Error fetching user details : ', error);

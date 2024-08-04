@@ -78,7 +78,7 @@ const Requestcustomer = ({ showRequestAddModal, handleCloseRequestAddModal, hand
         // Optionally refetch the customer list or update state to remove the accepted customer from the UI
         fetchCustomerrequestData();
       } else {
-        alert("Errorc adding customer");
+        alert("Error adding customer");
         console.error(data.message);
       }
     } catch (error) {
