@@ -105,10 +105,10 @@ const Register = () => {
       <div className="homeHeader">
 
         <div className="homeHeaderLinks">
-          <Link to="/">Home</Link>
-          <Link to="/products">Products</Link>
-          <Link to="/faqs">FAQs</Link>
-          <Link to="/Login">Log in</Link>
+          <Link to="/" style={{fontSize:'150%'}}>Home</Link>
+          <Link to="/products" style={{fontSize:'150%'}}>Products</Link>
+          <Link to="/faqs" style={{fontSize:'150%'}}>FAQs</Link>
+          <Link to="/Login" style={{fontSize:'150%'}}>Log in</Link>
         </div>
       </div>
       {errorMessage && (
@@ -156,7 +156,7 @@ const Register = () => {
                   <button type="submit" className='submit'>Next</button>
                   <div className="register-link">
 
-                    <span>Already have an account?<Link to="/login" onClick={() => sessionStorage.clear('stepOne')}> Login</Link></span>
+                    <span style={{fontSize:'145%'}}>Already have an account ?<Link to="/login" onClick={() => sessionStorage.clear('stepOne')}>&nbsp;  Login</Link></span>
 
                   </div>
                 </form>

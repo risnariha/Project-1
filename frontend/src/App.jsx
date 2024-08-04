@@ -26,8 +26,6 @@ import AdminOrder from './components/Admin/Order';
 import Customerdetails from './components/Admin/Customerdetails';
 import Companydetails from './components/Admin/Companydetails';
 import CompanyProfile from './components/Company/CompanyProfile';
-
-
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import { Home } from './components/Home/Home';

@@ -14,7 +14,18 @@ function Companydetails() {
 
   const handleShowViewModal = (company) => {
     setSelectedCompany(company);
-    setShowViewModal(true);
+    // try {
+    //   const response = await axios.post('http://localhost:8080/backend/api/Admin/Listproducts.php');
+    //   const jsonData = response.data;
+    //   if (jsonData.success) {
+    //     setCompany(jsonData.data);
+    //   } else {
+    //     setError(jsonData.message);
+    //   }
+    // } catch (error) {
+    //   setError(error.message);
+    // }
+    // setShowViewModal(true);
   };
 
   const handleCloseViewModal = () => setShowViewModal(false);
@@ -36,6 +47,7 @@ function Companydetails() {
       } else {
         setError(jsonData.message);
       }
+      //window.location.reload();
     } catch (error) {
       setError(error.message);
     } finally {
@@ -45,6 +57,12 @@ function Companydetails() {
 
   useEffect(() => {
     fetchCompany();
+    // const intervalId = setInterval(() => {
+    //   fetchCompany();
+    // }, 1000);
+
+    // // Clean up the interval when the component unmounts
+    // return () => clearInterval(intervalId);
   }, []);
 
   if (loading) return <div>Loading...</div>;
@@ -100,13 +118,18 @@ function Companydetails() {
         </div>
       </div>
 
-     {/* {selectedCustomer && (
+      {selectedCompany && (
         <Modal show={showViewModal} onHide={handleCloseViewModal}>
           <Modal.Header closeButton>
-            <Modal.Title>View Customer</Modal.Title>
+            <Modal.Title>Company Products</Modal.Title>
           </Modal.Header>
           <Modal.Body style={{fontSize:'135%'}}>
-            <p><strong>ID:</strong> {selectedCustomer.customerID}</p>
+            {/* {company.map((company) =>{
+              <ul key {company.companyOwnerID}>
+                <li></li>
+              </ul>
+            })} */}
+            {/*<p><strong>ID:</strong> {selectedCustomer.customerID}</p>
             <p><strong>Name:</strong> {selectedCustomer.customerName}</p>
             <p><strong>Shop Name:</strong> {selectedCustomer.customerShopName}</p>
             <p><strong>Email:</strong> {selectedCustomer.email}</p>
@@ -114,13 +137,14 @@ function Companydetails() {
             <p><strong>Address:</strong> {selectedCustomer.customerAddress}</p>
             <p><strong>District:</strong> {selectedCustomer.customerDistrict}</p>
             <p><strong>Reference No:</strong> {selectedCustomer.customerShopReferenceNo}</p>
-            <p><strong>Password:</strong> {selectedCustomer.password}</p>
+            <p><strong>Password:</strong> {selectedCustomer.password}</p>*/}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseViewModal}>Close</Button>
           </Modal.Footer>
         </Modal>
-      )}*/}
+      )}
+
       <Requestcompany
         showRequestAddModal={showRequestAddModal}
         handleCloseRequestAddModal={handleCloseRequestAddModal}

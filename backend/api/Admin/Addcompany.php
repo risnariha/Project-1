@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors = [];
 
         $sanitizedemail = filter_var($company['email'], FILTER_SANITIZE_EMAIL);
-        $Validatedemail = filter_var($company['email'], FILTER_VALIDATE_EMAIL);
+        $Validatedemail = filter_var($sanitizedemail, FILTER_VALIDATE_EMAIL);
         if ($Validatedemail) {
-            $email = $Validatedemail;
+            $email = strtolower($Validatedemail);
         } else {
             $errors[] = "Invalid Email";
         }
@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $fname = htmlspecialchars($company['username']);
         }
 
-        if (empty($company['companyName'])) {
+        if (empty($company['businessName'])) {
             $errors[] = "Shop name is required";
         } else {
-            $shopname = htmlspecialchars($company['companyName']);
+            $shopname = htmlspecialchars($company['businessName']);
         }
 
         if (!isset($company['contactNumber']) || !preg_match("/^\d{10}$/", $company['contactNumber'])) {
@@ -73,40 +73,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        // Generate a Unique company ID
-           // Generate company ID
-           $ID = uniqid("CMP", true);
+        $highest_id_query = $conn->prepare("SELECT companyOwnerID FROM `companyowners` ORDER BY companyOwnerID DESC LIMIT 1");
+        $highest_id_query->execute();
+        $highest_id_row = $highest_id_query->fetch(PDO::FETCH_ASSOC);
 
-//$refno='4545';
+        if ($highest_id_row) {
+            $highest_id = $highest_id_row['companyOwnerID'];
+            $numeric_part = (int)substr($highest_id, 4); // Get the numeric part of the highest ID
+            $new_id = 'COMP' . str_pad($numeric_part + 1, '0', STR_PAD_LEFT); // Increment and pad with zeros
+        } else {
+            $new_id = 'COMP1'; // If no product exists, start with P001
+        }
+        // Generate a Unique Customer ID
+        $ID = $new_id;
+
+        // Generate a Unique company ID
+        //    Generate company ID
+        //$ID = uniqid("CMP", true);
+       // $ID = 1;
+
+        //$refno='4545';
         // Generate a random password
         $PW = bin2hex(random_bytes(4));
 
         try {
+            // Start a transaction
             $conn->beginTransaction();
 
-            // Insert into companys table
-            $sql = "INSERT INTO companyowners 
-                               (companyOwnerID,companyOwnerName, 
-                                email, 
-                                password, 
-                                companyContactNumber, 
-                                companyName, 
-                                companyAddress,district 
-                                )
-                                 VALUES (?, ?, ?, ?, ?, ?,?)";
+            // Insert into companyowners table
+            $sql = "INSERT INTO `companyowners` (`companyOwnerID`, `companyName`, `companyAddress`, `district`, `companyOwnerName`, `email`, `password`, `companyContactNumber`)
+                    VALUES (?, ?, ?, ?, ?, ?, ?,?)";
             $pstmt = $conn->prepare($sql);
-             $pstmt->bindParam(1, $ID);
-            $pstmt->bindParam(2, $fname);
-            $pstmt->bindParam(3, $email);
-            $pstmt->bindParam(4, $PW);
-            $pstmt->bindParam(5, $contact);
-            $pstmt->bindParam(6, $shopname);
-            $pstmt->bindParam(7, $address);
-            $pstmt->bindParam(8, $district);
-           
-
-
-
+            $pstmt->bindParam(1, $ID);
+            $pstmt->bindParam(2, $shopname);
+            $pstmt->bindParam(3, $address);
+            $pstmt->bindParam(4, $district);
+            $pstmt->bindParam(5, $fname);
+            $pstmt->bindParam(6, $email);
+            $pstmt->bindParam(7, $PW);
+            $pstmt->bindParam(8, $contact);
             $r = $pstmt->execute();
 
             if ($r) {
@@ -116,15 +121,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $pstmtDelete->bindParam(1, $company['id']);
                 $pstmtDelete->execute();
 
+                // Commit the transaction
                 $conn->commit();
-                echo json_encode(['success' => true, 'message' => 'company added successfully']);
+                echo json_encode(['success' => true, 'message' => 'Company added successfully']);
             } else {
+                // Roll back the transaction if insert fails
                 $conn->rollBack();
                 $errorInfo = $pstmt->errorInfo();
                 echo json_encode(['success' => false, 'message' => 'Error in Register', 'error' => $errorInfo[2]]);
             }
         } catch (Exception $e) {
-            $conn->rollBack();
+            // Roll back the transaction on exception
+            if ($conn->inTransaction()) {
+                $conn->rollBack();
+            }
             echo json_encode(['success' => false, 'message' => 'Transaction failed', 'error' => $e->getMessage()]);
         }
     } else {
@@ -133,5 +143,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
-
 ?>

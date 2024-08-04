@@ -25,6 +25,11 @@ function Customerdetails() {
     setShowRequestAddModal(false);
   };
 
+useEffect(()=>{
+  // if(showRequestAddModal){
+  //   window.location.reload();
+  // }
+},[]);
 
   const fetchCustomerData = async () => {
     setLoading(true);
@@ -33,6 +38,7 @@ function Customerdetails() {
       const jsonData = await response.json();
       if (jsonData.success) {
         setCustomers(jsonData.data);
+        
       } else {
         setError(jsonData.message);
       }
@@ -41,10 +47,13 @@ function Customerdetails() {
     } finally {
       setLoading(false);
     }
+    
   };
 
   useEffect(() => {
     fetchCustomerData();
+    
+
   }, []);
 
   if (loading) return <div>Loading...</div>;
