@@ -3,7 +3,7 @@
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
     header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Max-Age: 86400'); // cache for 1 day
+    header('Access-Control-Max-Age: 86400');    // cache for 1 day
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -19,72 +19,74 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 header('Content-Type: application/json');
 
-require_once '../Connection/connection.php';
+require_once '../Connection/connection.php'; // Adjust path if needed
 
 $response = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product_id'])) {
-    $update_product_id = htmlspecialchars(trim($_POST['update_product_id']));
-    $update_product_name = htmlspecialchars(trim($_POST['update_product_name']));
-    $update_product_price = htmlspecialchars(trim($_POST['update_product_price']));
-    $update_product_quantity = htmlspecialchars(trim($_POST['update_product_quantity']));
-    $update_product_category = htmlspecialchars(trim($_POST['update_product_category']));
-    $update_product_netweight = htmlspecialchars(trim($_POST['update_product_netweight']));
+    $update_product_id = $_POST['update_product_id'];
+    $update_product_name = htmlspecialchars($_POST['update_product_name']);
+    $update_product_price = htmlspecialchars($_POST['update_product_price']);
+    $update_product_quantity = htmlspecialchars($_POST['update_product_quantity']);
+    $old_imagepath =$_POST['imagePath'];
 
-    if (isset($_FILES['update_product_image']) && $_FILES['update_product_image']['name']) {
-        $update_product_image = basename($_FILES['update_product_image']['name']);
-        $update_product_image_tmp_name = $_FILES['update_product_image']['tmp_name'];
-        $imageDir = '../../../frontend/public/images/products/' . $update_product_id;
-        $update_product_image_folder = $imageDir . '/' . $update_product_image;
-
-        $allowed_extensions = ['jpg', 'jpeg', 'png'];
-        $file_extension = pathinfo($update_product_image, PATHINFO_EXTENSION);
-
-        if (!in_array($file_extension, $allowed_extensions)) {
-            $response = ["error" => "Invalid image format. Only JPG, JPEG, and PNG are allowed."];
-            echo json_encode($response);
-            exit;
-        } elseif (!move_uploaded_file($update_product_image_tmp_name, $update_product_image_folder)) {
-            $response = ["error" => "Failed to upload the image."];
-            echo json_encode($response);
-            exit;
+    
+    if (isset($_FILES['image']) && $_FILES['image']['name']) {
+        $stmt = $conn->prepare('SELECT * FROM products WHERE productID = ?');
+        $stmt->bindParam(1, $update_product_id);
+        $stmt->execute();
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+        function deleteFilesInDirectory($dir)
+        {
+            if (is_dir($dir)) {
+                $files = scandir($dir);
+                foreach ($files as $file) {
+                    if ($file != '.' && $file != '..') {
+                        unlink($dir . '/' . $file);
+                    }
+                }
+            }
         }
-    } else {
-        $update_product_image = $_POST['current_product_image'];
-    }
 
+        // Save new image
+        $image =$_FILES['image']['name'] ;
+        $imageDir = '../../../frontend/public/images/products/' .$update_product_id;
+        $imagePath_move = $imageDir . '/' . $image;
+        // $imagePath_move = '../../../frontend/public/images/customer/' . $user_id . '/' . $image;
+        $imagePath = '../../../public/images/products/' .$update_product_id . '/' . $image;
+        // echo json_encode($imagePath);
+        // exit;
+        if (file_exists($imageDir)) {
+            // Delete all files in the directory
+            deleteFilesInDirectory($imageDir);
+            // Remove the directory itself
+            rmdir($imageDir);
+        }
+        if (!file_exists(dirname($imagePath_move))) {
+            mkdir(dirname($imagePath_move), 0777, true);
+        }
+        move_uploaded_file($_FILES['image']['tmp_name'], $imagePath_move);
+    } 
     try {
-        $check_name_query = "SELECT * FROM `products` WHERE productName = :product_name AND productID != :product_id";
-        $check_name_stmt = $conn->prepare($check_name_query);
-        $check_name_stmt->execute([':product_name' => $update_product_name, ':product_id' => $update_product_id]);
-
-        $check_image_query = "SELECT * FROM `products` WHERE productImage = :product_image AND productID != :product_id";
-        $check_image_stmt = $conn->prepare($check_image_query);
-        $check_image_stmt->execute([':product_image' => $update_product_image, ':product_id' => $update_product_id]);
-
-        if ($check_name_stmt->rowCount() > 0) {
-            $response = ["error" => "Product name already exists."];
-        } elseif ($check_image_stmt->rowCount() > 0) {
-            $response = ["error" => "Product image already exists."];
-        } else {
-            $update_query = "UPDATE `products` SET productName = :product_name, productPrice = :product_price, productQuantity = :product_quantity, productImage = :product_image, productCategory = :product_category, productNetweight = :product_netweight WHERE productID = :product_id";
+            if(!$imagePath){
+                $imagePath=$old_imagepath;
+            }
+            $update_query = "UPDATE `products` SET productName = :product_name, productPrice = :product_price, productQuantity = :product_quantity, productImage =:product_image WHERE productID = :product_id";
             $update_stmt = $conn->prepare($update_query);
             $update_success = $update_stmt->execute([
                 ':product_name' => $update_product_name,
                 ':product_price' => $update_product_price,
                 ':product_quantity' => $update_product_quantity,
-                ':product_image' => $update_product_image,
-                ':product_category' => $update_product_category,
-                ':product_netweight' => $update_product_netweight,
+                ':product_image' => $imagePath,
                 ':product_id' => $update_product_id
             ]);
 
             if ($update_success) {
                 $response = ["success" => "Product updated successfully."];
             } else {
-                $response = ["error" => "There was an error updating the product."];
+                $response = ["error" => "There is some error updating the product."];
             }
-        }
+        
     } catch (PDOException $e) {
         $response = ["error" => $e->getMessage()];
     }

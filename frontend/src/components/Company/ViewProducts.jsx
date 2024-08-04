@@ -85,7 +85,7 @@ const ViewProducts = () => {
                   <td>{product.productNetweight}</td>
                   <td>
                     <button className="delete_product_btn" onClick={() => handleDelete(product.productID)}><FaTrash /></button>
-                    <Link className="update_product_btn" to={`/update/${product.productID}`}><FaEdit /></Link>
+                    <Link className="update_product_btn" to={`/company/update/${product.productID}`}><FaEdit /></Link>
                   </td>
                 </tr>
               ))}
