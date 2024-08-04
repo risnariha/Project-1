@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($password === $hash) {
                 return $user;
             }
+ 
         }
         return false;
     }
@@ -50,10 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($userType) {
-        // $_SESSION['user'] = [
-        //     'email' => $user['email'],
-        //     'type' => $userType
-        // ];
+        $_SESSION['user'] = [
+            'email' => $user['email'],
+            'type' => $userType
+        ];
         $response['success'] = true;
         $response['userType'] = $userType;
         $response['message'] = 'Login successful';
@@ -66,4 +67,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 echo json_encode($response);
 $conn = null;
-
+?>
