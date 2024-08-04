@@ -78,17 +78,17 @@ function App() {
 
           </Route>
           {/* company */}
-          <Route path="/company/*" element={<CompanyLayout />} >
-            <Route exact path="dash" element={<CompanyDashboard />} />
-            <Route exact path="add-product" element={<AddProduct />} />
-            <Route exact path="display-product" element={<ViewProducts />} />
-            <Route exact path="update/:product_id" element={<UpdateProduct />} />
-            <Route exact path="customer" element={<Customer />} />
-            <Route exact path="order" element={<Order />} />
-            <Route exact path="review" element={<Review />} />
-            <Route exact path="reviewlayout/:product_id" element={<ReviewLayout />} />
-            <Route exact path="profile" element={<CompanyProfile />} />
-          </Route>
+            <Route path="/company/*" element={<CompanyLayout />} >
+              <Route exact path="dash" element={<CompanyDashboard />} />
+              <Route exact path="add-product" element={<AddProduct />} />
+              <Route exact path="display-product" element={<ViewProducts />} />
+              <Route exact path="update/:productID" element={<UpdateProduct />} />
+              <Route exact path="customer" element={<Customer />} />
+              <Route exact path="order" element={<Order />} />
+              <Route exact path="review" element={<Review />} />
+              <Route exact path="reviewlayout/:productID" element={<ReviewLayout />} />
+              <Route exact path="profile" element={<CompanyProfile/>}/>
+            </Route>
         </Routes>
         <Footer />
       </Router>
