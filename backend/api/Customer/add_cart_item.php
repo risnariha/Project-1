@@ -20,12 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $customer_id = $data['customer_id'];
         $product_id = $data['product_id'];
         $price = $data['price'];
+        $image =$data['image'];
+        $name= $data['name'];
 
-        $query = "INSERT INTO cart_items (customer_id, product_id, quantity, price) VALUES (:customer_id, :product_id, 1, :price)";
+        $query = "INSERT INTO cart_items (product_name,customer_id, product_id, quantity, price,product_image) VALUES (:product_name,:customer_id, :product_id, 1, :price,:product_image)";
         $stmt = $conn->prepare($query);
+        $stmt->bindParam(':product_name', $name) ;
         $stmt->bindParam(':customer_id', $customer_id);
         $stmt->bindParam(':product_id', $product_id);
         $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':product_image', $image);
 
         if ($stmt->execute()) {
             http_response_code(201);

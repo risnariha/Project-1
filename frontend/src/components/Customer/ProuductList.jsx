@@ -30,7 +30,7 @@ function ProductList({ sidebarToggle, setSidebarToggle }) {
           <div className='row cursor-pointer' >
             {products.map((product, index) => (
               <div className="col-md-3 col-sm-4 col-6" key={index}>
-                <Link to={{ pathname: "/productDetail" }}
+                <Link to={{ pathname: "/customer/productDetail" }}
                   state={{ product }} 
                   onClick={() => onProductClick(product)}>
                   <div className="card my-3">

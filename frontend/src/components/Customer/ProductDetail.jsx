@@ -1,47 +1,95 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 
-function ProductDetail({sidebarToggle}) {
+function ProductDetail({ sidebarToggle }) {
   const location = useLocation();
   const { product } = location.state;
+  const [add, setAdd] = useState(false);
+  const { user } = useOutletContext();
+  const userID = JSON.parse(sessionStorage.getItem('userID'));
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("product :", product);
+
+    const checkIfAddedToCart = async () => {
+      // try {
+        
+       const product_id=product.productID;
+       const customer_id=userID;
+        console.log("product_id:", product_id, "customer_id:", customer_id);
+        const response = await axios.get('http://localhost:8080/backend/api/Customer/check_cart_item.php', {
+          params: { product_id, customer_id }
+      });
+        if(response) {
+            console.log("checkIfAddedToCart:", response.data);
+              setAdd(true);
+          }
+      // } catch (error) {
+      //   console.error("There was an error checking the cart status:", error);
+      // }
+    };
+    checkIfAddedToCart();
+  }, [navigate]);
+
+  const addToCart = () => {
+    if (!add) {
+      console.log("Add to carting");
+      try {
+        axios.post('http://localhost:8080/backend/api/Customer/add_cart_item.php', {
+          customer_id: userID,
+          product_id: product.productID,
+          price: product.productPrice,
+          name:product.productName,
+          image:product.productImage
+        })
+          .then((response) => {
+            if (response.data) {
+              setAdd(true);
+              alert("Product successfully added to cart.");
+              console.log("Add to cart");
+            }
+          });
+
+
+      } catch (error) {
+        console.error("There was an error adding the product to the cart:", error);
+      }
+    } else {
+      alert("Item is already added..!");
+    }
+  };
 
   return (
     <div className='container d-flex justify-content-center'>
-        <div 
-        className={`${ sidebarToggle ? "ml-25" : "" } w-full card-body d-flex flex-row mt-5`}
-         
-        >
-          <div className="card m-3" >
-            <div className="row g-0 justify-content-center align-items-center d-flex p-4">
-              <div className="col-md-4 col-sm-5 col-6">
-                <img src={product.Image} className="img-fluid rounded-start" alt="..."/>
-              </div>
-              <div className="col-md-8">
-                <div className="card-body d-flex flex-column">
-                  <h4 className="card-title ">{product.Name}</h4>
-                  <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <h6 className='card-title rounded fw-bold'>Rs. {product.Price}.00</h6> 
-                  <div className='justify-content-center align-items-center d-flex flex-column'>
-                  <button className='btn btn-danger rounded-pill md-w-50 sm-w-75 xs-w-100 mb-2'>Add to Cart</button>
-                  <button className='btn btn-danger bg-white text-danger rounded-pill md-w-50 sm-w-75 xs-w-100'>Buy Now</button>
-                  </div>
+      <div className={`${sidebarToggle ? "ml-25" : ""} w-100 card-body d-flex flex-row mt-5`}>
+        <div className="card m-5">
+          <div className="row g-0 justify-content-center align-items-center d-flex p-4">
+            <div className="col-md-4 col-sm-5 col-6">
+              <img src={product.productImage} className="img-fluid rounded-start w-100" alt={product.productName} />
+            </div>
+            <div className="col-md-8">
+              <div className="card-body d-flex flex-column">
+                <div className="w-100 card-body d-flex flex-column justify-content-center align-items-center">
+                  <h2 className="card-title">{product.productName}</h2>
+                  <p className="card-text">Net weight: {product.productNetweight}</p>
+                  <h6 className='card-title rounded fw-bold'>Rs. {product.productPrice}.00</h6>
+                </div>
+
+                <div className='justify-content-center align-items-center d-flex flex-column'>
+                  <button
+                    className={`btn btn-danger rounded-pill md-w-75 sm-w-75 xs-w-100 mb-2`}
+                    onClick={addToCart}
+                  >
+                    Add to Cart
+                  </button>
+                  <button className='btn btn-danger bg-white text-danger rounded-pill md-w-75 sm-w-75 xs-w-100'>Buy Now</button>
                 </div>
               </div>
             </div>
           </div>
-          {/* <div className='card w-50 d-flex'>
-            <h2 className='card-title d-flex'>{product.Name}</h2>
-            <img src={product.Image} alt="" className='card-img p-5 d-flex' />
-          </div>
-          <div className='w-100 d-flex flex-column p-5'>
-            <h2 className='card-title bg-dark text-white p-3 rounded'>Rs. {product.Price}.00</h2>
-            <h3 className='card-title'>{product.Name}</h3>
-            <h4 className='card-title'>{product.Mobile}</h4>
-            <h5 className='card-title'>{product.Email}</h5>
-            <h2 className='card-title'>{product.Name}</h2>
-            
-          </div> */}
         </div>
+      </div>
     </div>
   );
 }

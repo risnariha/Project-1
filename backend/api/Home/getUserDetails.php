@@ -15,6 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
+        
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $data = $stmt->fetch();
         if($data){
