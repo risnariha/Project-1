@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useRef } from 'react';
 import 'typeface-poppins';
+//import emailjs from '@emailjs/browser';
+import emailjs from "emailjs-com";
 
 
 
 
-function Contactus() {
+
+const Contactus = () => {
+  const form = useRef();
+  const sendEmail = (event) => {
+    event.preventDefault();
+
+    emailjs
+      .sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY')
+      .then(
+        (result) => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
   return (
     <div className="container justify-content-center rounded bg-white mt-5" style={{ width: '70%', fontFamily: 'Poppins' }} >
      
@@ -15,28 +33,28 @@ function Contactus() {
             <div className='col-md-6 '>
                 <img src ="public/contact.jpg"  alt='img' style={{ width: '90%' }}/>
             </div>
-            <div className='col-md-6 border-left mt-4' style={{ fontSize: '16px' }}>
+            <form ref={form} onSubmit={sendEmail} className='col-md-6 border-left mt-4' style={{ fontSize: '16px' }}>
               
                 <div className="form-group">
                 <label>First Name</label>
-                <input type="text" className="form-control"  placeholder=' Name' required />
+                <input type="text" className="form-control" name = "user_name" placeholder=' Name' required />
               </div>
-              <div className="form-group mt-3">
+              {/* <div className="form-group mt-3">
                 <label>Mobile Number</label>
                 <input type="text" className="form-control"  placeholder='Mobile ' required />
-              </div>
+              </div> */}
               <div className="form-group mt-3">
                 <label>Email Address</label>
-                <input type="text" className="form-control"  placeholder='Email' required />
+                <input type="text" className="form-control" name = "user_email" placeholder='Email' required />
               </div>
               <div className="form-group mt-3">
                 <label>Message</label>
-                <textarea rows ='4' className="form-control" placeholder=' Message......' required />
+                <textarea rows ='4' className="form-control" name = "message" placeholder=' Message......' required />
               </div>
               <div className='text-end mt-4'>
                 <input type="submit" className="btn btn-primary shadow w-100" value='Send Email' />
               </div>
-            </div>
+            </form>
         </div>
         </div>
       </div>

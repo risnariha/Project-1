@@ -235,17 +235,17 @@ form .register-link{
     color: #f7f8f7;
 }
 .message {
-    width: 46%;
+    width: 30%;
     z-index: 10000;
     height: 100%;
     background: transparent;
     border: none;
     outline: none;
-    margin-left: 27%;
+     margin-left: 35%;
     margin-top: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 22px; 
     padding: 5px;
-    border-radius: 15px;
+    border-radius: 12px;
     justify-content: center;
     display: flex;
   }

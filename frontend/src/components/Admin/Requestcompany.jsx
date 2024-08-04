@@ -126,13 +126,13 @@ const Requestcompany = ({ showRequestAddModal, handleCloseRequestAddModal, handl
             <Modal.Title>View Company</Modal.Title>
           </Modal.Header>
           <Modal.Body style={{fontSize:'135%'}}>
-            <p><strong>ID:</strong> {selectedCompany.id}</p>
+             <p><strong>ID:</strong> {selectedCompany.id}</p>
             <p><strong>Name:</strong> {selectedCompany.username}</p>
             <p><strong>Company Name:</strong> {selectedCompany.businessName}</p>
             <p><strong>Email:</strong> {selectedCompany.email}</p>
             <p><strong>Contact Number:</strong> {selectedCompany.contactNumber}</p>
             <p><strong>Address:</strong> {selectedCompany.address}</p>
-            <p><strong>District:</strong> {selectedCompany.district}</p>
+            <p><strong>District:</strong> {selectedCompany.district}</p> 
             {/*<p><strong>Reference No:</strong> {selectedCustomer.customerShopReferenceNo}</p>*/}
             {/*<p><strong>Password:</strong> {selectedCustomer.password}</p>*/}
           </Modal.Body>

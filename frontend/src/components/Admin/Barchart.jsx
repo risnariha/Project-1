@@ -34,7 +34,7 @@ const options = {
     },
     title:{
       display:true,
-      text:'Number of Products in company'
+      text:''
     }
   }
 }
