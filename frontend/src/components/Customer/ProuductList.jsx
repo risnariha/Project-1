@@ -34,10 +34,10 @@ function ProductList({ sidebarToggle, setSidebarToggle }) {
                   state={{ product }} 
                   onClick={() => onProductClick(product)}>
                   <div className="card my-3">
-                    <img src={product.Image} className="card-img-top" alt="Product Image" />
+                    <img src={product.productImage} className="card-img-top" alt="Product Image" />
                     <div className="card-body">
-                      <h5 className="card-title">{product.Name}</h5>
-                      <h6 className='card-title'>{product.Mobile}</h6>
+                      <h5 className="card-title">{product.productName}</h5>
+                      <h6 className='card-title rounded fw-bold'>Rs. {product.productPrice}.00</h6> 
                     </div>
                   </div>
                 </Link>
