@@ -33,15 +33,15 @@ const data = {
 
 function PieChart() {
   return (
-    <div className='container mt-5'>
-      <div className='row justify-content-center'>
-        <div className='col-12 col-md-10'>
-          <div className='p-4 shadow bg-chart pie rounded'>
-            <Pie data={data} options={options} width={400} height={300} />
-          </div>
+    
+      <div className='d-flex justify-content-center'>
+        
+          
+            <Pie data={data} options={options} style={{width:'60%'}} />
+          
         </div>
-      </div>
-    </div>
+      
+    
   );
 }
 

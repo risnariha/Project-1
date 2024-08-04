@@ -3,10 +3,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-include '../connect.php';
+require_once '../Connection/connection.php';
 
-$connector = new DbConnector();
-$conn = $connector->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     // Handle preflight requests
@@ -19,9 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rating_value'])) {
     $userMessage = $_POST['userMessage'];
     $now = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO review_table (name, rating, message, datetime) VALUES (:userName, :rating_value, :userMessage, :now)";
+    $sql = "INSERT INTO review_table (productID,name, rating, reviewText, reviewDate) VALUES (:userName, :rating_value, :userMessage, :now)";
     $stmt = $conn->prepare($sql);
-
+    $stmt->bindParam(':userName', $userName);
+    $stmt->bindParam(':rating_value', $rating_value);
     $stmt->bindParam(':userName', $userName);
     $stmt->bindParam(':rating_value', $rating_value);
     $stmt->bindParam(':userMessage', $userMessage);
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $ratingsList = array();
     $totalRatings_avg = 0;
 
-    $sql = "SELECT * FROM review_table ORDER BY review_id DESC";
+    $sql = "SELECT * FROM product_reviews ORDER BY reviewID DESC";
     $stmt = $conn->query($sql);
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -54,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             'review_id' => $row['review_id'],
             'name' => $row['name'],
             'rating' => $row['rating'],
-            'message' => $row['message'],
-            'datetime' => date('l jS \of F Y h:i:s A', strtotime($row['datetime']))
+            'message' => $row['reviewText'],
+            'datetime' => date('l jS \of F Y h:i:s A', strtotime($row['reviewDate']))
         );
         if ($row['rating'] == '5') {
             $totalRatings5++;
