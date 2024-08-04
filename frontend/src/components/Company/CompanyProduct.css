@@ -107,6 +107,7 @@
     cursor: pointer;
     margin-top: 2rem;
     margin: 0 auto;
+    text-decoration: none;
   }
   .cancel_btn {
     background-color: var(--red);

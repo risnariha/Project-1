@@ -36,14 +36,14 @@ const data = {
 
 function BarChart() {
   return (
-    <div className="container mt-5">
+    
       <div className="row justify-content-center">
-        <div className="col-12 col-lg-10">
-          <div className="p-4 shadow  bg-chart bar rounded">
-            <Bar data={data} options={options} />
-          </div>
-        </div>
-      </div>
+        
+          
+      <Bar data={data} options={options} />
+          
+        
+      
     </div>
   );
 }

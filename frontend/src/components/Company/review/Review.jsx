@@ -1,43 +1,37 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaTrash, FaEdit } from 'react-icons/fa';
 import axios from 'axios';
+import { useOutletContext } from 'react-router-dom';
 
 const Review = () => {
+  const { user } = useOutletContext(); // assuming user context contains companyOwnerID
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost/Project-1/backend/api/Company/view_product.php')
-      .then(response => {
-        if (Array.isArray(response.data)) {
-          setProducts(response.data);
-        } else {
-          setError('Invalid response format');
-          console.error('Invalid response format:', response.data);
+    const fetchProducts = async () => {
+      try {
+        if (user) {
+          const response = await axios.post('http://localhost:8080/backend/api/Company/view_product.php', {
+            companyOwnerID: user.companyOwnerID,
+          });
+          console.log("user-- ", user);
+
+          if (Array.isArray(response.data)) {
+            setProducts(response.data);
+          } else {
+            setError('Invalid response format');
+            console.error('Invalid response format:', response.data);
+          }
         }
-      })
-      .catch(error => {
+      } catch (error) {
         setError('Error fetching products');
         console.error('Error fetching products:', error);
-      });
-  }, []);
+      }
+    };
 
-//   const handleDelete = (product_id) => {
-//     if (window.confirm('Are you sure you want to delete this product?')) {
-//       axios.get(`http://localhost/Project-1/backend/api/Company/delete_product.php?delete=${product_id}`)
-//         .then(response => {
-//           if (response.data.success) {
-//             setProducts(products.filter(product => product.product_id !== product_id));
-//           } else {
-//             console.error('Error deleting product:', response.data.error);
-//           }
-//         })
-//         .catch(error => console.error('Error deleting product:', error));
-//     }
-//   };
+    fetchProducts();
+  }, [user]);
 
   if (error) {
     return <div className="error">{error}</div>;
@@ -45,6 +39,9 @@ const Review = () => {
 
   return (
     <div className="maincontainer">
+       <div className="table_heading">
+        <h3>Review details</h3>
+      </div>
       <section className="display_product">
         {products.length > 0 ? (
           <table>
@@ -58,14 +55,12 @@ const Review = () => {
             </thead>
             <tbody>
               {products.map((product, index) => (
-                <tr key={product.product_id}>
+                <tr key={product.productID}>
                   <td>{index + 1}</td>
-                  <td><img src={`http://localhost/Project-1/images/${product.product_image}`} alt={product.product_name} /></td>
-                  <td>{product.product_name}</td>
-                  
+                  <td><img src={product.productImage} alt={product.productName} /></td>
+                  <td>{product.productName}</td>
                   <td>
-                    
-                    <Link className="btn btn-primary m-2" to={`/reviewlayout/${product.product_id}`}>Check</Link>
+                    <Link className="btn btn-primary m-2" to={`company/reviewlayout/${product.productID}`}>Check</Link>
                   </td>
                 </tr>
               ))}
