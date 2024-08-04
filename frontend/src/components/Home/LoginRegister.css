@@ -22,7 +22,7 @@
     justify-content: center;
     align-items: center;
     width: 420px;
-    height: 500px;
+    height: 450px;
     margin: auto;
 }
 
@@ -114,7 +114,7 @@ form.check .input-box{
    border: none;
    outline: none;
    border: 2px solid rgba(247, 244, 244, 0.1);
-   border-radius: 40px;
+   border-radius: 15px;
    font-size: 16px;
    color: #fff;
    padding: 20px 45px 20px 20px;
@@ -126,7 +126,7 @@ form.check .input-box{
     border: none;
     outline: none;
     border: 2px solid rgba(247, 244, 244, 0.1);
-    border-radius: 40px;
+    border-radius: 15px;
     font-size: 16px;
     color: #fff;
     padding: 0 20px ;
@@ -139,7 +139,7 @@ form.check .input-box{
     /* border: none; */
     outline: none;
     border: 2px solid rgba(247, 244, 244, 0.1);
-    border-radius: 40px;
+    border-radius: 15px;
     
 
  }
@@ -183,7 +183,7 @@ form .remember-forgot{
 
 .remember-forgot label input{
     accent-color: #fff;
-    margin-right: 4px;
+    margin-right: 5px;
 }
 
 .remember-forgot a{
@@ -201,7 +201,7 @@ form button{
     border: none;
     background-color: #fff;
     outline: none;
-    border-radius: 40px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     font-size: 16px;
@@ -209,7 +209,7 @@ form button{
     font-weight: 700;
 }
 .submit:hover{
-    background-color: #0e9117;
+    background-color: #672c9a;
     color: #fff;
 }
 

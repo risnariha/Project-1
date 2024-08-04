@@ -9,7 +9,7 @@ export default function Header() {
     navigate('/');
   };
   return (
-    <div className='d-flex w-full bg-white justify-content-between align-items-center'>
+    <div className='d-flex w-full bg-light justify-content-between align-items-center'>
       <div className='d-flex cursor-pointer' onClick={handleLogo}>
         <div className='align-items-center d-flex'>
           <img src={logo} alt="" className='h-10 w-10 d-felx ms-3' />
@@ -18,12 +18,12 @@ export default function Header() {
       </div>
       <div className='d-flex justify-content-between '>
         <div className='d-flex px-3'>
-          <Link to ="/Aboutus" className='text-black text-decoration-none'> About
+          <Link to ="/Aboutus" className='text-black text-decoration-none'style={{fontSize:'160%'}}> About
             <FaInfoCircle className=' mx-2' />
           </Link>
         </div>
         <div className='d-flex px-3'>
-          <Link to ="/Contactus" className='text-black text-decoration-none'> Contact
+          <Link to ="/Contactus" className='text-black text-decoration-none'style={{fontSize:'160%'}}> Contact
             <FaUser className=' mx-2' />
           </Link>
         </div>

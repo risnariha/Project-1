@@ -70,10 +70,10 @@ export const Login = () => {
             <div className="homeHeader">
 
                 <div className="homeHeaderLinks">
-                    <Link to="/">Home</Link>
-                    <Link to="/products">Products</Link>
-                    <Link to="/faqs">FAQs</Link>
-                    <Link to="/Login">Log in</Link>
+                    <Link to="/" style={{fontSize:'150%'}}>Home</Link>
+                    <Link to="/products" style={{fontSize:'150%'}}>Products</Link>
+                    <Link to="/faqs" style={{fontSize:'150%'}}>FAQs</Link>
+                    <Link to="/Login" style={{fontSize:'150%'}}>Log in</Link>
                 </div>
             </div>
             {/* <div className="loginContainer"> */}
@@ -108,7 +108,7 @@ export const Login = () => {
                                     />
                                     <FaLock className='icon text-white' />
                                 </div>
-                                <div className="remember-forgot">
+                                <div className="remember-forgot mt-4">
                                     <label><input 
                                     type='checkbox' 
                                     checked={rememberMe}
@@ -117,9 +117,9 @@ export const Login = () => {
                                     Remember me</label>
                                     <Link to="/forgot-password">Forgot password?</Link>
                                 </div>
-                                <button type='submit' className='submit'>Login</button>
+                                <button type='submit' className='submit mt-3'>Login</button>
                                 <div className='justify-content-center d-flex fs-6 mt-2'>
-                                    <span className='text-white'>Don't have an account?<Link to="/register" className='register'> Register</Link></span>
+                                    <span className='text-white mt-3 mb-0'>Don't have an account ?<Link to="/register" className='register text-info ms-1'> Register</Link></span>
                                 </div>
                                 {/* <h2 id='h1'>Login</h2> */}
                                 {/* <div className="loginInputsContainer">

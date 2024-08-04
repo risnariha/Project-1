@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $fname = htmlspecialchars($company['username']);
         }
 
-        if (empty($company['businessName'])) {
+        if (empty($company['companyName'])) {
             $errors[] = "Shop name is required";
         } else {
-            $shopname = htmlspecialchars($company['businessName']);
+            $shopname = htmlspecialchars($company['companyName']);
         }
 
         if (!isset($company['contactNumber']) || !preg_match("/^\d{10}$/", $company['contactNumber'])) {
@@ -56,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $address = htmlspecialchars($company['address']);
         }
 
-        if (empty($company['district'])) {
-            $errors[] = "District is required";
-        } else {
-            $district = htmlspecialchars($company['district']);
-        }
+         if (empty($company['district'])) {
+             $errors[] = "District is required";
+         } else {
+             $district = htmlspecialchars($company['district']);
+         }
 
         // if (empty($company['companyShopReferenceNo'])) {
         //     $errors[] = "Reference number is required";
@@ -75,9 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Generate a Unique company ID
            // Generate company ID
+           $ID = uniqid("CMP", true);
 
-
-$refno='4545';
+//$refno='4545';
         // Generate a random password
         $PW = bin2hex(random_bytes(4));
 
@@ -86,23 +86,23 @@ $refno='4545';
 
             // Insert into companys table
             $sql = "INSERT INTO companyowners 
-                               (companyOwnerName, 
+                               (companyOwnerID,companyOwnerName, 
                                 email, 
                                 password, 
                                 companyContactNumber, 
                                 companyName, 
-                                companyAddress, 
-                                district)
-                                 VALUES (?, ?, ?, ?, ?, ?, ?)";
+                                companyAddress,district 
+                                )
+                                 VALUES (?, ?, ?, ?, ?, ?,?)";
             $pstmt = $conn->prepare($sql);
-            // $pstmt->bindParam(1, $ID);
-            $pstmt->bindParam(1, $fname);
-            $pstmt->bindParam(2, $email);
-            $pstmt->bindParam(3, $PW);
-            $pstmt->bindParam(4, $contact);
-            $pstmt->bindParam(5, $shopname);
-            $pstmt->bindParam(6, $address);
-            $pstmt->bindParam(7, $district);
+             $pstmt->bindParam(1, $ID);
+            $pstmt->bindParam(2, $fname);
+            $pstmt->bindParam(3, $email);
+            $pstmt->bindParam(4, $PW);
+            $pstmt->bindParam(5, $contact);
+            $pstmt->bindParam(6, $shopname);
+            $pstmt->bindParam(7, $address);
+            $pstmt->bindParam(8, $district);
            
 
 
@@ -134,3 +134,4 @@ $refno='4545';
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
 
+?>
