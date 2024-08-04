@@ -3,13 +3,12 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require_once '../connect.php';
+include '../Connection/connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
 
-    $db = new DbConnector();
-    $conn = $db->getConnection();
+    
 
     if ($input['action'] === 'load_data' && isset($input['productId'])) {
         $productId = $input['productId'];
@@ -19,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ratingsList = array();
 
         // Fetch average ratings for the product
-        $sql = "SELECT AVG(rating) as avgUserRatings FROM review_table WHERE product_id = :productId";
+        $sql = "SELECT AVG(rating) as avgUserRatings FROM product_reviews WHERE productID = :productId";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':productId', $productId);
         if ($stmt->execute()) {
@@ -33,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Fetch all reviews for the product
-        $sql = "SELECT * FROM review_table WHERE product_id = :productId ORDER BY datetime DESC";
+        $sql = "SELECT * FROM review_table WHERE productID = :productId ORDER BY datetime DESC";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':productId', $productId);
         if ($stmt->execute()) {
@@ -41,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $ratingsList[] = array(
                     'rating' => $row['rating'],
                     'name' => $row['name'],
-                    'message' => $row['message'],
-                    'datetime' => date('l jS, F Y h:i:s A', strtotime($row['datetime']))
+                    'message' => $row['reviewText'],
+                    'datetime' => date('l jS, F Y h:i:s A', strtotime($row['reviewDate']))
                 );
             }
         } else {
