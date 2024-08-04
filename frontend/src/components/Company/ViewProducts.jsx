@@ -78,14 +78,14 @@ const ViewProducts = () => {
               {products.map((product, index) => (
                 <tr key={product.productID}>
                   <td>{index + 1}</td>
-                  <td><img src={product.productImage} alt={product.product_name} /></td>
+                  <td><img src={product.productImage} alt={product.productName} /></td>
                   <td>{product.productName}</td>
                   <td>{product.productPrice}</td>
                   <td>{product.productQuantity}</td>
                   <td>{product.productNetweight}</td>
                   <td>
                     <button className="delete_product_btn" onClick={() => handleDelete(product.productID)}><FaTrash /></button>
-                    <Link className="update_product_btn" to={`/update/${product.productID}`}><FaEdit /></Link>
+                    <Link className="update_product_btn" to={`/company/update/${product.productID}`}><FaEdit /></Link>
                   </td>
                 </tr>
               ))}

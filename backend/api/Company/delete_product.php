@@ -21,16 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 // Ensure headers are set before any output
 header('Content-Type: application/json');
 
-require_once 'connect.php';
-
-$dbcon = new DbConnector();
-$conn = $dbcon->getConnection();
+require_once '../Connection/connection.php';
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
 
     try {
-        $delete_query = "DELETE FROM `products` WHERE product_id=:product_id";
+        $delete_query = "DELETE FROM `products` WHERE productID=:product_id";
         $delete_stmt = $conn->prepare($delete_query);
         $delete_stmt->execute([':product_id' => $delete_id]);
 
