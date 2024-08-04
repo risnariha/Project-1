@@ -17,7 +17,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Prepare and execute the SQL statement
-    $stmt = $conn->prepare("SELECT productId, productName, productCategory, productPrice, productQuantity,productNetweight,productImage FROM products");
+    $stmt = $conn->prepare("SELECT * FROM products");
     $stmt->execute();
 
     // Fetch all products as an associative array
