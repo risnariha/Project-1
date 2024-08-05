@@ -57,8 +57,7 @@ const UpdateProduct = () => {
     formData.append("update_product_price", product.productPrice);
     formData.append("update_product_quantity", product.productQuantity);
     formData.append("image", image);
-    formData.append("imagePath", imagepath);
-    
+    formData.append("imagePath", imagePath);
 
     axios
       .post(
@@ -66,7 +65,7 @@ const UpdateProduct = () => {
         formData
       )
       .then((response) => {
-        console.log("update : ",response.data);
+        console.log("update : ", response.data);
         setMessage(response.data.message);
         setTimeout(() => {
           navigate("/Company/display-product");
@@ -92,7 +91,7 @@ const UpdateProduct = () => {
             encType="multipart/form-data"
             className="update_product product_container_box"
           >
-            <div className="justify-content-center d-flex w-30  align-items-start ms-5">
+            <div className="justify-content-center d-flex w-30  align-items-center ms-5">
               {image ? (
                 <img
                   src={URL.createObjectURL(image)}
@@ -109,11 +108,7 @@ const UpdateProduct = () => {
                 <BiImageAdd className="w-100 h-100 ps-2 rounded bg-white" />
               )}
             </div>
-            <input
-              type="hidden"
-              name="update_product_id"
-              value={productID}
-            />
+            <input type="hidden" name="update_product_id" value={productID} />
             <input
               type="hidden"
               name="current_product_image"

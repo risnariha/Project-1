@@ -1,14 +1,13 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
 
-const HomeCard = ({ title, icon: Icon, count }) => {
+const HomeCard = ({ title, icon: Icon, count, className }) => {
   return (
-    <div className='p-4 shadow bg-dark rounded'>{/* Each card */}
-      <div className='d-flex align-items-center mb-2'>
-        <Icon className='me-2 text-white' style={{ width: '24px', height: '24px' }} />
-        <h3 className='h5 text-white mb-0'>{title}</h3>
+    <div className={`card ${className}`}>
+      <div className="card-body text-center">
+        <Icon size={40} />
+        <h5 className="card-title mt-2">{title}</h5>
+        <p className="card-text" style={{fontSize:'165%'}}>{count}</p>
       </div>
-      <h2 className='h3 text-white fw-bold'>{count}</h2>
     </div>
   );
 };
