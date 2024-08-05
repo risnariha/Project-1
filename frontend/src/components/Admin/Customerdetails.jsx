@@ -98,7 +98,7 @@ useEffect(()=>{
                         <td className='d-flex justify-content-center'>
                           <button className="btn btn-primary me-1" onClick={() => handleShowViewModal(customer)}>View</button>
                           {/*<button className="btn btn-success me-1">Edit</button>*/}
-                          <button className="btn btn-danger me-1 ">Delete</button>
+                          {/* <button className="btn btn-danger me-1 ">Delete</button> */}
                         </td>
                       </tr>
                     ))}
