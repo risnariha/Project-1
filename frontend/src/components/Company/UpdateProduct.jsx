@@ -18,6 +18,7 @@ const UpdateProduct = () => {
   const hiddenFileInput = useRef(null);
 
   useEffect(() => {
+  
     axios
       .get(
         `http://localhost:8080/backend/api/Company/view_product.php?product_id=${productID}`
@@ -57,7 +58,7 @@ const UpdateProduct = () => {
     formData.append("update_product_price", product.productPrice);
     formData.append("update_product_quantity", product.productQuantity);
     formData.append("image", image);
-    formData.append("imagePath", imagePath);
+    formData.append("imagePath", imagepath);
 
     axios
       .post(

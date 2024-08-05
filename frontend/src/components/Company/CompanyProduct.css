@@ -135,7 +135,11 @@
   }
   .display_product table thead th {
     padding: 1.5rem;
+<<<<<<< HEAD
      font-size: 1.3rem; 
+=======
+    font-size: 1.3rem;
+>>>>>>> 777cb64708e2748a7cccfba141d17d0be04d4dfa
     background-color: var(--color2);
     color: var(--white);
   }
@@ -145,7 +149,11 @@
   }
   td {
     padding: 1rem;
+<<<<<<< HEAD
      font-size: 1.2rem; 
+=======
+    font-size: 1.2rem;
+>>>>>>> 777cb64708e2748a7cccfba141d17d0be04d4dfa
     color: var(--color1);
     border: 1px solid var(--white);
     text-transform: capitalize;

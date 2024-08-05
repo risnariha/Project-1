@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useOutletContext } from "react-router-dom";
 
 function PlaceOrder() {
+  const { user } = useOutletContext();
   const [showModal, setShowModal] = useState(false);
+  const [email, setEmail] = useState();
+  const [name, setName] = useState();
+  const [sname, setSName] = useState();
+  const [number, setNumber] = useState();
+  const [address, setAddress] = useState();
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
-
+useEffect(()=>{
+  if(user){
+    setEmail(user.email);
+    setName(user.customerName);
+    setNumber(user.customerContactNumber);
+    setAddress(user.customerAddress);
+    setSName(user.customerShopName);
+  }
+},[]);
   const handleProceed = () => {
     // Show success alert and close the modal
     alert("Payment Successful!");
@@ -21,24 +36,24 @@ function PlaceOrder() {
     >
       <form method="POST" style={{ fontSize: "140%" }}>
         <div className="mb-3">
-          <label>First Name</label>
-          <input type="text" name="f_name" className="form-control" />
+          <label>Customer Name</label>
+          <input type="text" name="f_name" className="form-control" value={name}/>
         </div>
         <div className="mb-3">
-          <label>Last Name</label>
-          <input type="text" name="l_name" className="form-control" />
+          <label>Shop Name</label>
+          <input type="text" name="l_name" className="form-control" value={sname} />
         </div>
         <div className="mb-3">
           <label>Address 1</label>
-          <input type="text" name="addrs1" className="form-control" />
+          <input type="text" name="addrs1" className="form-control" value={address}/>
         </div>
         <div className="mb-3">
           <label>Mobile Number</label>
-          <input type="number" name="mob_no" className="form-control" />
+          <input type="number" name="mob_no" className="form-control" value={number}/>
         </div>
         <div className="mb-3">
           <label>Email</label>
-          <input type="text" name="email" className="form-control" />
+          <input type="text" name="email" className="form-control" value={email} />
         </div>
         <div className="mb-3">
           <label>Postal Code</label>
