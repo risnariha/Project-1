@@ -56,9 +56,9 @@ const Products = () => {
                   <img src={product.productImage} className='card-img-top' alt={product.name} />
                   <div className='card-body'>
                     <h5 className='card-title'>{product.productName}</h5>
-                    <p className='card-title'>{product.productNetweight}</p>
-                    <p className='card-text'>{product.productCategory}</p>
-                    <p className='card-text'>Price: Rs.{product.productPrice}</p>
+                    <p className='card-title fs-5'>{product.productNetweight}</p>
+                    <p className='card-text fs-5'>{product.productCategory}</p>
+                    <p className='card-text fs-4'>Price: Rs.{product.productPrice}</p>
                   </div>
                 </div>
               </div>
@@ -68,14 +68,14 @@ const Products = () => {
           ):(
             <div className='row gy-4'>
             {products.map((product) => (
-            <div key={product.productId} className='col-6 col-md-6 col-lg-4'>
+            <div key={product.productId} className='col-6 col-md-3 col-lg-4'>
               <div className='card'>
-                <img src={product.productImage} className='card-img-top' alt={product.name} />
-                <div className='card-body'>
+                <img src={product.productImage} className='card-img-top bg-dark' alt={product.name} />
+                <div className='card-body bg-secondary text-white'>
                   <h5 className='card-title'>{product.productName}</h5>
-                  <p className='card-title'>{product.productNetweight}</p>
-                  <p className='card-text'>{product.productCategory}</p>
-                  <p className='card-text'>Price: Rs.{product.productPrice}</p>
+                  <p className='card-title fs-5'>{product.productNetweight}</p>
+                  <p className='card-text fs-5'>{product.productCategory}</p>
+                  <p className='card-text fs-4'>Price: Rs.{product.productPrice}</p>
                 </div>
               </div>
             </div>
