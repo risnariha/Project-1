@@ -39,6 +39,7 @@ import { Faqs } from './components/Home/Faqs';
 import Register from './components/Home/Register';
 import Footer from './components/Home/Footer';
 import Products from './components/Home/Products'
+import Setting from './components/Customer/Setting';
 
 function App() {
 
@@ -68,11 +69,12 @@ function App() {
           {/* customer */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="dash" element={<ProuductList />} />
+            <Route path="shop" element={<ProuductList />} />
             <Route path="CartItems" element={<CartItems />} />
             <Route path="PlaceOrder" element={<PlaceOrder />} />
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />
-
+            <Route path="setting" element={<Setting/>}/>
 
           </Route>
           {/* company */}
