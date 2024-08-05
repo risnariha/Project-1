@@ -11,21 +11,22 @@ function Companydetails() {
   const [showViewModal, setShowViewModal] = useState(false);
   const [showRequestAddModal, setShowRequestAddModal] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const [products,setProducts] = useState([]);
 
-  const handleShowViewModal = (company) => {
+  const handleShowViewModal = async (company) => {
     setSelectedCompany(company);
-    // try {
-    //   const response = await axios.post('http://localhost:8080/backend/api/Admin/Listproducts.php');
-    //   const jsonData = response.data;
-    //   if (jsonData.success) {
-    //     setCompany(jsonData.data);
-    //   } else {
-    //     setError(jsonData.message);
-    //   }
-    // } catch (error) {
-    //   setError(error.message);
-    // }
-    // setShowViewModal(true);
+    try {
+      const response = await axios.post('http://localhost:8080/backend/api/Admin/Listproducts.php',{companyOwnerID:company.companyOwnerID});
+      const jsonData = response.data;
+      if (jsonData.error) {
+        setError(jsonData.error);
+      } else {
+       setProducts(jsonData);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+    setShowViewModal(true);
   };
 
   const handleCloseViewModal = () => setShowViewModal(false);
@@ -124,20 +125,31 @@ function Companydetails() {
             <Modal.Title>Company Products</Modal.Title>
           </Modal.Header>
           <Modal.Body style={{fontSize:'135%'}}>
-            {/* {company.map((company) =>{
-              <ul key {company.companyOwnerID}>
-                <li></li>
-              </ul>
-            })} */}
-            {/*<p><strong>ID:</strong> {selectedCustomer.customerID}</p>
-            <p><strong>Name:</strong> {selectedCustomer.customerName}</p>
-            <p><strong>Shop Name:</strong> {selectedCustomer.customerShopName}</p>
-            <p><strong>Email:</strong> {selectedCustomer.email}</p>
-            <p><strong>Contact Number:</strong> {selectedCustomer.customerContactNumber}</p>
-            <p><strong>Address:</strong> {selectedCustomer.customerAddress}</p>
-            <p><strong>District:</strong> {selectedCustomer.customerDistrict}</p>
-            <p><strong>Reference No:</strong> {selectedCustomer.customerShopReferenceNo}</p>
-            <p><strong>Password:</strong> {selectedCustomer.password}</p>*/}
+          {products.length > 0 ? (
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((product) => (
+                    <tr key={product.productID}>
+                      <td>{product.productID}</td>
+                      <td>{product.productName}</td>
+                      <td>Rs.{product.productPrice}</td>
+                      <td>{product.productQuantity}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No products found for this company.</p>
+            )}
+            
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseViewModal}>Close</Button>
