@@ -8,6 +8,7 @@ const CustomerLayout = () => {
     const [sidebarToggle, setSidebarToggle] = useState(false);
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,10 +51,12 @@ const CustomerLayout = () => {
                 sidebarToggle={sidebarToggle}
                 setSidebarToggle={setSidebarToggle}
                 user={user} error={error}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
             />
             <div className={`${sidebarToggle ? "ml-25" : "w-full"}`}>
                 <Outlet
-                    context={{ user: user, sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }}
+                    context={{ user: user, sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle,searchQuery :searchQuery  }}
                 />
             </div>
 
