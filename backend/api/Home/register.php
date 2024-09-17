@@ -2,13 +2,11 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
-
+include('User.php');
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit();
 }
-
-require_once '../Connection/connection.php';
 
 
 $input = json_decode(file_get_contents('php://input'), true);
@@ -27,26 +25,38 @@ if (!preg_match('/^\d{10}$/', $contactNumber)) {
     exit();
 }
 
-// $connection = (new DbConnector())->getConnection();
+
 
 try {
-    // $connection->beginTransaction();
     $businessName = !empty($companyName) ? $companyName : $shopName;
 
-    
-    $status = 'pending';
 
-    $sql = "INSERT INTO registration_requests (userType, username, email, businessName, address, contactNumber, district, status) 
-            VALUES (:userType, :username, :email, :businessName, :address, :contactNumber, :district, :status)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':userType', $userType);
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':businessName', $businessName);
-    $stmt->bindParam(':address', $address);
-    $stmt->bindParam(':contactNumber', $contactNumber);
-    $stmt->bindParam(':district', $district);
-    $stmt->bindParam(':status', $status);
+    $status = 'pending';
+    $reguser = new User();
+    $result = $reguser->register(
+        $userType,
+        $username,
+        $email,
+        $businessName,
+        $address,
+        $contactNumber,
+        $district,
+        $status
+    );
+
+
+
+    // $sql = "INSERT INTO registration_requests (userType, username, email, businessName, address, contactNumber, district, status) 
+    //         VALUES (:userType, :username, :email, :businessName, :address, :contactNumber, :district, :status)";
+    // $stmt = $conn->prepare($sql);
+    // $stmt->bindParam(':userType', $userType);
+    // $stmt->bindParam(':username', $username);
+    // $stmt->bindParam(':email', $email);
+    // $stmt->bindParam(':businessName', $businessName);
+    // $stmt->bindParam(':address', $address);
+    // $stmt->bindParam(':contactNumber', $contactNumber);
+    // $stmt->bindParam(':district', $district);
+    // $stmt->bindParam(':status', $status);
 
     // Generate company ID
     // $lastCompanyIdSql = "SELECT MAX(company_id) AS maxCompanyId FROM company";
@@ -61,7 +71,7 @@ try {
     //     $companyId = 'D' . sprintf('%03d', $lastIdNumber + 1);
     // }
 
-    $result = $stmt->execute();
+
     if ($result) {
         echo json_encode(['success' => true, 'message' => 'Registration successful']);
     } else {
