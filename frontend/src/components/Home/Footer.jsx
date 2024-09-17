@@ -4,9 +4,9 @@ import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 
-const Footer = () => {
+const Footer = ({toggle}) => {
   return (
-    <footer className="bg-dark text-white  p-5 mt-5 height-150">
+    <footer className={`${toggle ? "ml-25" :""} bg-dark text-white  p-5 mt-5 height-150`}>
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-5 m-3">

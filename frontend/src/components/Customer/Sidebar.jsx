@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error,searchQuery, setSearchQuery}) => {
+export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error,searchQuery, setSearchQuery,setToggle}) => {
     // const [user , setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
     // const [error , setError] = useState(null);
     const [scrolled, setScrolled] = useState(false);
@@ -46,7 +46,9 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error,se
         sessionStorage.clear();
         navigate('/');
     };
-
+    useEffect(()=>{
+        setToggle(sidebarToggle);
+    })
 
     if(error){
         return <div> Error : {error.message} </div>;
