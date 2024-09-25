@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import './customer.css';
 import axios from 'axios';
 
-const CustomerLayout = () => {
+const CustomerLayout = ({setToggle}) => {
     const [sidebarToggle, setSidebarToggle] = useState(false);
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
@@ -42,6 +42,8 @@ const CustomerLayout = () => {
         }
     }, [navigate]);
 
+ 
+    
     if (!user) {
         return null; // or a loading spinner
     }
@@ -53,6 +55,7 @@ const CustomerLayout = () => {
                 user={user} error={error}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
+                setToggle = {setToggle}
             />
             <div className={`${sidebarToggle ? "ml-25" : "w-full"}`}>
                 <Outlet
