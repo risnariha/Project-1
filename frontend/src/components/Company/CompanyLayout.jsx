@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import withAuth from './withAuth';
 
-const CompanyLayout = () => {
+const CompanyLayout = ({setToggle}) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [user, setUser] = useState('');
   const [error, setError] = useState(null);
@@ -39,7 +39,7 @@ const CompanyLayout = () => {
       navigate('/');
     }
   }, [navigate]);
-
+    
   if (!user) {
     return null; // or a loading spinner
   }
@@ -49,6 +49,7 @@ const CompanyLayout = () => {
       <CompanySidebar sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
         user={user} error={error}
+        setToggle={setToggle}
       />
       <div className={`${sidebarToggle ? "ml-25 w-75" : " w-100"} `}>
         <Outlet context={{ user: user, sidebarToggle: sidebarToggle, setSidebarToggle: setSidebarToggle }} />

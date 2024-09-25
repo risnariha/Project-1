@@ -6,29 +6,14 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
     
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        include('../Connection/connection.php');
+        // include('../Connection/connection.php');
+        include('../Home/User.php');
+        $getUser = new User();
         $data = json_decode(file_get_contents('php://input'), true);
         $email = $data['email'];
         $table = $data['userType'];
-        try {
-        $query = "SELECT * FROM $table WHERE email = :email";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
+        $getUser->getUserDetails($email,$table);
         
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $data = $stmt->fetch();
-        if($data){
-            $user = $data;
-            $user['password']='';
-        echo json_encode($user);
-        
-        }else{
-            echo json_encode(array('error' => 'data is null: ',$user));
-        }
-        } catch (PDOException $e) {
-            echo json_encode(array('error' => 'Database error: ' . $e->getMessage()));
-    }
 }else{
     echo json_encode(array('error' => 'post data is null: '));
 }

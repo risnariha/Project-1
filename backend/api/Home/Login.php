@@ -8,7 +8,9 @@ header('Access-Control-Allow-Methods: POST');
 $response = array('success' => false, 'message' => '');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include('../Connection/connection.php');
+    // include('../Connection/connection.php');
+    // include('../Connection/DbConnector.php');
+    include('User.php');
     $data = json_decode(file_get_contents('php://input'), true);
     $email = $data['email'];
     $password = $data['password'];
@@ -19,32 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    function check_user($conn, $email, $password, $table)
-    {
-        $query = "SELECT * FROM $table WHERE email = :email";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $user = $stmt->fetch();
-            $hash = $user['password'];
-            if ($password === $hash) {
-                return $user;
-            }
  
-        }
-        return false;
-    }
+    $User = new User(); 
 
     $user = null;
     $userType = null;
-    if ($user = check_user($conn, $email, $password, 'admins')) {
+    if ($user = $User->check_user( $email, $password, 'admins')) {
         $userType = 'admin';
-    } elseif ($user = check_user($conn, $email, $password, 'companyowners')) {
+    } elseif ($user = $User->check_user($email, $password, 'companyowners')) {
         $userType = 'company';
-    } elseif ($user = check_user($conn, $email, $password, 'customers')) {
+    } elseif ($user = $User->check_user( $email, $password, 'customers')) {
         $userType = 'customer';
     } else {
         $response['message'] = 'Invalid email or password';

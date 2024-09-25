@@ -40,8 +40,11 @@ import Register from './components/Home/Register';
 import Footer from './components/Home/Footer';
 import Products from './components/Home/Products'
 import Setting from './components/Customer/Setting';
+import { useState } from 'react';
 
 function App() {
+  const [toggle,setToggle] = useState(false);
+
 
   return (
 
@@ -60,14 +63,14 @@ function App() {
           <Route path="/faqs" element={<Faqs />} />
           <Route path='/products' element={<Products />}/>
           {/* admin */}
-          <Route path="/admin" element={<AdminLayout />}>
+          <Route path="/admin" element={<AdminLayout setToggle={setToggle}/>}>
             <Route path="dash" element={<Dash />} />
             <Route path="Customerdetails" element={<Customerdetails />} />
             <Route path="Companydetails" element={<Companydetails />} />
             <Route path='Order' element={<AdminOrder />} />
           </Route>
           {/* customer */}
-          <Route path="/customer" element={<CustomerLayout />}>
+          <Route path="/customer" element={<CustomerLayout setToggle={setToggle}/>}>
             <Route path="dash" element={<ProuductList />} />
             <Route path="shop" element={<ProuductList />} />
             <Route path="CartItems" element={<CartItems />} />
@@ -78,7 +81,7 @@ function App() {
 
           </Route>
           {/* company */}
-            <Route path="/company/*" element={<CompanyLayout />} >
+            <Route path="/company/*" element={<CompanyLayout setToggle={setToggle}/>} >
               <Route exact path="dash" element={<CompanyDashboard />} />
               <Route exact path="add-product" element={<AddProduct />} />
               <Route exact path="display-product" element={<ViewProducts />} />
@@ -90,7 +93,7 @@ function App() {
               <Route exact path="profile" element={<CompanyProfile/>}/>
             </Route>
         </Routes>
-        <Footer />
+        <Footer toggle = {toggle}/>
       </Router>
       {/* <Sidebar
           sidebarToggle={sidebarToggle}
