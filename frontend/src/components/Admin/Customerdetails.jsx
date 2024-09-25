@@ -5,6 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 import Requestcustomer from './Requestcustomer';
 
 function Customerdetails() {
+  const[search, setSearch] = useState('');
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,6 +51,10 @@ useEffect(()=>{
     
   };
 
+  // function handleFilter(event) {
+  //   const new = search.filter();
+  // }
+
   useEffect(() => {
     fetchCustomerData();
     
@@ -66,7 +71,7 @@ useEffect(()=>{
           <div className='card'>
             <div className='card-header bg-dark text-white d-flex justify-content-between align-items-center'>
                 <form className="d-flex" role="search">
-                    <input className="form-control" placeholder="Search" aria-label="Search"/>
+                    <input className="form-control" onChange={(e)=>setSearch(e.target.value)}  placeholder="Search" aria-label="Search"/>
                 </form>
                 <h1 className='h4 text-center'>Customers Details</h1>
                 <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
@@ -88,7 +93,9 @@ useEffect(()=>{
                   </thead>
                   <tbody>
           
-                    {customers.map((customer) => (
+                    {customers.filter((customer)=>{
+                      return search.toLowerCase() === '' ? customers : customer.customerName.toLowerCase().includes(search);
+                    }).map((customer) => (
                       <tr key={customer.customerID} style={{fontSize:'145%'}}>
                         <td>{customer.customerName}</td>
                         <td>{customer.customerShopName}</td>

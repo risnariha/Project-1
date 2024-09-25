@@ -61,23 +61,28 @@ const Requestcompany = ({ showRequestAddModal, handleCloseRequestAddModal, handl
     
       const handleAcceptCompany = async() => {
         console.log('accept clicked');
-        try {
-          const response = await axios.post('http://localhost:8080/backend/api/Admin/Addcompany.php', selectedCompany);
-          const data = response.data;
-          console.log('data : ', data);
-          if (data.success) {
-            alert("Company added successfully");
-            // Optionally refetch the customer list or update state to remove the accepted customer from the UI
-            fetchCompanyRequestData();
-          } else {
-            alert("Error adding company");
-            console.error(data.message);
+        const confirmed = window.confirm("Are you sure want to add this company ?");
+        if(confirmed){
+          try {
+            const response = await axios.post('http://localhost:8080/backend/api/Admin/Addcompany.php', selectedCompany);
+            const data = response.data;
+            console.log('data : ', data);
+            if (data.success) {
+              alert("Company added successfully");
+              // Optionally refetch the customer list or update state to remove the accepted customer from the UI
+              fetchCompanyRequestData();
+              window.location.reload();
+            } else {
+              alert("Error adding company");
+              console.error(data.message);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert("There was an error!");
           }
-        } catch (error) {
-          console.error('Error:', error);
-          alert("There was an error!");
+          setShowCompanyDetailsModal(false);
         }
-        setShowCompanyDetailsModal(false);
+        
       };
     
       const handleRejectCompany = () => {

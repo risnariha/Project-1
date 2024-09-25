@@ -5,6 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 import Requestcompany from './Requestcompany';
 
 function Companydetails() {
+  const[search,setSearch] = useState('');
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -70,13 +71,13 @@ function Companydetails() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='container mt-5' style={{ bodyBackground: '#eaeaea' }}>
+    <div className='container mt-5'>
       <div className='row justify-content-center'>
         <div className='col-md-11   col-lg-11'>
           <div className='card'>
             <div className='card-header bg-dark text-white d-flex justify-content-between align-items-center'>
                 <form className="d-flex" role="search">
-                    <input className="form-control" placeholder="Search" aria-label="Search"/>
+                    <input className="form-control" onChange={(e)=> setSearch(e.target.value)} placeholder="Search" aria-label="Search"/>
                 </form>
                 <h1 className='h4 text-center'>Company Details</h1>
                 <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
@@ -97,8 +98,9 @@ function Companydetails() {
                     </tr>
                   </thead>
                   <tbody>
-          
-                    {company.map((company) => (
+                    {company.filter((company)=>{
+                      return search.toLowerCase() === '' ? company: company.companyName.toLowerCase().includes(search);
+                    }).map((company) => (
                       <tr key={company.companyOwnerID} style={{fontSize:'145%'}}>
                         <td>{company.companyName}</td>
                         <td>{company.companyOwnerName}</td>
