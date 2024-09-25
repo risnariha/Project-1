@@ -135,7 +135,7 @@
   }
   .display_product table thead th {
     padding: 1.5rem;
-    /* font-size: 1.3rem; */
+    font-size: 1.3rem;
     background-color: var(--color2);
     color: var(--white);
   }
@@ -145,7 +145,7 @@
   }
   td {
     padding: 1rem;
-    /* font-size: 1.2rem; */
+    font-size: 1.2rem;
     color: var(--color1);
     border: 1px solid var(--white);
     text-transform: capitalize;

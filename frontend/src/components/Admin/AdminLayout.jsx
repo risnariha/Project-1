@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import AdminSidebar from './Sidebar';
 
-const AdminLayout = () => {
+const AdminLayout = ({setToggle}) => {
     const [sidebarToggle, setSidebarToggle] = useState(false);
     const [user , setUser] =useState(null);
     const navigate = useNavigate();
@@ -22,6 +22,10 @@ const AdminLayout = () => {
             navigate('/');
         }
     }, [navigate]);
+
+    useEffect(()=>{
+        setToggle(sidebarToggle);  
+    });
 
     if (!user) {
         return null; // or a loading spinner

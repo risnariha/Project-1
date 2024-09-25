@@ -5,12 +5,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error}) => {
+export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error,searchQuery, setSearchQuery,setToggle}) => {
     // const [user , setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
     // const [error , setError] = useState(null);
     const [scrolled, setScrolled] = useState(false);
     const [scrollDirection, setScrollDirection] = useState(null);
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+    
+    const [search,setSearch]=useState(true);
     const navigate = useNavigate();
 
     // if (sidebarToggle) {
@@ -44,7 +46,9 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error}) 
         sessionStorage.clear();
         navigate('/');
     };
-
+    useEffect(()=>{
+        setToggle(sidebarToggle);
+    })
 
     if(error){
         return <div> Error : {error.message} </div>;
@@ -54,6 +58,10 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error}) 
             <Dashboard
                 sidebarToggle={sidebarToggle}
                 setSidebarToggle={setSidebarToggle}
+                search={search}
+                setSearch={setSearch}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
                 user={user}
             />
             <div className={`${sidebarToggle ? "xs-w-50 md-w-25 sm-w-25" : "d-none"} ${scrolled?"position-absolute ":""} z-3 fixed d-felx bg-color h-full`}>
@@ -65,22 +73,22 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error}) 
                 
                 <ul className='h-100vh pt-2 bg-color text-white list-unstyled fw-bold  '>
                     <li className='mb-2  hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <Link to={"/customer/dash"} className='text-decoration-none text-white fs-5 px-2'>
+                        <Link to={"/customer/dash"} className='text-decoration-none text-white fs-5 px-2' onClick={(e)=>setSearch(true)}>
                             <FaHome className='w-6 h-6 mx-3 pb-1' />Dashboard
                         </Link>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <Link to={"/customer/CartItems"} className='text-decoration-none text-white fs-5 px-2'>
+                        <Link to={"/customer/CartItems"} className='text-decoration-none text-white fs-5 px-2' onClick={(e)=>setSearch(false)}>
                             <FaShoppingCart className='w-6 h-6 mx-3 pb-1' />Card
                         </Link>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <Link to="/customer/shop" className='text-decoration-none text-white fs-5 px-2'>
+                        <Link to="/customer/shop" className='text-decoration-none text-white fs-5 px-2' onClick={(e)=>setSearch(true)}>
                             <FaShoppingBag className='w-6 h-6 mx-3 pb-1' />Shop
                         </Link>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
-                        <Link to="/customer/setting" className='text-decoration-none text-white fs-5 px-2'>
+                        <Link to="/customer/setting" className='text-decoration-none text-white fs-5 px-2' onClick={(e)=>setSearch(false)}>
                             <FaCog className='w-6 h-6 mx-3 pb-1' />Setting
                         </Link>
                     </li>

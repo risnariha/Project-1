@@ -160,7 +160,9 @@ function AddProduct() {
             setProductCategory('');
             setNetWeight('');
             fileInputRef.current.value = '';
-
+            if(response){
+                alert("product added Successfully..!");
+            }
             setTimeout(() => {
                 setIsMessageVisible(false);
             }, 5000);

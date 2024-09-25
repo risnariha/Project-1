@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Login } from '../Home/Login';
 
-const CompanySidebar = ({ sidebarToggle, setSidebarToggle,error, user }) => {
+const CompanySidebar = ({ sidebarToggle, setSidebarToggle,error, user,setToggle}) => {
 
     const [scrolled, setScrolled] = useState(false);
     const [scrollDirection, setScrollDirection] = useState(null);
@@ -53,6 +53,9 @@ const CompanySidebar = ({ sidebarToggle, setSidebarToggle,error, user }) => {
         sessionStorage.clear();
         navigate('/');
     };
+    useEffect(()=>{
+        setToggle(sidebarToggle);
+    });
 
     if (error) {
         return <div>Error: {error.message}</div>;

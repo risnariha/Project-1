@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 
 function ProductDetail({ sidebarToggle }) {
   const location = useLocation();
@@ -83,7 +83,7 @@ function ProductDetail({ sidebarToggle }) {
                   >
                     Add to Cart
                   </button>
-                  <button className='btn btn-danger bg-white text-danger rounded-pill md-w-75 sm-w-75 xs-w-100'>Buy Now</button>
+                  <Link to="/customer/PlaceOrder" className='btn btn-danger bg-white text-danger rounded-pill md-w-75 sm-w-75 xs-w-100'>Buy Now</Link>
                 </div>
               </div>
             </div>
