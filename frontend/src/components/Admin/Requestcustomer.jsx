@@ -98,7 +98,29 @@ const Requestcustomer = ({ showRequestAddModal, handleCloseRequestAddModal, hand
   };
 
 
-  const handleRejectCustomer = () => {
+  const handleRejectCustomer = async() => {
+    console.log('accept rejected');
+    const confirmed = window.confirm("Are you sure you want to reject this customer");
+    if(confirmed){
+      try {
+        const response = await axios.post('http://localhost:8080/backend/api/Admin/deletecustomer.php', selectedCustomer.id);
+        const data = response.data;
+        console.log('data : ', data);
+        if (data.success) {
+          alert("Customer rejected successfully");
+          // Optionally refetch the customer list or update state to remove the accepted customer from the UI
+          fetchCustomerrequestData();
+          window.location.reload();
+        } else {
+          alert("Error rejecting customer");
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert("There was an error!");
+      }
+      setShowCustomerDetailsModal(false);
+    }
     // Implement reject customer logic here
     setShowCustomerDetailsModal(false);
   };

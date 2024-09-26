@@ -85,7 +85,32 @@ const Requestcompany = ({ showRequestAddModal, handleCloseRequestAddModal, handl
         
       };
     
-      const handleRejectCompany = () => {
+      const handleRejectCompany = async () => {
+
+        console.log('accept rejected');
+        
+        console.log(selectedCompany.id);
+        const confirmed = window.confirm("Are you sure want to remove this company ?");
+        if(confirmed){
+          try {
+            const response = await axios.post('http://localhost:8080/backend/api/Admin/deletecompany.php',selectedCompany.id);
+            const data = response.data;
+            console.log('data : ', data);
+            if (data.success) {
+              alert("Company rejected successfully");
+              // Optionally refetch the customer list or update state to remove the accepted customer from the UI
+              fetchCompanyRequestData();
+              window.location.reload();
+            } else {
+              alert("Error Rejecting company");
+              console.error(data.message);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert("There was an error!");
+          }
+          setShowCompanyDetailsModal(false);
+        }
         // Implement reject customer logic here
         setShowCompanyDetailsModal(false);
       };
