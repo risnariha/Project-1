@@ -25,7 +25,7 @@ function ProductList({ sidebarToggle, setSidebarToggle }) {
       <div className={`${sidebarToggle ? "ml-25" : "w-full"} z-0 card d-flex`}>
         <div className='card-header align-items-center justify-content-center d-flex'>
           <div className="row align-items-center d-flex">
-            <div className="d-flex"><b>Product list</b></div>
+            <div className="d-flex mt-2"><h4><b>Product List</b></h4></div>
           </div>
         </div>
         {/* <ProductDetail product={selectedProduct} className='d-none'/> */}
