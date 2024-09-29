@@ -14,18 +14,17 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [contactNumber, setContactNumber] = useState('');
-  const [district, setDistrict] = useState('');
+  const [provinceList, setProvinceList] = useState([]); // List of provinces
+  const [selectedProvince, setSelectedProvince] = useState(''); // Selected province
+  const [district, setDistrict] = useState(''); // Selected district
+  const [districtData, setDistrictData] = useState({}); // Districts by province
   const [step, setStep] = useState(1);
   const [message, setMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [messageType, setMessageType] = useState('');
-  const districts = [
-    "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo",
-    "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara",
-    "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar",
-    "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya",
-    "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"
-  ];
+  
+ 
+   
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,12 +37,38 @@ const Register = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // Fetch provinces and districts
+    const fetchData = async () => {
+      // Replace with your API calls to fetch provinces and district data
+      const provinces = ["North", "NorthWestern", "Western", "NorthCentral", "Central", "Sabaragamuwa", "Eastern", "Uva", "Southern"];
+      const districts = {
+        "North" :["Jaffna", "Mullaitivu","Vavuniya","Kilinochchi","Mannar"],
+        "NorthWestern":["Puttalam",  "Kurunegala"],
+        "Western":["Colombo", "Gampaha", "Kalutara"],
+        "NorthCentral" :[ "Anuradhapura", "Polonnaruwa"],
+        "Central ":["Kandy","Nuwara Eliya","Matale"],
+        "Sabaragamuwa" :["Kegalle","Ratnapura"],
+        "Eastern":[ "Trincomalee","Batticaloa","Ampara"],
+        "Uva" :["Badulla", "Monaragala"],
+        "Southern" :["Galle" ,"Hambantota","Matara"]
+      };
+
+      setProvinceList(provinces);
+      setDistrictData(districts);
+    };
+
+    fetchData();
+  }, []);
+
   const handleFirstStepSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(email);
     try {
-      const response = await axios.post('http://localhost:8080/backend/api/Home/emailVerification.php', { email })
+      const response = await axios.post('http://localhost:8080/backend/api/Home/emailVerification.php', { email });
+      
       const data = response.data;
+    
       sessionStorage.setItem('stepOne', JSON.stringify({ email, selectedUserType }))
 
       if (data) {
@@ -227,19 +252,42 @@ const Register = () => {
                     <FaLock className="icon" />
                   </div> */}
 
-                  <div className="input-box">
-                    <div className='option'>
-                      <select
-                        value={district}
-                        className='select'
-                        onChange={(e) => setDistrict(e.target.value)} required>
-                        <option value="" disabled>Select a district</option>
-                        {districts.map((district, index) => (
-                          <option key={index} value={district}>{district}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
+<div className="input-box">
+        <div className='option'>
+          <select
+            value={selectedProvince}
+            className='select'
+            onChange={(e) => {
+              setSelectedProvince(e.target.value);
+              setDistrict(''); // Reset district when province changes
+            }}
+            required
+          >
+            <option value="" disabled>Select a Province</option>
+            {provinceList.map((province, index) => (
+              <option key={index} value={province}>{province}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* District Dropdown */}
+      <div className="input-box">
+        <div className='option'>
+          <select
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
+            className='select'
+            required
+            disabled={!selectedProvince} // Disable until province is selected
+          >
+            <option value="" disabled>Select a District</option>
+            {districtData[selectedProvince]?.map((dist, index) => (
+              <option key={index} value={dist}>{dist}</option>
+            ))}
+          </select>
+        </div>
+      </div>
                   <button type="submit" className='submit'>Send Registration Request</button>
                   <button type="submit" className='mt-2 text-white bg-secondary' onClick={() => setStep(1)}>Back</button>
 
