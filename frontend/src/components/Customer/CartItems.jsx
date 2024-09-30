@@ -30,68 +30,13 @@ function CartItems() {
         fetchCartItems();
     }, [userID]);
 
-    const handleQuantityChange = (index, newQuantity) => {
-        if (newQuantity < 1) return; // Prevent negative or zero quantities
-
-        const updatedItems = [...Items];
-        updatedItems[index].quantity = newQuantity;
-        setItems(updatedItems);
-    };
-
-    const updateQuantity = async (itemID, newQuantity) => {
-        try {
-            const response = await axios.post('http://localhost:8080/backend/api/Customer/update_cart_quantity.php', {
-                item_id: itemID,
-                quantity: newQuantity
-            });
-
-            if (response.data.success) {
-                console.log("Quantity updated successfully!");
-            } else {
-                console.error("Failed to update quantity.");
-            }
-        } catch (error) {
-            console.error("Error updating quantity:", error);
-        }
-    };
-
-    const handleBlur = (itemID, quantity) => {
-        updateQuantity(itemID, quantity);
-    };
-
-    const handlePlaceOrder = async () => {
-        try {
-            // Send request to create an order
-            const response = await axios.post('http://localhost:8080/backend/api/Customer/place_order.php', {
-                customer_id: userID,
-                items: Items
-            });
-
-            if (response.data.success) {
-                // Set invoice details and show invoice modal/page
-                setInvoice(response.data.invoice);
-                console.log("Order placed successfully! Invoice:", response.data.invoice);
-            } else {
-                console.error("Failed to place order.");
-            }
-        } catch (error) {
-            console.error("Error placing order:", error);
-        }
-    };
-
-    const handleProceedToPayment = () => {
-        // Navigate to payment page or show payment options
-        navigate('/customer/payment', { state: { invoice: invoice } });
-    };
-
     return (
         <div className="card">
             <div className="card-header">
                 <div className="row">
-                    <div className="col-md-6"><b>CART ITEMS</b></div>
+                    <div className="col-md-6 "><h5><b>CART ITEMS</b></h5></div>
                     <div className="col-md-6">
-                        <button 
-                            onClick={handlePlaceOrder} 
+                        <Link to="/customer/PlaceOrder"
                             className={`${Items.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
                             aria-disabled={!Items.length}
                         >Place Order</button>
@@ -102,11 +47,11 @@ function CartItems() {
                 <table className="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Product Name</th>
-                            <th>Price per Product</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
+                            <th style={{fontSize:'130%'}}>Product</th>
+                            <th style={{fontSize:'130%'}}>Product Name</th>
+                            <th style={{fontSize:'130%'}}>Price per Product</th>
+                            <th style={{fontSize:'130%'}}>Quantity</th>
+                            <th style={{fontSize:'130%'}}>Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,16 +60,8 @@ function CartItems() {
                                 <td className='col-1'><img src={Item.product_image} className='w-100'/></td>    
                                 <td className='d-flex align-items-center'>{Item.product_name}</td>
                                 <td>{Item.price}</td>
-                                <td className=''>
-                                    <input
-                                        type="number"
-                                        value={Item.quantity}
-                                        onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
-                                        onBlur={() => handleBlur(Item.item_id, Item.quantity)}
-                                        className="form-control form-control-sm"
-                                    />
-                                </td>
-                                <td>{Item.price * Item.quantity}</td>
+                                <td>{Item.quantity}</td>
+                                <td>{Item.price *Item.quantity}</td>
                             </tr>
                         ))}
                     </tbody>

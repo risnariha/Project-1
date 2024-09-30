@@ -36,6 +36,7 @@ const count =async() =>{
    try {
     const response = await axios.post('http://localhost:8080/backend/api/Admin/chart.php');
     const jsonData = response.data;
+    console.log('API response:', jsonData);
     setPendingcount(jsonData.pending);
     setDeliverycount(jsonData.delivery);
     console.log(pendingcount);
@@ -60,7 +61,7 @@ const options = {
 };
 
 const data = {
-  labels: [ 'Completed', 'Pending'],
+  labels: ['Pending','Delivry'],
   datasets: [
     {
       label: 'Order',
