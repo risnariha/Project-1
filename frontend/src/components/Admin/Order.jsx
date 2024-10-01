@@ -28,12 +28,7 @@ const  AdminOrder=(()=> {
 
   useEffect(() => {
     fetchOrderData();
-    // const intervalId = setInterval(() => {
-    //   fetchOrderData();
-    // }, 1000);
-
-    // // Clean up the interval when the component unmounts
-    // return () => clearInterval(intervalId);
+    
   }, []);
   
 

@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -16,6 +17,36 @@ ChartJS.register(
   Title
 );
 
+
+
+
+
+
+function Piechart() {
+
+
+const [pendingcount, setPendingcount] = useState(0);
+const [deliverycount, setDeliverycount] = useState(0);
+
+useEffect(()=>{
+  count();
+},[]);
+
+const count =async() =>{
+   try {
+    const response = await axios.post('http://localhost:8080/backend/api/Admin/chart.php');
+    const jsonData = response.data;
+    console.log('API response:', jsonData);
+    setPendingcount(jsonData.pending);
+    setDeliverycount(jsonData.delivery);
+    console.log(pendingcount);
+    console.log(deliverycount);
+    
+  } catch (error) {
+    console.error('Error  order details count:', error);
+  }
+}
+
 const options = {
   responsive: true,
   plugins: {
@@ -30,11 +61,11 @@ const options = {
 };
 
 const data = {
-  labels: [ 'Completed', 'Pending'],
+  labels: ['Pending','Delivry'],
   datasets: [
     {
       label: 'Order',
-      data: [10, 20],
+      data: [{pendingcount}, {deliverycount}],
       backgroundColor: [
         '#219ebc',
         '#8ecae6',
@@ -50,7 +81,6 @@ const data = {
   ],
 };
 
-function Piechart() {
   return (
     // <div >
     <div className='d-flex' style={{width:'60%', marginLeft:'16%'}}>

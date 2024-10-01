@@ -86,11 +86,11 @@ const AdminSidebar = ({sidebarToggle,setSidebarToggle,user}) => {
                     <AiFillShopping className='w-6 h-6 mx-3 pb-1'/>Orders
                     </Link>
                 </li>
-                <li className='mb-3 hover-bg-blue-500 py-1 rounded align-items-center'>
+                {/* <li className='mb-3 hover-bg-blue-500 py-1 rounded align-items-center'>
                     <Link to ="#" className='text-decoration-none text-white fs-5 px-2'>
                     <BiSolidReport className='w-6 h-6 mx-3 pb-1'/>Reports
                     </Link>
-                </li>
+                </li> */}
                 <li className='mb-3 hover-bg-blue-500 py-1 rounded align-items-center' onClick={handleLogout}>
                     <Link to="#" className='text-decoration-none text-white fs-5 px-2' >
                     <BiLogOutCircle className='w-6 h-6 mx-3 pb-1'/>Logout

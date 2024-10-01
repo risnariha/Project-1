@@ -41,9 +41,11 @@ import Footer from './components/Home/Footer';
 import Products from './components/Home/Products'
 import Setting from './components/Customer/Setting';
 import { useState } from 'react';
+import Payment from './components/Customer/Payment';
+import OrderSuccess from './components/Customer/OrderSuccess';
 
 function App() {
-  const [toggle,setToggle] = useState(false);
+  const [toggle, setToggle] = useState(false);
 
 
   return (
@@ -61,39 +63,42 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/faqs" element={<Faqs />} />
-          <Route path='/products' element={<Products />}/>
+          <Route path='/products' element={<Products />} />
           {/* admin */}
-          <Route path="/admin" element={<AdminLayout setToggle={setToggle}/>}>
+          <Route path="/admin" element={<AdminLayout setToggle={setToggle} />}>
             <Route path="dash" element={<Dash />} />
             <Route path="Customerdetails" element={<Customerdetails />} />
             <Route path="Companydetails" element={<Companydetails />} />
             <Route path='Order' element={<AdminOrder />} />
           </Route>
           {/* customer */}
-          <Route path="/customer" element={<CustomerLayout setToggle={setToggle}/>}>
+          <Route path="/customer" element={<CustomerLayout setToggle={setToggle} />}>
             <Route path="dash" element={<ProuductList />} />
             <Route path="shop" element={<ProuductList />} />
             <Route path="CartItems" element={<CartItems />} />
+            {/* <Route path="cart" element={<CartItems />} /> */}
+            <Route path="payment" element={<Payment/>} />
+            <Route path="order-success" element={<OrderSuccess/>} />
             <Route path="PlaceOrder" element={<PlaceOrder />} />
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />
-            <Route path="setting" element={<Setting/>}/>
+            <Route path="setting" element={<Setting />} />
 
           </Route>
           {/* company */}
-            <Route path="/company/*" element={<CompanyLayout setToggle={setToggle}/>} >
-              <Route exact path="dash" element={<CompanyDashboard />} />
-              <Route exact path="add-product" element={<AddProduct />} />
-              <Route exact path="display-product" element={<ViewProducts />} />
-              <Route exact path="update/:productID" element={<UpdateProduct />} />
-              <Route exact path="customer" element={<Customer />} />
-              <Route exact path="order" element={<Order />} />
-              <Route exact path="review" element={<Review />} />
-              <Route exact path="reviewlayout/:productID" element={<ReviewLayout />} />
-              <Route exact path="profile" element={<CompanyProfile/>}/>
-            </Route>
+          <Route path="/company/*" element={<CompanyLayout setToggle={setToggle} />} >
+            <Route exact path="dash" element={<CompanyDashboard />} />
+            <Route exact path="add-product" element={<AddProduct />} />
+            <Route exact path="display-product" element={<ViewProducts />} />
+            <Route exact path="update/:productID" element={<UpdateProduct />} />
+            <Route exact path="customer" element={<Customer />} />
+            <Route exact path="order" element={<Order />} />
+            <Route exact path="review" element={<Review />} />
+            <Route exact path="reviewlayout/:productID" element={<ReviewLayout />} />
+            <Route exact path="profile" element={<CompanyProfile />} />
+          </Route>
         </Routes>
-        <Footer toggle = {toggle}/>
+        <Footer toggle={toggle} />
       </Router>
       {/* <Sidebar
           sidebarToggle={sidebarToggle}
