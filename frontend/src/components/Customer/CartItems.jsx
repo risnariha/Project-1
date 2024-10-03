@@ -36,10 +36,10 @@ function CartItems() {
                 <div className="row">
                     <div className="col-md-6 "><h5><b>CART ITEMS</b></h5></div>
                     <div className="col-md-6">
-                        <Link to="/customer/PlaceOrder"
+                        <button><Link to="/customer/PlaceOrder"
                             className={`${Items.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
-                            aria-disabled={!Items.length}
-                        >Place Order</button>
+                            aria-disabled={!Items.length}>Place Order</Link></button>
+                        
                     </div>
                 </div>
             </div>
