@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 
-
 function CartItems() {
     const [Items, setItems] = useState([]);
     const [invoice, setInvoice] = useState(null);
@@ -30,6 +29,26 @@ function CartItems() {
         fetchCartItems();
     }, [userID]);
 
+    const handleProceedToPayment = async () => {
+        try {
+            // Make a request to generate the invoice based on the cart items
+            const response = await axios.post('http://localhost:8080/backend/api/Customer/generate_invoice.php', {
+                customer_id: userID,
+                items: Items
+            });
+
+            if (response.data) {
+                setInvoice(response.data);
+                console.log("Invoice generated:", response.data);
+
+                // Navigate to payment page with invoice details
+                navigate('/customer/PaymentPage', { state: { invoice: response.data } });
+            }
+        } catch (error) {
+            console.error("Error proceeding to payment:", error);
+        }
+    };
+
     return (
         <div className="card">
             <div className="card-header">
@@ -38,8 +57,9 @@ function CartItems() {
                     <div className="col-md-6">
                         <Link to="/customer/PlaceOrder"
                             className={`${Items.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
-                            aria-disabled={!Items.length}
-                        >Place Order</button>
+                            aria-disabled={!Items.length} 
+                            onClick={handleProceedToPayment}
+                        >Place Order</Link>
                     </div>
                 </div>
             </div>
@@ -47,21 +67,21 @@ function CartItems() {
                 <table className="table table-bordered">
                     <thead>
                         <tr>
-                            <th style={{fontSize:'130%'}}>Product</th>
-                            <th style={{fontSize:'130%'}}>Product Name</th>
-                            <th style={{fontSize:'130%'}}>Price per Product</th>
-                            <th style={{fontSize:'130%'}}>Quantity</th>
-                            <th style={{fontSize:'130%'}}>Total Price</th>
+                            <th style={{ fontSize: '130%' }}>Product</th>
+                            <th style={{ fontSize: '130%' }}>Product Name</th>
+                            <th style={{ fontSize: '130%' }}>Price per Product</th>
+                            <th style={{ fontSize: '130%' }}>Quantity</th>
+                            <th style={{ fontSize: '130%' }}>Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Items.map((Item, index) => (
                             <tr key={index} className=''>
-                                <td className='col-1'><img src={Item.product_image} className='w-100'/></td>    
+                                <td className='col-1'><img src={Item.product_image} className='w-100' /></td>
                                 <td className='d-flex align-items-center'>{Item.product_name}</td>
                                 <td>{Item.price}</td>
                                 <td>{Item.quantity}</td>
-                                <td>{Item.price *Item.quantity}</td>
+                                <td>{Item.price * Item.quantity}</td>
                             </tr>
                         ))}
                     </tbody>
