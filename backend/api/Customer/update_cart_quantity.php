@@ -4,8 +4,8 @@ include '../config/cors.php';
 include '../Connection/DbConnector.php';
 
 $data = json_decode(file_get_contents("php://input"));
-
-$item_id = $data->item_id;
+// $user_id = $data->customer_id;
+$item_id = $data->id;
 $quantity = $data->quantity;
 $db=new DbConnector();
 $pdo=$db->getConnection();
