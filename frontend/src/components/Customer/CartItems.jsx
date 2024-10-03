@@ -48,6 +48,30 @@ function CartItems() {
             console.error("Error proceeding to payment:", error);
         }
     };
+    const handleQuantityChange = (index, newQuantity) => {
+        const updateItems = [...Items];
+        updateItems[index].quantity = newQuantity;
+        setItems(updateItems);
+    };
+    const updateCartQuantity = async (item) => {
+        try {
+            const response = await axios.post('http://localhost:8080/backend/api/Customer/update_cart_quantity.php', {
+                // customer_id: userID,
+                id: item.id,
+                quantity: item.quantity
+
+            });
+            if (response.data.success) {
+                console.log("cart item successfully updated");
+            } else {
+                console.log("cart item error updated");
+
+            }
+        }
+        catch (error) {
+            console.error("error updating cart : ", error);
+        }
+    };
 
     return (
         <div className="card">
@@ -55,11 +79,11 @@ function CartItems() {
                 <div className="row">
                     <div className="col-md-6 "><h5><b>CART ITEMS</b></h5></div>
                     <div className="col-md-6">
-                        <Link to="/customer/PlaceOrder"
+                        <div
                             className={`${Items.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
-                            aria-disabled={!Items.length} 
+                            aria-disabled={!Items.length}
                             onClick={handleProceedToPayment}
-                        >Place Order</Link>
+                        >Place Order</div>
                     </div>
                 </div>
             </div>
@@ -69,8 +93,8 @@ function CartItems() {
                         <tr>
                             <th style={{ fontSize: '130%' }}>Product</th>
                             <th style={{ fontSize: '130%' }}>Product Name</th>
-                            <th style={{ fontSize: '130%' }}>Price per Product</th>
-                            <th style={{ fontSize: '130%' }}>Quantity</th>
+                            <th style={{ fontSize: '130%', alignItems: 'center' }}>Price per Product</th>
+                            <th style={{ fontSize: '130%', justifyContent: 'center', alignItems: 'center ', display: 'flex' }}>Quantity</th>
                             <th style={{ fontSize: '130%' }}>Total Price</th>
                         </tr>
                     </thead>
@@ -80,8 +104,21 @@ function CartItems() {
                                 <td className='col-1'><img src={Item.product_image} className='w-100' /></td>
                                 <td className='d-flex align-items-center'>{Item.product_name}</td>
                                 <td>{Item.price}</td>
-                                <td>{Item.quantity}</td>
-                                <td>{Item.price * Item.quantity}</td>
+                                <td className='w-20'>
+                                    <input
+                                        type="number"
+                                        value={Item.quantity}
+                                        min='1'
+                                        className='form-control text-center'
+                                        onChange={(e) => {
+                                            const newQuantity = e.target.value;
+                                            handleQuantityChange(index, newQuantity);
+                                            updateCartQuantity(Item)
+                                        }}
+                                        // onBlur={() => updateCartQuantity(Item)}
+                                    />
+                                </td>
+                                <td className='justify-content-end d-flex'>{Item.price * Item.quantity}.00</td>
                             </tr>
                         ))}
                     </tbody>
@@ -111,7 +148,7 @@ function CartItems() {
                                     <tr key={index}>
                                         <td>{item.product_name}</td>
                                         <td>{item.price}</td>
-                                        <td>{item.quantity}</td>
+                                        <td>{item.quantity} </td>
                                         <td>{item.total_price}</td>
                                     </tr>
                                 ))}

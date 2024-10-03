@@ -34,7 +34,7 @@ import AdminLayout from './components/Admin/AdminLayout';
 import CompanyLayout from './components/Company/CompanyLayout';
 import CustomerLayout from './components/Customer/CustomerLayout';
 import CartItems from './components/Customer/CartItems';
-import PlaceOrder from './components/Customer/PlaceOrder';
+// import PlaceOrder from './components/Customer/PlaceOrder';
 import { Faqs } from './components/Home/Faqs';
 import Register from './components/Home/Register';
 import Footer from './components/Home/Footer';
@@ -79,7 +79,7 @@ function App() {
             {/* <Route path="cart" element={<CartItems />} /> */}
             <Route path="payment" element={<Payment/>} />
             <Route path="order-success" element={<OrderSuccess/>} />
-            <Route path="PlaceOrder" element={<PlaceOrder />} />
+            {/* <Route path="PlaceOrder" element={<PlaceOrder />} /> */}
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />
             <Route path="setting" element={<Setting />} />
