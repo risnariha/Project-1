@@ -13,7 +13,7 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Piechart',
+      text: 'Order Status',
     },
   },
 };

@@ -35,6 +35,8 @@
     background-color: var(--lightgray);
   } 
   
+  /* display message css */
+
   .display_message {
     background-color: var(--color2);
     padding: 1rem 3rem;
@@ -42,6 +44,7 @@
     align-items: center;
     justify-content: space-between;
   }
+
   .display_message span {
     font-size: 2rem;
   }
@@ -64,7 +67,8 @@
   }
   
   
-  /* add products form */
+  /* add products , update productsform */
+
   .add_product,
   .update_product {
     width: 75%;
@@ -72,13 +76,13 @@
     border-radius: 0.5rem;
     padding: 2rem 3rem;
     height: 75%;
-    /* margin: 0 auto; */
     margin: auto;
     justify-content: center;
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
   }
+
   .add_product .input_fields,
   .update_product .input_fields {
     padding: 0.6rem 1.2rem;
@@ -91,7 +95,7 @@
     
   }
   
-  /* submit button */
+  /* submit buttons update and add */
   
   .submit_btn,
   .edit_btn,
@@ -117,32 +121,79 @@
     color: var(--color3);
   }
   
-  /* view_products.php */
-  .display_product table {
+  /* view_products ,Order , Customer tables  */
+
+  .display_details table {
     width:100%;
     text-align: center;
 
   }
 
-  .table_heading h3{
+
+  .table_heading {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
     padding-top: 10px;
     padding-bottom: 4px;
-    text-align: center;
-    font-weight: 600;
     background-color: #8e8f91;
     margin-bottom: 0;
     margin-top: 8px;
+    position: relative;
   }
-  .display_product table thead th {
+
+  .table_heading h3 {
+    text-align: left;
+    font-weight: 600;
+  } 
+
+  @media (max-width: 420px) {
+    .table_heading  {
+      justify-content: flex-start;
+     
+  }
+  .table_heading  h3{
+    margin-left: 20px;  
+}
+}
+
+  /* table heading search box  */
+  .search_container {
+    position: absolute; 
+    right: 10px; 
+    display: flex;
+    align-items: center;
+  }
+  
+  .search_container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search_input {
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+  }
+  
+  .search_icon {
+    color: #333;
+    font-size: 20px;
+  }
+  
+
+  .display_details table thead th {
     padding: 1.5rem;
     font-size: 1.3rem;
     background-color: var(--color2);
     color: var(--white);
   }
 
-  .display_product table tr{
+  .display_details table tr{
     border: 1px solid var(--white);
   }
+
   td {
     padding: 1rem;
     font-size: 1.2rem;
@@ -150,18 +201,22 @@
     border: 1px solid var(--white);
     text-transform: capitalize;
   }
+
   .empty_text {
     background-color: var(--color2);
     padding: 2.5rem 2rem;
     font-size: 2rem;
     text-align: center;
   }
+
+
   .btns {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
   }
+
    .delete_product_btn,
    .update_product_btn {
     text-align: center;
@@ -170,12 +225,15 @@
     padding: 0 1rem;
     cursor: pointer;
   }
+
   .delete_product_btn{
     background-color: var(--lightgray);
   }
+
   .update_product_btn {
     color: var(--color2);
   }
+
   .price_container {
     display: flex;
     align-items: center;
@@ -228,117 +286,7 @@
     }
   }
   
-  * shop_product.php file styles */
-  .product_container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 30rem);
-    gap: 2rem;
-    justify-content: center;
-  }
-  
-  .product_container .edit_form {
-    text-align: center;
-    padding: 2rem;
-    box-shadow: var(--black);
-    border: var(--border);
-    border-radius: 0.5rem;
-    background-color: var(--white);
-    box-shadow: 2px 5px 14px #888888;
-  }
-  .product_container .edit_form img {
-    width: 50%;
-    margin: 0 auto;
-  }
-  
-  .products .edit_form h3 {
-    margin: 1rem 0;
-    font-size: 2rem;
-    color: var(--black);
-    text-transform: uppercase;
-  }
-  .products .edit_form .price {
-    font-size: 1.7rem;
-    color: var(--color1);
-    margin: 1rem 0;
-  }
-  .cart_btn {
-    text-align: center;
-    padding: 1rem 0;
-  }
-  
-  /* cart.php */
-  .shopping_cart table {
-    text-align: center;
-    width: 100%;
-  }
-  .shopping_cart table thead th {
-    padding: 1.5rem;
-    font-size: 1.6rem;
-    color: var(--white);
-    background-color: var(--color2);
-  }
-  .table_bottom {
-    background-color: var(--color1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-    margin: 1rem 0 3rem 0;
-  }
-  .bottom_btn {
-    color: var(--black);
-    font-size: 1.3rem;
-    background-color: var(--color4);
-    padding: 1rem;
-  }
-  .bottom_btn span {
-    color: green;
-  }
-  
-  .delete_all_btn {
-    background-color: var(--color1);
-    color: var(--white);
-    font-size: 1.3rem;
-    padding: 1.5rem;
-  }
-  .delete_all_btn .fa-trash {
-    color: var(--red);
-    margin-right: 0.5rem;
-  }
-  .quantity_box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .quantity_box input {
-    width: 40%;
-    padding: 0.5rem;
-  }
-  .update_quantity {
-    color: var(--white);
-    padding: 0.5rem;
-    background-color: var(--color1);
-    margin: 1rem 0;
-  }
-  /* media queries */
-  
-  @media (max-width: 1200px) {
-    .shopping_cart {
-      overflow-x: scroll;
-    }
-  
-    .shopping_cart table {
-      width: 120rem;
-    }
-  
-    .shopping_cart .heading {
-      text-align: left;
-    }
-  
-    .shopping_cart .checkout-btn {
-      text-align: left;
-    }
-  }
+
   
   @media (max-width: 991px) {
     html {
@@ -382,11 +330,11 @@
       font-size: 2.5rem;
     }
   
-    .display_product {
+    .display_details {
       overflow-x: scroll;
     }
   
-    .display_product table {
+    .display_details table {
       width: 90rem;
     }
     .table_bottom {
@@ -402,7 +350,7 @@
     }
   }
   
-  @media (max-width: 450px) {
+  @media (max-width: 465px) {
     html {
       font-size: 60%;
     }
@@ -439,3 +387,6 @@
     font-size: 15px;
   }
 
+  
+  
+  
