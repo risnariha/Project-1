@@ -42,7 +42,7 @@ const Review = () => {
        <div className="table_heading">
         <h3>Review details</h3>
       </div>
-      <section className="display_product">
+      <section className="display_details">
         {products.length > 0 ? (
           <table>
             <thead>
@@ -57,7 +57,7 @@ const Review = () => {
               {products.map((product, index) => (
                 <tr key={product.productID}>
                   <td>{index + 1}</td>
-                  <td><img src={product.productImage} alt={product.productName} /></td>
+                  <td className='col-1'><img src={product.productImage} alt={product.productName} className='w-100' /></td>
                   <td>{product.productName}</td>
                   <td>
                     <Link className="btn btn-primary m-2" to={`company/reviewlayout/${product.productID}`}>Check</Link>

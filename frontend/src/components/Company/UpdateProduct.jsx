@@ -92,18 +92,20 @@ const UpdateProduct = () => {
             encType="multipart/form-data"
             className="update_product product_container_box"
           >
-            <div className="justify-content-center d-flex w-30  align-items-center ms-5">
+             <div className="justify-content-center d-flex w-100 align-items-center">
               {image ? (
                 <img
                   src={URL.createObjectURL(image)}
                   alt="upload image"
-                  className="w-75 rounded-circle align-items-center justify-content-center"
+                  className="w-50 rounded-circle"
+                  style={{ objectFit: "cover" }} // Optional: to handle aspect ratio
                 />
               ) : product.productImage ? (
                 <img
                   src={product.productImage}
                   alt=" image"
-                  className="w-100 rounded-circle align-items-start d-flex "
+                  className="w-25 rounded-circle"
+                  style={{ objectFit: "cover" }} // Optional: to handle aspect ratio
                 />
               ) : (
                 <BiImageAdd className="w-100 h-100 ps-2 rounded bg-white" />

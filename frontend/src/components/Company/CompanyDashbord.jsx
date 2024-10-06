@@ -8,30 +8,43 @@ import Order from './Order';
 import PieChart from './PieChart.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import { useOutletContext } from 'react-router-dom';
 
 export const CompanyDashboard = () => {
+  const { sidebarToggle, setSidebarToggle } = useOutletContext();
+  const { user } = useOutletContext(); // assuming user context contains companyOwnerID
+  const [productCount, setProductCount] = useState(0);
+  const [customerCount, setCustomerCount] = useState(0);
+  const [orderCount, setOrderCount] = useState(0);
+  const [deliveryCount, setDeliveryCount] = useState(0);
 
-  const [counts, setCounts] = useState({
-    products: 0,
-    customers: 0,
-    orders: 0,
-    delivery: 0,
-  });
+
 
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/backend/api/Company/counts.php');
-        setCounts(response.data);
+        if (user) {
+          const response = await axios.post('http://localhost:8080/backend/api/Company/counts.php', {
+            companyOwnerID: user.companyOwnerID,
+          });
+         
+          if (response.data && !response.data.error) {
+            setProductCount(response.data.products);
+            setCustomerCount(response.data.customers);
+            setOrderCount(response.data.orders);
+            setDeliveryCount(response.data.delivery);
+          } else {
+            console.error('Error in response data:', response.data.error);
+          }
+        }
       } catch (error) {
-        console.error('Error fetching counts:', error);
+        console.error('Error fetching count:', error);
       }
     };
-
+  
     fetchCounts();
-  }, []);
-
-
+  }, [user.companyOwnerID]);
+  
   return (
     <div>
       <div className="container mt-5">
@@ -40,7 +53,7 @@ export const CompanyDashboard = () => {
             <HomeCard
               title="Products"
               icon={AiOutlineStock}
-              count={counts.products}
+              count={productCount}
               className="bg-primary text-white"
             />
           </div>
@@ -48,7 +61,7 @@ export const CompanyDashboard = () => {
             <HomeCard
               title="Customers"
               icon={AiOutlineUser}
-              count={counts.customers}
+              count={customerCount}
               className="bg-success text-white"
             />
           </div>
@@ -56,7 +69,7 @@ export const CompanyDashboard = () => {
             <HomeCard
               title="Orders"
               icon={BsCartFill}
-              count={counts.orders}
+              count={orderCount}
               className="bg-warning text-dark"
             />
           </div>
@@ -64,7 +77,7 @@ export const CompanyDashboard = () => {
             <HomeCard
               title="Delivery"
               icon={BsTruck}
-              count={counts.delivery}
+              count={deliveryCount}
               className="bg-danger text-white"
             />
           </div>

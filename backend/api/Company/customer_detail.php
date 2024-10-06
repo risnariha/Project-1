@@ -4,22 +4,38 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-
 include '../Connection/connection.php';
 
-try{
-    $stmt = $conn->prepare('SELECT * FROM customers');
-    $stmt->execute();
-    $customers = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-
-    echo json_encode(['success'=> true, 'data'=>$customers]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Fetch the raw POST data
+    $data = json_decode(file_get_contents("php://input"), true);
     
-
-} catch (Exception $e) {
-    echo json_encode(['success'=> false, 'message'=>'Error fetching customers', 'error'=>$e->getMessage()]);
-
-}
-
-
-
+    // Check if companyOwnerID is set
+    if (!isset($data['companyOwnerID'])) {
+        echo json_encode(['error' => $data]);
+        exit;
+    }
+    
+    $companyOwnerID = $data['companyOwnerID'];
+    
+    try {
+        // Prepare the SQL query to get customer details based on companyOwnerID
+        $pstmt = $conn->prepare("SELECT customers.*
+            FROM customers
+            JOIN orders ON customers.customerID = orders.customerID
+            JOIN orderItems ON orders.orderID = orderItems.orderID
+            JOIN products ON orderItems.productID = products.productID
+            WHERE products.companyOwnerID = ?
+            ;
+        ");
+        
+        $pstmt->bindParam(1, $companyOwnerID);
+        $pstmt->execute();
+        $customers = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo json_encode($customers);
+    } catch (PDOException $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+    }
 ?>
