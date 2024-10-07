@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import { FaSearch, FaEye, FaEnvelope } from "react-icons/fa";
+import { FaSearch, FaEye} from "react-icons/fa";
+import { BiSolidMessageEdit } from "react-icons/bi";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useOutletContext } from "react-router-dom";
 
@@ -44,7 +45,15 @@ function Customer() {
     setFile(e.target.files[0]); // File input
   };
 
-  const handleSubmitMessage = async () => {
+  const handleSubmitMessage = async (e) => {
+    e.preventDefault(); // Prevent submission first
+
+    if (!message.trim()) {
+      // You can show custom validation error or rely on native
+      alert('Message field is required');
+      return;
+    }
+
     if (user && selectedCustomer) {
       const formData = new FormData();
       formData.append("companyOwnerID", user.companyOwnerID);
@@ -168,13 +177,14 @@ function Customer() {
                       className="btn btn-primary me-1"
                       onClick={() => handleShowViewModal(customer)}
                     >
-                      <FaEye />
+                      {/* <FaEye /> */}
+                      view
                     </button>
                     <button
                       className="btn btn-info me-1"
                       onClick={() => handleShowMessageModal(customer)}
                     >
-                      <FaEnvelope />
+                      <BiSolidMessageEdit />
                     </button>
                   </td>
                 </tr>

@@ -1,5 +1,6 @@
 import React from 'react'
-import {FaBars} from 'react-icons/fa'
+import {FaBars} from 'react-icons/fa';
+import { MdOutlineMessage } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 export const CompanyNavbar = ({sidebarToggle,setSidebarToggle,user}) => {
@@ -17,9 +18,9 @@ export const CompanyNavbar = ({sidebarToggle,setSidebarToggle,user}) => {
         <div className='d-flex text-white align-items-center'>{user.companyName}</div>
     </div>
     <div className='d-flex align-items-center'>
-        
+    {/* <div className='d-flex ms-2 align-items-center cursor-pointer'onClick={handleViewModal}><MdOutlineMessage style={{height:'20px',width:'20px'}}/></div> */}
         <div className='d-flex ms-2 align-items-center cursor-pointer'onClick={handleLogout}><IoLogOut style={{height:'20px',width:'20px'}}/><span className='px-1 d-none d-md-block d-flex' >Log Out</span></div>
-        
+       
     </div>
   </nav>
   )
