@@ -78,7 +78,7 @@ function Order() {
        <div className="table_heading">
         <h3>Order Details</h3>
         </div>
-      <section className="display_product">
+      <section className="display_details">
          <table className="d-felx">
           <thead className=" fs-5">
             <tr>

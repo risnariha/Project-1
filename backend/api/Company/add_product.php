@@ -56,16 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['message' => 'This product already exists!']);
             exit();
         } else {
-            // $upload_directory = $_SERVER['DOCUMENT_ROOT'] . '/Project-1/img/';
-            // ensureDirectoryExists($upload_directory);
-
-            // $product_image_temp_name = $_FILES['product_image']['tmp_name'];
-            // $product_image_folder = $upload_directory . $product_image;
-
-            // if (!move_uploaded_file($product_image_temp_name, $product_image_folder)) {
-            //     echo json_encode(['message' => 'Failed to upload image.']);
-            //     exit();
-            // }
+            
 
             $highest_id_query = $conn->prepare("SELECT productID FROM `products` ORDER BY productID DESC LIMIT 1");
             $highest_id_query->execute();
@@ -98,10 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $image =$product_image['name'] ;
             $imageDir = '../../../frontend/public/images/products/' . $new_id;
             $imagePath_move = $imageDir . '/' . $image;
-            // $imagePath_move = '../../../frontend/public/images/customer/' . $user_id . '/' . $image;
             $imagePath = '../../../public/images/products/' . $new_id . '/' . $image;
-            // echo json_encode($imagePath);
-            // exit;
             if (file_exists($imageDir)) {
                 // Delete all files in the directory
                 deleteFilesInDirectory($imageDir);
