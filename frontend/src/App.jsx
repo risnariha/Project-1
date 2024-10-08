@@ -30,6 +30,7 @@ import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Home/Login';
+import ChangePassword from './components/Home/ChangePassword';
 import AdminLayout from './components/Admin/AdminLayout';
 import CompanyLayout from './components/Company/CompanyLayout';
 import CustomerLayout from './components/Customer/CustomerLayout';
@@ -61,6 +62,7 @@ function App() {
 
           <Route path='/' element={<Home />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/ChangePassword" element={<ChangePassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/faqs" element={<Faqs />} />
           <Route path='/products' element={<Products />} />
