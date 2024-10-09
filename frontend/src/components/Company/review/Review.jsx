@@ -60,7 +60,7 @@ const Review = () => {
                   <td className='col-1'><img src={product.productImage} alt={product.productName} className='w-100' /></td>
                   <td>{product.productName}</td>
                   <td>
-                    <Link className="btn btn-primary m-2" to={`company/reviewlayout/${product.productID}`}>Check</Link>
+                    <Link className="btn btn-primary m-2" to={`/company/reviewlayout/${product.productID}`}>Check</Link>
                   </td>
                 </tr>
               ))}
