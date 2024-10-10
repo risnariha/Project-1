@@ -25,8 +25,8 @@ ChartJS.register(
 function Piechart() {
 
 
-const [pendingcount, setPendingcount] = useState(0);
-const [deliverycount, setDeliverycount] = useState(0);
+const [pendingCount, setPendingCount] = useState(0);
+const [deliveryCount, setDeliveryCount] = useState(0);
 
 useEffect(()=>{
   count();
@@ -36,11 +36,12 @@ const count =async() =>{
    try {
     const response = await axios.post('http://localhost:8080/backend/api/Admin/chart.php');
     const jsonData = response.data;
+    //console.log(response);
     console.log('API response:', jsonData);
-    setPendingcount(jsonData.pending);
-    setDeliverycount(jsonData.delivery);
-    console.log(pendingcount);
-    console.log(deliverycount);
+    setPendingCount(jsonData.pending);
+    setDeliveryCount(jsonData.delivery);
+    //console.log({pendingCount});
+    //console.log({deliveryCount});
     
   } catch (error) {
     console.error('Error  order details count:', error);
@@ -65,7 +66,7 @@ const data = {
   datasets: [
     {
       label: 'Order',
-      data: [{pendingcount}, {deliverycount}],
+      data: [pendingCount, deliveryCount],
       backgroundColor: [
         '#219ebc',
         '#8ecae6',

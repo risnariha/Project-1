@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaTrash, FaEdit, FaTruck,FaHome, FaShippingFast, FaCheck,FaSearch } from "react-icons/fa";
 import { MdOutlineHomeWork } from "react-icons/md";
-import DatePicker from "react-datepicker"; // Import DatePicker
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker"; // Import DatePicker
+// import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { Modal, Button } from 'react-bootstrap';
 import { useOutletContext } from "react-router-dom";
