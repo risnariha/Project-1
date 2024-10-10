@@ -39,13 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($userType) {
         $_SESSION['user'] = [
             'email' => $user['email'],
-            'type' => $userType,
-            'is_first_login' => $user['is_first_login']
+            'type' => $userType
         ];
         $response['success'] = true;
         $response['userType'] = $userType;
         $response['message'] = 'Login successful';
-        $response['is_first_login'] = $user['is_first_login'];  // return first login status
     } else {
         $response['message'] = 'Please make sure that email and password are correct.';
     }

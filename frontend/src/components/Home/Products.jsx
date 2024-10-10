@@ -36,16 +36,13 @@ const Products = () => {
           <Link to="/faqs" style={{ fontSize: '150%' }}>FAQs</Link>
           <Link to="/Login" style={{ fontSize: '150%' }}>Log in</Link>
           
-            {/* <input
+            <input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={handleSearch}
-            /> */}
+            />
         </div>
-        <form className="d-flex " role="search" >
-          <input className="form-control "  value={searchQuery} onChange={handleSearch} placeholder="Search Products...." aria-label="Search"/>
-        </form>
       </div>
       <div className='container mt-5'>
         
