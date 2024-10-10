@@ -32,19 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $query->execute([$productID]);
             $product = $query->fetch(PDO::FETCH_ASSOC);
 
-            // If a product is found, return it as JSON
+            
             if ($product) {
                 echo json_encode($product);
             } else {
-                // If no product is found, return an empty array
                 echo json_encode([]);
             }
         } catch (PDOException $e) {
-            // Return an error message if an exception occurs
             echo json_encode(['message' => 'Error: ' . $e->getMessage()]);
         }
     } else {
-        // Return an error message if 'product_id' is not provided
         echo json_encode(['message' => 'Product ID not provided']);
     }
 }

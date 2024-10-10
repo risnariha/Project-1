@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customerName = $_POST['customerName'];
     $message = $_POST['message'];
     $message_file = $_FILES['file'] ?? null; // Handle file upload
+    $type = "company";
 
     // Generate unique contact ID
     $contactID = $new_id;
@@ -74,10 +75,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Prepare SQL insert query
-        $pstmt = $conn->prepare("INSERT INTO contact (contactID, companyOwnerID, customerID, email, companyName, customerName, message, dataFile) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $pstmt = $conn->prepare("INSERT INTO contact (contactID, companyOwnerID, customerID, email, companyName, customerName, message, dataFile,sender) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $pstmt->execute([$contactID, $companyOwnerID, $customerID, $email, $companyName, $customerName, $message, $filePath]);
+        $pstmt->execute([$contactID, $companyOwnerID, $customerID, $email, $companyName, $customerName, $message, $filePath, $type]);
 
         // Check if the message was sent successfully
         if ($pstmt->rowCount() > 0) {

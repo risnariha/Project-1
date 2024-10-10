@@ -15,11 +15,12 @@ const ReviewLayout = () => {
 
   useEffect(() => {
     // Fetch product details
-    axios.get(`http://localhost:8080/backend/api/Company/view_product.php?product_id=${productID}`)
+    axios.get(`http://localhost:8080/backend/api/Company/product_review.php?product_id=${productID}`)
       .then((response) => {
-        console.log("update : ",response.data);
+        console.log("API Response:", response.data); 
         if (response.data) {
           setProduct(response.data[0]);
+          loadData(productID);
         } else {
           console.error('Product not found');
         }
@@ -27,46 +28,42 @@ const ReviewLayout = () => {
       .catch((error) => console.error('Error fetching product:', error));
 
     // Fetch reviews for the product
-    loadData(productID);
   }, [productID]);
 
   const loadData = (productID) => {
-    axios.post('http://localhost:8080/backend/api/Company/review/reviewdata.php', { action: 'load_data', productID })
+    axios.post('http://localhost:8080/backend/api/Company/product_review.php', { action: 'load_data', productID })
       .then(response => {
         console.log("Backend Response:", response.data);
         const data = response.data;
-        setAvgRating(data.avgUserRatings);
-        setTotalReview(data.totalReviews);
-        setReviews(data.ratingsList);
+        setAvgRating(data.avgUserRatings || 0);
+        setTotalReview(data.totalReviews || 0);
+        setReviews(data.ratingsList  || []);
       })
       .catch(error => {
         console.error('There was an error!', error);
       });
   };
+  
 
   return (
     <div>
-      <div className="jumbotron text-center">
-        {product && (
-          <form action="">
-            <img src={product.productImage} alt={product.productName} />
-            <input type="hidden" name="update_product_id" value={product.productID} />
-            <input type="hidden" name="current_product_image" value={product.productImage} />
-          </form>
+      <div className="jumbotron text-center mb-3 ">
+        {product && ( 
+            <img src={product.productImage} alt={product.productName} height='300' width='200'/> 
         )}
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-sm-4 text-center m-auto">
-            <h1><span id="avg_rating">{avgRating}</span>/5.0</h1>
+          <div className="col-sm-6 text-center m-auto">
+            <h1><span id="avg_rating">{avgRating}</span> / 5.0</h1>
             <div>
               {[...Array(5)].map((star, index) => (
-                <i key={index} className={`fa fa-star star-light main_star mr-1 ${index < Math.ceil(avgRating) ? 'text-warning' : ''}`}></i>
+                <i key={index} className={`fa fa-star star-light starAvg main_star mr-2 ${index < Math.ceil(avgRating) ? 'text-warning' : ''}`}></i>
               ))}
             </div>
-            <span id="total_review">{totalReview}</span> Reviews
+            <h5><span id="total_review">{totalReview}</span> Reviews</h5>
           </div>
-          <div className="col-sm-4 progressSection">
+          <div className="col-sm-6 progressSection">
             {[5, 4, 3, 2, 1].map((rating, index) => (
               <div className='holder' key={index}>
                 <div>
