@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $counts['orders'] = $row['order_count'];
 
         // Fetch delivery count
-        $pstmt = $conn->prepare("SELECT COUNT(DISTINCT orders.orderID) AS delivery_order_count FROM products JOIN orderItems ON products.productID = orderItems.productID JOIN orders ON orderItems.orderID = orders.orderID WHERE products.companyOwnerID = ? AND orders.status = 'delivery'");
+        $pstmt = $conn->prepare("SELECT COUNT(DISTINCT orders.orderID) AS delivery_order_count FROM products JOIN orderItems ON products.productID = orderItems.productID JOIN orders ON orderItems.orderID = orders.orderID WHERE products.companyOwnerID = ? AND orders.status = 'delivered'");
         $pstmt->bindParam(1, $companyOwnerID);
         $pstmt->execute();
         $row = $pstmt->fetch(PDO::FETCH_ASSOC);

@@ -389,4 +389,14 @@
 
   
   
-  
+  table tbody tr:hover {
+    background-color: #e7e0e3; /* Change this to your desired hover color */
+    transition: background-color 0.3s; /* Optional: smooth transition */
+}
+
+/* Optional: Style for empty text */
+.empty_text {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #e8dfdf;
+}
