@@ -42,15 +42,20 @@ export const Login = () => {
                     localStorage.clear();
                     sessionStorage.setItem('user', JSON.stringify(user));
                 }
-                if (userType === 'admin') {
-                    navigate('/admin/dash');
-                } else if (userType === 'company') {
-                    navigate('/company/dash');
-                } else if (userType === 'customer') {
-                    navigate('/customer/dash');
-                } else {
-                    setErrorMessage('Invalid credentials');
+                if (isFirstLogin) {
+                    navigate('/ChangePassword');  // Redirect to change password page
+                } else{
+                    if (userType === 'admin') {
+                        navigate('/admin/dash');
+                    } else if (userType === 'company') {
+                        navigate('/company/dash');
+                    } else if (userType === 'customer') {
+                        navigate('/customer/dash');
+                    } else {
+                        setErrorMessage('Invalid credentials');
+                    }
                 }
+                
             } else {
                 setErrorMessage(data.message);
             }
