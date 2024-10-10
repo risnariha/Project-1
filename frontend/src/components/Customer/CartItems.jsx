@@ -100,18 +100,11 @@ function CartItems() {
                 <div className="row">
                     <div className="col-md-6 "><h5><b>CART ITEMS</b></h5></div>
                     <div className="col-md-6">
-<<<<<<< HEAD
-                        <button><Link to="/customer/PlaceOrder"
-                            className={`${Items.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
-                            aria-disabled={!Items.length}>Place Order</Link></button>
-                        
-=======
                         <div
                             className={`${Items.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
                             aria-disabled={!Items.length}
                             onClick={handlePlaceOrder}
                         >Place Order</div>
->>>>>>> 322c3b34287d7a1d25fc0c5d64fd5cbd45619a54
                     </div>
                 </div>
             </div>
