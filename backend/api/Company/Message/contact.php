@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit; // Respond with a success status for OPTIONS
 }
 
-require_once '../Connection/connection.php';
+require_once '../../Connection/connection.php';
 
 $highest_id_query = $conn->prepare("SELECT contactID FROM `contact` ORDER BY contactID DESC LIMIT 1");
 $highest_id_query->execute();

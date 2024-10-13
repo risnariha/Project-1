@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Container,
@@ -15,12 +15,18 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import ReplyIcon from "@mui/icons-material/Reply";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { Modal, Form } from "react-bootstrap";
 
-export default function MessageDetail() {
-  const { id } = useParams();
-  const [messsage, setMessage] = useState(null);
+const MessageDetail = () => {
+  const { contactID } = useParams();
+  const navigate = useNavigate();
+  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [replyMessage, setReplyMessage] = useState("");
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const fetchMessageDetails = async () => {
@@ -46,24 +52,70 @@ export default function MessageDetail() {
     fetchMessageDetails();
   }, [contactID]);
 
-  const downloadCV = () => {
-    const cvPath = `http://localhost:8080/backend/api/Company/Message/downloadCV.php?id=${message.contactID}`;
+  const downloadFile = () => {
+    if (!message || !message.dataFile) return;
+    const filePath = `http://localhost:8080/backend/api/Company/Message/download_file.php?contact_id=${message.contactID}`;
     const link = document.createElement("a");
-    link.href = cvPath;
-    link.setAttribute("download", `${message.customerName}_CV.pdf`);
+    link.href = filePath;
+    link.setAttribute("download", `${message.customerName}.pdf`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   const handleReply = () => {
-    // Logic for replying (e.g., navigating to a reply form)
-    console.log("Reply clicked");
+    setShowMessageModal(true);
+    setSelectedCustomer(message);
   };
 
-  const handleCancel = () => {
-    // Logic for canceling (e.g., resetting form or navigating back)
-    console.log("Cancel clicked");
+
+  const handleShowMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const handleCloseMessageModal = () => {
+    setShowMessageModal(false);
+    setReplyMessage(""); // Reset message field
+    setFile(null); // Reset file input
+  };
+
+  const handleCloseModal = () => {
+    navigate('/company/messageList'); 
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]); 
+  };
+
+  const handleSubmitMessage = async (e) => {
+    e.preventDefault(); // Prevent submission first
+
+    if (!replyMessage.trim()) {
+      alert("Message field is required");
+      return;
+    }
+
+    const formData = new FormData();
+      formData.append("companyOwnerID", message.companyOwnerID);
+      formData.append("customerID", selectedCustomer.customerID);
+      formData.append("email", selectedCustomer.email);
+      formData.append("companyName", message.companyName); // Assuming companyName is available in user context
+      formData.append("customerName", selectedCustomer.customerName);
+      formData.append("message", replyMessage);
+      formData.append("file", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/backend/api/Company/Message/contact.php",
+        formData
+      );
+      if (response.data.error) {
+        throw new Error(response.data.error);
+      }
+      handleCloseMessageModal();
+    } catch (error) {
+      alert("Error sending message: " + error.message);
+    }
   };
 
   if (loading) {
@@ -71,7 +123,7 @@ export default function MessageDetail() {
       <Container sx={{ textAlign: "center", mt: 4 }}>
         <CircularProgress />
         <Typography variant="body1" sx={{ mt: 2 }}>
-          Loading company details...
+          Loading message details...
         </Typography>
       </Container>
     );
@@ -85,11 +137,11 @@ export default function MessageDetail() {
     );
   }
 
-  if (!company) {
+  if (!message) {
     return (
       <Container sx={{ mt: 4 }}>
         <Typography variant="body1" color="textSecondary">
-          No company details found!
+          No message details found!
         </Typography>
       </Container>
     );
@@ -100,32 +152,39 @@ export default function MessageDetail() {
       <Card variant="outlined">
         <CardContent>
           <Typography variant="h4" color="primary" gutterBottom>
-            {company.companyname}
+            {message.customerName}
           </Typography>
           <Typography variant="body1">
-            <strong>Company ID:</strong> {company.companyid}
+            <strong>Email:</strong> {message.email}
           </Typography>
           <Typography variant="body1" sx={{ mt: 1 }}>
-            <strong>CV Path:</strong>{" "}
-            <MuiLink
-              href={company.cv_path}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View CV
-            </MuiLink>
+            <strong>Message :</strong> {message.message}
+          </Typography>
+          <Typography variant="body1" sx={{ mt: 1 }}>
+            <strong>View Data:</strong>{" "}
+            {message.dataFile ? (
+              <MuiLink
+                href={message.dataFile}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Click Here !
+              </MuiLink>
+            ) : (
+              "No data available"
+            )}
           </Typography>
           <Typography variant="body1" sx={{ mt: 1 }}>
             <strong>Created At:</strong>{" "}
-            {new Date(company.created_at).toLocaleDateString()}
+            {new Date(message.date).toLocaleDateString()}
           </Typography>
           <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
             <Button
               variant="contained"
               startIcon={<DownloadIcon />}
-              onClick={downloadCV}
+              onClick={downloadFile}
             >
-              Download CV
+              Download File
             </Button>
             <Button
               variant="outlined"
@@ -138,13 +197,87 @@ export default function MessageDetail() {
               variant="outlined"
               color="error"
               startIcon={<CancelIcon />}
-              onClick={handleCancel}
+              onClick={handleCloseModal}
             >
               Cancel
             </Button>
           </Stack>
         </CardContent>
       </Card>
+
+     {/* Message Modal */}
+      {selectedCustomer && (
+      <Modal show={showMessageModal} onHide={handleCloseMessageModal}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ fontSize: "1.5rem" }}>
+            Send Message to {selectedCustomer.customerName}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontSize: "1.2rem" }}>
+                Company Name
+              </Form.Label>
+              <Form.Control type="text" value={message.companyName} readOnly />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontSize: "1.2rem" }}>
+                Customer Name
+              </Form.Label>
+              <Form.Control
+                type="text"
+                value={selectedCustomer.customerName}
+                readOnly
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontSize: "1.2rem" }}>Email</Form.Label>
+              <Form.Control
+                type="email"
+                value={selectedCustomer.email}
+                readOnly
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontSize: "1.2rem" }}>Message</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={replyMessage}
+                onChange={(e) => setReplyMessage(e.target.value)}
+                placeholder="Enter your message"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontSize: "1.2rem" }}>
+                Attach File
+              </Form.Label>
+              <Form.Control type="file" onChange={handleFileChange} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={handleCloseMessageModal}
+            style={{ backgroundColor: "#6c757d", color: "white" }} // Secondary color
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleSubmitMessage}
+            style={{ backgroundColor: "#007bff", color: "white" }} // Primary color
+          >
+            Send Message
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      )}
     </Container>
   );
-}
+};
+
+export default MessageDetail;

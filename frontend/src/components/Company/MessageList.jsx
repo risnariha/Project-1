@@ -62,7 +62,7 @@ const MessageList = () => {
                   </p>
                   <p className="card-text">Email : {message.email}</p>
                   <Link
-                    to={"/messageDetail/${message.contactID}"}
+                    to={`/company/messageDetail/${message.contactID}`}
                     className="btn btn-danger mt-auto"
                   >
                     Read more
