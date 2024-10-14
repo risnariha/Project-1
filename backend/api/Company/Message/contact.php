@@ -60,9 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     // Save new image
     $file = $message_file['name'];
-    $fileDir = '../../../frontend/public/files/message/' . $contactID;
+    $fileDir = '../../../../frontend/public/files/message/' . $contactID;
     $filePath_move = $fileDir . '/' . $file;
-    $filePath = '../../../public/files/message/' . $contactID . '/' . $file;
+    $filePath = '../../../../public/files/message/' . $contactID . '/' . $file;
 
     if (file_exists($fileDir)) {
         deleteFilesInDirectory($fileDir);

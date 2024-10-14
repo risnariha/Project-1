@@ -12,7 +12,7 @@ import {
   Link as MuiLink,
   Stack,
 } from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 import ReplyIcon from "@mui/icons-material/Reply";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Modal, Form } from "react-bootstrap";
@@ -52,17 +52,7 @@ const MessageDetail = () => {
     fetchMessageDetails();
   }, [contactID]);
 
-  const downloadFile = () => {
-    if (!message || !message.dataFile) return;
-    const filePath = `http://localhost:8080/backend/api/Company/Message/download_file.php?contact_id=${message.contactID}`;
-    const link = document.createElement("a");
-    link.href = filePath;
-    link.setAttribute("download", `${message.customerName}.pdf`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
+  
   const handleReply = () => {
     setShowMessageModal(true);
     setSelectedCustomer(message);
@@ -148,62 +138,67 @@ const MessageDetail = () => {
   }
 
   return (
+    <div className="maincontainer">
+      <div className="table_heading"></div>
     <Container sx={{ mt: 5 }}>
       <Card variant="outlined">
-        <CardContent>
-          <Typography variant="h4" color="primary" gutterBottom>
-            {message.customerName}
-          </Typography>
-          <Typography variant="body1">
-            <strong>Email:</strong> {message.email}
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 1 }}>
-            <strong>Message :</strong> {message.message}
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 1 }}>
-            <strong>View Data:</strong>{" "}
-            {message.dataFile ? (
-              <MuiLink
-                href={message.dataFile}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Click Here !
-              </MuiLink>
-            ) : (
-              "No data available"
-            )}
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 1 }}>
-            <strong>Created At:</strong>{" "}
-            {new Date(message.date).toLocaleDateString()}
-          </Typography>
-          <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
-            <Button
-              variant="contained"
-              startIcon={<DownloadIcon />}
-              onClick={downloadFile}
-            >
-              Download File
+      <div className="card-color">
+    <CardContent>
+      <Typography variant="h4" color="primary" textAlign="center" gutterBottom>
+        {message.customerName}
+      </Typography>
+
+      {/* Align "Created At" to the right */}
+      <Typography variant="body1" sx={{ mt: 3, textAlign: "right", mr: 2 }}>
+        <strong>Date :</strong>{" "}
+        {new Date(message.date).toLocaleDateString()}
+      </Typography>
+
+      <Typography variant="body1" sx={{ mt: 4 ,ml: 4 }}>
+        <strong sx={{ mr: 4 }}>Email :</strong> 
+        <span style={{ paddingLeft: '70px' }}>{message.email}</span>
+      </Typography>
+
+      <Typography variant="body1" sx={{ mt: 3 ,ml: 4}}>
+        <strong >Message :</strong>
+         <span style={{ paddingLeft: '40px' }}>{message.message}</span>
+      </Typography>
+
+      <Typography variant="body1" sx={{ mt: 3, ml: 4 }}>
+        <strong>View Data :</strong>{" "}<span style={{ paddingLeft: '30px' }}>
+        {message.dataFile ? (
+          <MuiLink href={message.dataFile} target="_blank" rel="noopener noreferrer">
+            <Button variant="contained" startIcon={<FileOpenIcon />}>
+              Click Here!
             </Button>
-            <Button
-              variant="outlined"
-              startIcon={<ReplyIcon />}
-              onClick={handleReply}
-            >
-              Reply
-            </Button>
-            <Button
-              variant="outlined"
-              color="error"
-              startIcon={<CancelIcon />}
-              onClick={handleCloseModal}
-            >
-              Cancel
-            </Button>
-          </Stack>
-        </CardContent>
-      </Card>
+          </MuiLink>
+        ) : (
+          "No data available"
+        )}</span>
+      </Typography>
+
+      {/* Align the buttons in the center */}
+      <Stack direction="row" spacing={2} sx={{ mt: 3, justifyContent: "center" }}>
+        <Button
+          variant="outlined"
+          startIcon={<ReplyIcon />}
+          onClick={handleReply}
+        >
+          Reply
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          startIcon={<CancelIcon />}
+          onClick={handleCloseModal}
+        >
+          Cancel
+        </Button>
+      </Stack>
+    </CardContent>
+    </div>
+  </Card>
+  
 
      {/* Message Modal */}
       {selectedCustomer && (
@@ -277,6 +272,7 @@ const MessageDetail = () => {
       </Modal>
       )}
     </Container>
+    </div>
   );
 };
 

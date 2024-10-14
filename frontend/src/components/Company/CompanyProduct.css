@@ -400,3 +400,9 @@
     font-size: 1.2rem;
     color: #e8dfdf;
 }
+
+/* message card */
+
+.card-color{
+  background-color: var(--color5);
+}

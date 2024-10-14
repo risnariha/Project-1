@@ -14,29 +14,25 @@ if (isset($_GET['contact_id'])) {
     $pstmt->bindParam(':contactID', $contactID);
     $pstmt->execute();
 
-    $file = $pstmt->fetch(PDO::FETCH_ASSOC); // Corrected from $stmt to $pstmt
+    $file = $pstmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($file) {
-        $filePath = $file['dataFile'];
-        // Debugging: print the file path
-        error_log("File path: " . $filePath);
-        
+    if ($application) {
+        $filePath = $application['dataFile']; // Assuming cv stores the file path
+
         if (file_exists($filePath)) {
             // Set headers for file download
             header('Content-Description: File Transfer');
-            header('Content-Type: application/pdf'); // Change MIME type if needed
+            header('Content-Type: application/pdf'); // Change the MIME type as needed
             header('Content-Disposition: attachment; filename=' . basename($filePath));
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             header('Content-Length: ' . filesize($filePath));
-            readfile($filePath);
+            readfile($filePath); // Read the file and send it to the user
             exit;
         } else {
-            error_log("File does not exist: " . $filePath);
             echo json_encode(['error' => 'File does not exist.']);
         }
-        
     } else {
         echo json_encode(['error' => 'Application not found.']);
     }

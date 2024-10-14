@@ -46,32 +46,45 @@ const MessageList = () => {
 
   return (
     <div>
-      <h1 className="text-center my-5">Message Details</h1>
+      <div className="maincontainer">
+       <div className="table_heading">
+      <h1 className="text-center my-3">Message Details</h1>
+      </div>
       <div className="container">
         <div className="row">
           {messages.map((message) => (
-            <div className="col-md-6 mb-4" key={message.contactID}>
+            <div className="col-md-6 mb-2 mt-3" key={message.contactID}>
               <div className="card h-100">
+              <div className="card-color">
                 <div className="thumbnail">
                   {/* Optional: Add an image here if needed */}
                 </div>
                 <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{message.customerName}</h5>
-                  <p className="card-text">
-                    Created At: {new Date(message.date).toLocaleDateString()}
+                  <h5 className="card-title text-center">
+                    {message.customerName}
+                  </h5>
+                  <p className="card-text text-end">
+                    Date : {new Date(message.date).toLocaleDateString()}
                   </p>
                   <p className="card-text">Email : {message.email}</p>
+                  <p className="card-text">
+                    Message:{" "}
+                    {message.message.split(" ").slice(0, 6).join(" ") +
+                      (message.message.split(" ").length > 6 ? "....." : "")}
+                  </p>
                   <Link
                     to={`/company/messageDetail/${message.contactID}`}
-                    className="btn btn-danger mt-auto"
+                    className="btn btn-primary mt-auto"
                   >
                     Read more
                   </Link>
                 </div>
               </div>
+              </div>
             </div>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
