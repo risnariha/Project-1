@@ -406,3 +406,44 @@
 .card-color{
   background-color: var(--color5);
 }
+
+/* order date picker */
+
+.datepicker-wrapper {
+  display: inline-block; 
+}
+
+.small-datepicker {
+  width: 120px; 
+  font-size: 0.9rem; 
+  padding: 4px; 
+  border: 1px solid #ced4da; 
+  border-radius: 0.25rem; 
+}
+
+.small-datepicker:focus {
+  outline: none; 
+  border-color: #80bdff; 
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.save-button {
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 0.25rem; 
+  padding: 3px 8px; 
+  font-size: 1rem; 
+  cursor: pointer; 
+  
+}
+
+.save-button:hover {
+  background-color: #0056b3; 
+  transform: scale(1.05); 
+}
+
+.save-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); 
+}
