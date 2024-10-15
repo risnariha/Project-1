@@ -41,6 +41,31 @@ const MessageList = () => {
     }
   };
 
+  const markAsRead = async (contactID) => {
+    try {
+      // Send POST request to mark the message as read
+      const response = await axios.post(
+        "http://localhost:8080/backend/api/Company/Message/markAsRead.php",
+        {
+          contactID: contactID, 
+        }
+      );
+
+      if (response.data.success) {
+        // If the update is successful, update only the clicked message in the state
+        setMessages((prevMessages) =>
+          prevMessages.map((message) =>
+            message.contactID === contactID
+              ? { ...message, isRead: 1 } // Set isRead to 1 for the clicked message
+              : message
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error marking message as read:", error);
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -75,6 +100,7 @@ const MessageList = () => {
                   <Link
                     to={`/company/messageDetail/${message.contactID}`}
                     className="btn btn-primary mt-auto"
+                    onClick={() => markAsRead(message.contactID)} 
                   >
                     Read more
                   </Link>

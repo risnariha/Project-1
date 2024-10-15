@@ -447,3 +447,18 @@
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); 
 }
+
+/* message notification status  */
+
+.notification-badge {
+  position: absolute;
+  top: -0.1px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0.0rem 0.4rem;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

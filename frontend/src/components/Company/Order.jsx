@@ -210,7 +210,6 @@ function Order() {
                     <>
                       {formatDate(order.deliveryDate)}
                       <button onClick={() => {
-                         className="calendar-button"
                         setCurrentOrderId(order.orderID);
                         setEditingDeliveryDate(new Date(order.deliveryDate)); // Set current delivery date
                       }}>
