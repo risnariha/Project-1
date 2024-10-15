@@ -87,7 +87,7 @@ function App() {
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />
             <Route path="setting" element={<Setting />} />
-            // add message path
+ 
           </Route>
           {/* company */}
           <Route path="/company/*" element={<CompanyLayout setToggle={setToggle} />} >

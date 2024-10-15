@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contactID = $data['contactID'];
 
     try {
-        // Check if $conn is available
+        // Check if $conn is available   // Check if $conn is available
         if (!$conn) {
             throw new Exception('Database connection failed');
         }

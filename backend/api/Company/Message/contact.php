@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customerName = $_POST['customerName'];
     $message = $_POST['message'];
     $message_file = $_FILES['file'] ?? null; // Handle file upload
-    $type = "company";
+    $type = "company";  // Handle file upload
 
     // Generate unique contact ID
     $contactID = $new_id;
