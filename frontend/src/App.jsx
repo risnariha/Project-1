@@ -43,6 +43,8 @@ import Setting from './components/Customer/Setting';
 import { useState } from 'react';
 import Payment from './components/Customer/Payment';
 import OrderSuccess from './components/Customer/OrderSuccess';
+import MessageList from './components/Company/MessageList';
+import MessageDetail  from './components/Company/MessageDetail';
 
 function App() {
   const [toggle, setToggle] = useState(false);
@@ -83,7 +85,7 @@ function App() {
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />
             <Route path="setting" element={<Setting />} />
-            // add message path
+           
           </Route>
           {/* company */}
           <Route path="/company/*" element={<CompanyLayout setToggle={setToggle} />} >
@@ -96,7 +98,7 @@ function App() {
             <Route exact path="review" element={<Review />} />
             <Route exact path="reviewlayout/:productID" element={<ReviewLayout />} />
             <Route exact path="profile" element={<CompanyProfile />} />
-            <Route exact path="messagelist" element={<MessageList />} />   // add message path
+            <Route exact path="messagelist" element={<MessageList />} />  
             <Route exact path="messageDetail/:contactID" element={<MessageDetail />} />
           </Route>
         </Routes>
