@@ -66,7 +66,7 @@ function Customer() {
 
       try {
         const response = await axios.post(
-          "http://localhost:8080/backend/api/company/Message/contact.php",
+          "http://localhost:8080/backend/api/company/contact.php",
           formData,
           {
             headers: {
