@@ -96,7 +96,7 @@ function App() {
             <Route exact path="review" element={<Review />} />
             <Route exact path="reviewlayout/:productID" element={<ReviewLayout />} />
             <Route exact path="profile" element={<CompanyProfile />} />
-            <Route exact path="messagelist" element={<MessageList/>} />   
+            <Route exact path="messagelist" element={<MessageList />} />   // add message path
             <Route exact path="messageDetail/:contactID" element={<MessageDetail />} />
           </Route>
         </Routes>
