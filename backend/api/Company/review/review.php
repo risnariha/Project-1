@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rating_value'])) {
         echo "Error: " . $sql . "<br>" . $stmt->errorInfo();
     }
 }
-
+// avgRatings
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $avgRatings = 0;
     $avgUserRatings = 0;

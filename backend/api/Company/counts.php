@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit; // Respond with a success status for OPTIONS
 }
 
+ // Respond with a success status for OPTIONS
 require_once '../Connection/connection.php';
 
 $counts = [];

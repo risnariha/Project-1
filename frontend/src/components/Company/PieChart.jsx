@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Legend, Tooltip, Title } from 'chart.js';
-import axios from 'axios'; // Make sure to import axios
+import axios from 'axios'; // Make sure to import axios // Make sure to import axios
 import { useOutletContext } from 'react-router-dom';
 
 ChartJS.register(ArcElement, Legend, Tooltip, Title);

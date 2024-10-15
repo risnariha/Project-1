@@ -32,10 +32,8 @@ export const CompanyNavbar = ({ sidebarToggle, setSidebarToggle, user }) => {
       }
     };
 
-    // Fetch unread messages count on initial load
     fetchUnreadMessages();
 
-    // Fetch unread messages periodically (every 30 seconds)
     const interval = setInterval(fetchUnreadMessages, 30000); // 30 seconds
 
     // Clear interval on component unmount

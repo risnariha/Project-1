@@ -78,7 +78,7 @@ const MessageDetail = () => {
   };
 
   const handleSubmitMessage = async (e) => {
-    e.preventDefault(); // Prevent submission first
+    e.preventDefault(); // Prevent submission first // Prevent submission first
 
     if (!replyMessage.trim()) {
       alert("Message field is required");

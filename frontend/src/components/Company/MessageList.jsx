@@ -56,7 +56,7 @@ const MessageList = () => {
         setMessages((prevMessages) =>
           prevMessages.map((message) =>
             message.contactID === contactID
-              ? { ...message, isRead: 1 } // Set isRead to 1 for the clicked message
+              ? { ...message, isRead: 1 } // Set isRead to 1 for the clicked message  // Set isRead to 1 for the clicked message
               : message
           )
         );

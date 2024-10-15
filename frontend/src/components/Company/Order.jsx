@@ -211,7 +211,7 @@ function Order() {
                       {formatDate(order.deliveryDate)}
                       <button onClick={() => {
                         setCurrentOrderId(order.orderID);
-                        setEditingDeliveryDate(new Date(order.deliveryDate)); // Set current delivery date
+                        setEditingDeliveryDate(new Date(order.deliveryDate)); // Set  delivery date
                       }}>
                         📅 
                       </button>

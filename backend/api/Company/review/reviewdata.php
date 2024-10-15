@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $totalReviews = 0;
         $ratingsList = array();
 
-        // Fetch average ratings for the product
+        // Fetch average ratings product
         $sql = "SELECT AVG(rating) as avgUserRatings FROM product_reviews WHERE productID = :productId";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':productId', $productId);

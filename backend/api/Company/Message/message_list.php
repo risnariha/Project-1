@@ -4,6 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
+ // Adjust the path to your connection file
 include '../../Connection/connection.php'; // Adjust the path to your connection file
 
 
