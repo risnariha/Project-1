@@ -83,7 +83,7 @@ function App() {
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />
             <Route path="setting" element={<Setting />} />
-
+            // add message path
           </Route>
           {/* company */}
           <Route path="/company/*" element={<CompanyLayout setToggle={setToggle} />} >
@@ -96,6 +96,8 @@ function App() {
             <Route exact path="review" element={<Review />} />
             <Route exact path="reviewlayout/:productID" element={<ReviewLayout />} />
             <Route exact path="profile" element={<CompanyProfile />} />
+            <Route exact path="messagelist" element={<MessageList/>} />   
+            <Route exact path="messageDetail/:contactID" element={<MessageDetail />} />
           </Route>
         </Routes>
         <Footer toggle={toggle} />

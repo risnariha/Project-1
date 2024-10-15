@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-    // Save new image
+    // Save new image   // Save new image
     $file = $message_file['name'];
     $fileDir = '../../../frontend/public/files/message/' . $contactID;
     $filePath_move = $fileDir . '/' . $file;

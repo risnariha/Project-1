@@ -7,7 +7,7 @@ const ReviewDisplay = ({ reviews }) => {
         <div className="row mt-2" key={index}>
           <div className="col-1">
             <div className="text-center">
-              <img
+              <img  //  mage add
                 src={review.image}
                 alt="Review"
                 className="img-fluid rounded-circle"

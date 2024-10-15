@@ -14,7 +14,7 @@ const ReviewLayout = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    // Fetch product details
+    // Fetch product details   // Fetch product details
     axios.get(`http://localhost:8080/backend/api/Company/product_review.php?product_id=${productID}`)
       .then((response) => {
         console.log("API Response:", response.data); 

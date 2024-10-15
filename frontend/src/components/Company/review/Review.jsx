@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useOutletContext } from 'react-router-dom';
 
 const Review = () => {
-  const { user } = useOutletContext(); // assuming user context contains companyOwnerID
+  const { user } = useOutletContext(); // assuming user context contains companyOwnerID  // assuming user context contains companyOwnerID
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 

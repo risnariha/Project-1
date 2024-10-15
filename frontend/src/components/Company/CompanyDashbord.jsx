@@ -1,7 +1,7 @@
 
 import React,{useState, useEffect} from 'react';
 import { AiOutlineStock, AiOutlineUser } from 'react-icons/ai';
-import { BsCartFill, BsTruck } from 'react-icons/bs'; // Assuming you're using BsTruck for Delivery icon
+import { BsCartFill, BsTruck } from 'react-icons/bs'; //  using BsTruck for Delivery icon
 import HomeCard from './HomeCard';
 import BarChart from './BarChart';
 import Order from './Order';

@@ -105,7 +105,7 @@ function Customer() {
       } catch (error) {
         setError("Error fetching customers");
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false); // Stop loading  // Stop loading
       }
     };
 
