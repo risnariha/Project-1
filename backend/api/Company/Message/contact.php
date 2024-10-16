@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit; // Respond with a success status for OPTIONS
 }
 
-require_once '../Connection/connection.php';
+require_once '../../Connection/connection.php';
 
 $highest_id_query = $conn->prepare("SELECT contactID FROM `contact` ORDER BY contactID DESC LIMIT 1");
 $highest_id_query->execute();
@@ -22,7 +22,7 @@ if ($highest_id_row) {
     $numeric_part = (int) substr($highest_id, 1); // Get the numeric part of the highest ID
     $new_id = 'M' . str_pad($numeric_part + 1, 3, '0', STR_PAD_LEFT); // Increment and pad with zeros
 } else {
-    $new_id = 'M001'; 
+    $new_id = 'M001';
 }
 
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customerName = $_POST['customerName'];
     $message = $_POST['message'];
     $message_file = $_FILES['file'] ?? null; // Handle file upload
-    $type = "company";  // Handle file upload
+    $type = "company";
 
     // Generate unique contact ID
     $contactID = $new_id;
@@ -60,9 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     // Save new image   // Save new image
     $file = $message_file['name'];
-    $fileDir = '../../../frontend/public/files/message/' . $contactID;
+    $fileDir = '../../../../frontend/public/files/message/' . $contactID;
     $filePath_move = $fileDir . '/' . $file;
-    $filePath = '../../../public/files/message/' . $contactID . '/' . $file;
+    $filePath = '../../../../public/files/message/' . $contactID . '/' . $file;
 
     if (file_exists($fileDir)) {
         deleteFilesInDirectory($fileDir);
