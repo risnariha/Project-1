@@ -67,7 +67,7 @@ useEffect(()=>{
   return (
     <div className='container mt-5' style={{ bodyBackground: '#eaeaea' }}>
       <div className='row justify-content-center'>
-        <div className='col-md-11   col-lg-11'>
+        <div className='col-md-11 col-lg-11'>
           <div className='card'>
             <div className='card-header bg-dark text-white d-flex justify-content-between align-items-center'>
                 <form className="d-flex" role="search">
@@ -83,7 +83,7 @@ useEffect(()=>{
               <div className='table-responsive'>
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
-                    <tr style={{fontSize:'145%'}}>
+                    <tr style={{fontSize:'105%'}}>
                       <th>Customer Name</th>
                       <th>Shop Name</th>
                       <th>Email</th>
@@ -96,7 +96,7 @@ useEffect(()=>{
                     {customers.filter((customer)=>{
                       return search.toLowerCase() === '' ? customers : customer.customerName.toLowerCase().includes(search);
                     }).map((customer) => (
-                      <tr key={customer.customerID} style={{fontSize:'145%'}}>
+                      <tr key={customer.customerID} style={{fontSize:'75%'}}>
                         <td>{customer.customerName}</td>
                         <td>{customer.customerShopName}</td>
                         <td>{customer.email}</td>

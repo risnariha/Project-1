@@ -89,7 +89,7 @@ function Companydetails() {
               <div className='table-responsive'>
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
-                    <tr style={{fontSize:'145%'}}>
+                    <tr style={{fontSize:'105%'}}>
                       <th>Company Name</th>
                       <th>Company Owner Name</th>
                       <th>Email</th>
@@ -101,7 +101,7 @@ function Companydetails() {
                     {company.filter((company)=>{
                       return search.toLowerCase() === '' ? company: company.companyName.toLowerCase().includes(search);
                     }).map((company) => (
-                      <tr key={company.companyOwnerID} style={{fontSize:'145%'}}>
+                      <tr key={company.companyOwnerID} style={{fontSize:'75%'}}>
                         <td>{company.companyName}</td>
                         <td>{company.companyOwnerName}</td>
                         <td>{company.email}</td>

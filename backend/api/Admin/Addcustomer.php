@@ -5,10 +5,12 @@ header("Access-Control-Allow-Headers: Origin, Content-Type, Authorization, X-Req
 header('Content-Type: application/json');
 
 include '../Connection/connection.php';
-require '../../vendor/autoload.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+require '../Phpmailer/src/Exception.php';
+require '../Phpmailer/src/PHPMailer.php';
+require '../Phpmailer/src/SMTP.php';
 // Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

@@ -48,7 +48,7 @@ const  AdminOrder=(()=> {
               <div className='table-responsive'>
                 <table className='table table-bordered table-striped'>
                   <thead className='thead-dark'>
-                    <tr style={{fontSize:'145%'}}>
+                    <tr style={{fontSize:'105%'}}>
                       <th>Order_ID</th>
                       <th>Customer_ID</th>
                       <th>Order_Date</th>
@@ -59,7 +59,7 @@ const  AdminOrder=(()=> {
                   </thead>
                   <tbody>
                   {orders.map((order) => (
-                      <tr key={order.orderID} style={{fontSize:'135%'}}>
+                      <tr key={order.orderID} style={{fontSize:'75%'}}>
                         <td>{order.orderID}</td>
                         <td>{order.customerID}</td>
                         <td>{order.orderDate}</td>
