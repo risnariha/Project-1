@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit; // Respond with a success status for OPTIONS
 }
 
- // Respond with a success status for OPTIONS
+// Respond with a success status for OPTIONS
 require_once '../Connection/connection.php';
 
 $counts = [];
@@ -50,13 +50,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $counts['orders'] = $row['order_count'];
 
         // Fetch delivery count
-        $pstmt = $conn->prepare("SELECT COUNT(DISTINCT orders.orderID) AS delivery_order_count FROM products JOIN orderItems ON products.productID = orderItems.productID JOIN orders ON orderItems.orderID = orders.orderID WHERE products.companyOwnerID = ? AND orders.status = 'delivery'");
+        $pstmt = $conn->prepare("SELECT COUNT(DISTINCT orders.orderID) AS delivery_order_count FROM products JOIN orderItems ON products.productID = orderItems.productID JOIN orders ON orderItems.orderID = orders.orderID WHERE products.companyOwnerID = ? AND orders.status = 'delivered'");
         $pstmt->bindParam(1, $companyOwnerID);
         $pstmt->execute();
         $row = $pstmt->fetch(PDO::FETCH_ASSOC);
         $counts['delivery'] = $row['delivery_order_count'];
 
+        // fetch pie chart count
+        $pstmt = $conn->prepare("SELECT COUNT(DISTINCT orders.orderID) AS pending_order_count FROM products JOIN orderItems ON products.productID = orderItems.productID JOIN orders ON orderItems.orderID = orders.orderID WHERE products.companyOwnerID = ? AND orders.status = 'pending'");
+        $pstmt->bindParam(1, $companyOwnerID);
+        $pstmt->execute();
+        $row = $pstmt->fetch(PDO::FETCH_ASSOC);
+        $counts['pending'] = $row['pending_order_count'];
+
+        $pstmt = $conn->prepare("SELECT COUNT(DISTINCT orders.orderID) AS processing_order_count FROM products JOIN orderItems ON products.productID = orderItems.productID JOIN orders ON orderItems.orderID = orders.orderID WHERE products.companyOwnerID = ? AND orders.status = 'processing'");
+        $pstmt->bindParam(1, $companyOwnerID);
+        $pstmt->execute();
+        $row = $pstmt->fetch(PDO::FETCH_ASSOC);
+        $counts['processing'] = $row['processing_order_count'];
+
+        $pstmt = $conn->prepare("SELECT COUNT(DISTINCT orders.orderID) AS delivered_order_count FROM products JOIN orderItems ON products.productID = orderItems.productID JOIN orders ON orderItems.orderID = orders.orderID WHERE products.companyOwnerID = ? AND orders.status = 'delivered'");
+        $pstmt->bindParam(1, $companyOwnerID);
+        $pstmt->execute();
+        $row = $pstmt->fetch(PDO::FETCH_ASSOC);
+        $counts['delivered'] = $row['delivered_order_count'];
+
         echo json_encode($counts);
+
     } catch (PDOException $e) {
         echo json_encode(array("error" => "Query failed: " . $e->getMessage()));
     }
