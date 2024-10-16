@@ -3,7 +3,7 @@
 
 
 
-<div class="col-12">
+<di class="col-12">
 
 <span>Quantity: </span>
 
@@ -14,18 +14,19 @@
 <div class="position-absolute qty-buttons">
 
 <div class="justify-content-center d-flex flex-column align-items-center border border-1 border-secondary qty-Inc">
-    <i class="bi bi-caret-up-fill text-primary fs-5" onclick='qty_inc(<?php echo $product_data["qty"]; ?>)"></i>
+    <i class="bi bi-caret-up-fill text-primary fs-5" onclick='qty_inc(<?php echo $product_data["qty"]; ?>)'> </i>
 
 </div>
+
 
 <div class="justify-content-center d-flex flex-column align-items-center border border-1 border-secondary qty-dec"> 
-<i class="bi bi-caret-down-fill text-primary fs-5" onclick='qty dec(<?php echo $product data["qty"]; ?>)'></i>
+<i class="bi bi-caret-down-fill text-primary fs-5" onclick='qty_dec(<?php echo $product_data["qty"]; ?>)'></i>
 </div>
 </div>
 
 </div>
 </div>
-
+</div>
 <div class="row">
     <div class="col-12 mt-5">
         <div class="row">

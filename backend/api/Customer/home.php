@@ -1,11 +1,11 @@
 <?php
 
 if ($product_data["qty"] > 0) {
-    
+
 <span class="card_text text-warning fw_bold">in stock</span> <br />
 <span class="card_text text-success fw_bold"><?php echo $product_data["qty"];?> items available</span><br />
 <a  href= '<?php echo "singleproductview.php?id=" . $product_data["id"]; ?>' class="col-12 btn-success">buy now</a>
-<butteen class="col-12 btn btn-danger mt-2" onclick="addtocart(<?php echo $product_data['id']; ?>);">add to cart</button>
+<button class="col-12 btn btn-danger mt-2" onclick='add_cart_item(<?php echo $product_data["id"]; ?>)'>add to cart</button>
 
 } else {
 

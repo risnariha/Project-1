@@ -23,7 +23,7 @@ r.onreadystatechange = function () {
             window.location = "updateprofile.php";
         } else {
             // payment completed. if can be a successful failure.
-            payhere.oncompleted = funcation oncompleted(orderid) {
+            payhere.oncompleted = function oncompleted(orderid) {
                 // note: prompt user to pay again or show an error page
                 console.log("payment dismissed");
             };
