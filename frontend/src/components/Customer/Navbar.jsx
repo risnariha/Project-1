@@ -1,6 +1,7 @@
 import React from 'react'
 import {FaBars,FaUserCircle, FaSearch, FaBell} from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { MdOutlineMessage } from "react-icons/md";
 export const Navbar = ({user,sidebarToggle,setSidebarToggle,search,setSearch,searchQuery, setSearchQuery}) => {
 
   const handleSearch = (event) => {
@@ -12,7 +13,11 @@ export const Navbar = ({user,sidebarToggle,setSidebarToggle,search,setSearch,sea
         <div className='d-flex text-white me-1'><FaBars className={`fabar ${sidebarToggle?"d-none":""}`} onClick={()=>setSidebarToggle(!sidebarToggle)}/></div>
         <div className='d-flex text-white'>{user.customerShopName}</div>
     </div>
+
     <div className='d-flex align-items-center'>
+    <Link to="/customer/message-list" className='d-flex ms-2 align-items-center cursor-pointer'>
+          <MdOutlineMessage style={{ height: '20px', width: '20px' }} />
+        </Link>
         {/* <div className={`${search?"":"d-none"} position-relative align-items-center  `}>
           <span className='ms-0 sm-relative md-absolute  align-items-center bg-success rounded '>
             <button className='btn btn-none d-flex align-items-center  h-6' ><FaSearch className='text-white '/></button></span>

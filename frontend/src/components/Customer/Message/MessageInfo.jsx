@@ -18,15 +18,15 @@ import ReplyIcon from "@mui/icons-material/Reply";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Modal, Form } from "react-bootstrap";
 
-const MessageDetail = () => {
+const MessageInfo = () => {
+    const { user } = useOutletContext();
   const { contactID } = useParams();
-  const { user } = useOutletContext();
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedCompany, setSelectedCompany] = useState(null);
   const [replyMessage, setReplyMessage] = useState("");
   const [file, setFile] = useState(null);
 
@@ -34,7 +34,7 @@ const MessageDetail = () => {
     const fetchMessageDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/backend/api/Company/Message/message_detail.php?contact_id=${contactID}`
+          `http://localhost:8080/backend/api/Customer/Message/message_info.php?contact_id=${contactID}`
         );
         if (response.data.error) {
           throw new Error(response.data.error);
@@ -57,7 +57,7 @@ const MessageDetail = () => {
   
   const handleReply = () => {
     setShowMessageModal(true);
-    setSelectedCustomer(message);
+    setSelectedCompany(message);
   };
 
 
@@ -67,12 +67,12 @@ const MessageDetail = () => {
 
   const handleCloseMessageModal = () => {
     setShowMessageModal(false);
-    setReplyMessage(""); // Reset message field
-    setFile(null); // Reset file input
+    setReplyMessage(""); 
+    setFile(null);
   };
 
   const handleCloseModal = () => {
-    navigate('/company/messageList'); 
+    navigate('/customer/messageList'); 
   };
 
   const handleFileChange = (e) => {
@@ -89,16 +89,16 @@ const MessageDetail = () => {
 
     const formData = new FormData();
       formData.append("companyOwnerID", message.companyOwnerID);
-      formData.append("customerID", selectedCustomer.customerID);
+      formData.append("customerID", selectedCompany.customerID);
       formData.append("email", user.email);
-      formData.append("companyName", message.companyName); // Assuming companyName is available in user context
-      formData.append("customerName", selectedCustomer.customerName);
+      formData.append("companyName", message.companyName); 
+      formData.append("customerName", selectedCompany.customerName);
       formData.append("message", replyMessage);
       formData.append("file", file);
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/backend/api/Company/Message/contact.php",
+        "http://localhost:8080/backend/api/Customer/Message/send_message.php",
         formData
       );
       if (response.data.error) {
@@ -140,14 +140,14 @@ const MessageDetail = () => {
   }
 
   return (
-    <div className="maincontainer">
+      <div className="">
       <div className="table_heading"></div>
     <Container sx={{ mt: 5 }}>
       <Card variant="outlined">
-      <div className="card-color">
+      {/* <div className="card-color"> */}
     <CardContent>
       <Typography variant="h4" color="primary" textAlign="center" gutterBottom>
-        {message.customerName}
+        {message.companyName}
       </Typography>
 
       {/* Align "Created At" to the right */}
@@ -198,25 +198,25 @@ const MessageDetail = () => {
         </Button>
       </Stack>
     </CardContent>
-    </div>
+    {/* </div> */}
   </Card>
   
 
      {/* Message Modal */}
-      {selectedCustomer && (
-      <Modal show={showMessageModal} onHide={handleCloseMessageModal}  centered > 
+      {selectedCompany && (
+      <Modal show={showMessageModal} onHide={handleCloseMessageModal}>
         <Modal.Header closeButton>
           <Modal.Title style={{ fontSize: "1.5rem" }}>
-            Send Message to {selectedCustomer.customerName}
+            Send Message to {selectedCompany.companyName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
               <Form.Label style={{ fontSize: "1.2rem" }}>
-                Company Name
+                Customer Name
               </Form.Label>
-              <Form.Control type="text" value={message.companyName} readOnly />
+              <Form.Control type="text" value={message.customerName} readOnly />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label style={{ fontSize: "1.2rem" }}>Email</Form.Label>
@@ -228,11 +228,11 @@ const MessageDetail = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label style={{ fontSize: "1.2rem" }}>
-                Customer Name
+                Company Name
               </Form.Label>
               <Form.Control
                 type="text"
-                value={selectedCustomer.customerName}
+                value={selectedCompany.companyName}
                 readOnly
               />
             </Form.Group>
@@ -255,19 +255,19 @@ const MessageDetail = () => {
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer >
-          <Button 
+        <Modal.Footer>
+          <Button
             variant="secondary"
             onClick={handleCloseMessageModal}
             style={{ backgroundColor: "#6c757d", color: "white" }} 
-             className="me-2"
+            className="me-2"
           >
             Cancel
           </Button>
           <Button
             variant="primary"
             onClick={handleSubmitMessage}
-            style={{ backgroundColor: "#007bff", color: "white" }} // Primary color
+            style={{ backgroundColor: "#007bff", color: "white" }} 
           >
             Send Message
           </Button>
@@ -275,8 +275,8 @@ const MessageDetail = () => {
       </Modal>
       )}
     </Container>
-    </div>
+     </div>
   );
 };
 
-export default MessageDetail;
+export default MessageInfo;
