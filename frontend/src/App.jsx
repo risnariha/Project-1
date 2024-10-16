@@ -15,25 +15,23 @@ import ProductDetail from './components/Customer/ProductDetail';
 import AddProduct from './components/Company/AddProduct';
 import UpdateProduct from './components/Company/UpdateProduct';
 import ViewProducts from './components/Company/ViewProducts';
+// import { CompanyDashboard } from './components/Company/CompanyDashboard';
 import Customer from './components/Company/Customer';
 import Order from './components/Company/Order';
 import { CompanyDashboard } from './components/Company/CompanyDashbord';
 import Review from './components/Company/review/Review';
 import ReviewLayout from './components/Company/review/ReviewLayout';
-import CompanyProfile from './components/Company/CompanyProfile';
-import CompanyLayout from './components/Company/CompanyLayout';
-import MessageList from './components/Company/MessageList';
-import MessageDetail from './components/Company/MessageDetail';
-
 import Dash from './components/Admin/Dash';
 import AdminOrder from './components/Admin/Order';
 import Customerdetails from './components/Admin/Customerdetails';
 import Companydetails from './components/Admin/Companydetails';
+import CompanyProfile from './components/Company/CompanyProfile';
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Home/Login';
 import AdminLayout from './components/Admin/AdminLayout';
+import CompanyLayout from './components/Company/CompanyLayout';
 import CustomerLayout from './components/Customer/CustomerLayout';
 import CartItems from './components/Customer/CartItems';
 // import PlaceOrder from './components/Customer/PlaceOrder';
@@ -45,8 +43,8 @@ import Setting from './components/Customer/Setting';
 import { useState } from 'react';
 import Payment from './components/Customer/Payment';
 import OrderSuccess from './components/Customer/OrderSuccess';
-
-
+import MessageList from './components/Company/MessageList';
+import MessageDetail  from './components/Company/MessageDetail';
 
 function App() {
   const [toggle, setToggle] = useState(false);
