@@ -101,7 +101,7 @@ function Companydetails() {
                     {company.filter((company)=>{
                       return search.toLowerCase() === '' ? company: company.companyName.toLowerCase().includes(search);
                     }).map((company) => (
-                      <tr key={company.companyOwnerID} style={{fontSize:'75%'}}>
+                      <tr key={company.companyOwnerID} style={{fontSize:'55%'}}>
                         <td>{company.companyName}</td>
                         <td>{company.companyOwnerName}</td>
                         <td>{company.email}</td>

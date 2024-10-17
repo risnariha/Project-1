@@ -96,7 +96,7 @@ useEffect(()=>{
                     {customers.filter((customer)=>{
                       return search.toLowerCase() === '' ? customers : customer.customerName.toLowerCase().includes(search);
                     }).map((customer) => (
-                      <tr key={customer.customerID} style={{fontSize:'75%'}}>
+                      <tr key={customer.customerID} style={{fontSize:'55%'}}>
                         <td>{customer.customerName}</td>
                         <td>{customer.customerShopName}</td>
                         <td>{customer.email}</td>

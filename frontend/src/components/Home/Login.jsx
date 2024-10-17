@@ -34,6 +34,8 @@ export const Login = () => {
             console.log("data : ",data);
             if (data.success) {
                 const userType = data.userType;
+                const isFirstLogin = data.is_first_login;
+                
                 const user = { email, userType };
                 if (rememberMe) {
                     localStorage.setItem('user', JSON.stringify(user));
@@ -42,15 +44,20 @@ export const Login = () => {
                     localStorage.clear();
                     sessionStorage.setItem('user', JSON.stringify(user));
                 }
-                if (userType === 'admin') {
-                    navigate('/admin/dash');
-                } else if (userType === 'company') {
-                    navigate('/company/dash');
-                } else if (userType === 'customer') {
-                    navigate('/customer/dash');
-                } else {
-                    setErrorMessage('Invalid credentials');
+                if(isFirstLogin){
+                    navigate('/ChangePassword');
+                }else{
+                    if (userType === 'admin') {
+                        navigate('/admin/dash');
+                    } else if (userType === 'company') {
+                        navigate('/company/dash');
+                    } else if (userType === 'customer') {
+                        navigate('/customer/dash');
+                    } else {
+                        setErrorMessage('Invalid credentials');
+                    }
                 }
+                
             } else {
                 setErrorMessage(data.message);
             }

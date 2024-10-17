@@ -59,7 +59,7 @@ const  AdminOrder=(()=> {
                   </thead>
                   <tbody>
                   {orders.map((order) => (
-                      <tr key={order.orderID} style={{fontSize:'75%'}}>
+                      <tr key={order.orderID} style={{fontSize:'55%'}}>
                         <td>{order.orderID}</td>
                         <td>{order.customerID}</td>
                         <td>{order.orderDate}</td>
