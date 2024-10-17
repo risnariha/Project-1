@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['message'] = 'Login successful';
         $response['is_first_login'] = $is_first_login;
     } else {
-        $response['message'] = 'Please make sure that email and password are correct.';
+        $response['message'] = "Please make sure that email: $email and password: $password are correct. : $userType";
     }
 } else {
     $response['message'] = 'Invalid request';

@@ -23,8 +23,17 @@ class User
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $user = $stmt->fetch();
             $hash = $user['password'];
-            if ($password === $hash) {
-                return $user;
+
+            if ($table === 'admins') {
+                if ($password === $hash) {
+                    return $user;  // Plaintext password matches
+                }
+            }
+            // For other users with hashed passwords, use password_verify
+            else {
+                if (password_verify($password, $hash)) {
+                    return $user;  // Hashed password matches
+                }
             }
         }
         return false;

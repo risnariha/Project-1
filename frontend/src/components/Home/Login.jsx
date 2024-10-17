@@ -35,6 +35,7 @@ export const Login = () => {
             if (data.success) {
                 const userType = data.userType;
                 const isFirstLogin = data.is_first_login;
+                console.log(isFirstLogin);
                 
                 const user = { email, userType };
                 if (rememberMe) {
@@ -44,7 +45,7 @@ export const Login = () => {
                     localStorage.clear();
                     sessionStorage.setItem('user', JSON.stringify(user));
                 }
-                if(isFirstLogin){
+                if(isFirstLogin && (userType != 'admin')){
                     navigate('/ChangePassword');
                 }else{
                     if (userType === 'admin') {
