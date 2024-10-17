@@ -68,6 +68,10 @@ export const Login = () => {
         }
     };
 
+    const handleforgotpassword = () =>{
+        
+    }
+
     return (
         <div className="login">
             {errorMessage && (
@@ -123,7 +127,7 @@ export const Login = () => {
                                     onChange={(e) => setRememberMe(e.target.checked)}
                                     /> 
                                     Remember me</label>
-                                    <Link to="/forgot-password">Forgot password?</Link>
+                                    <Link to="/forgot-password" onClick={{handleforgotpassword}}>Forgot password?</Link>
                                 </div>
                                 <button type='submit' className='submit mt-3'>Login</button>
                                 <div className='justify-content-center d-flex fs-6 mt-2'>

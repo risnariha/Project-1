@@ -93,7 +93,8 @@ const Requestcompany = ({ showRequestAddModal, handleCloseRequestAddModal, handl
         const confirmed = window.confirm("Are you sure want to remove this company ?");
         if(confirmed){
           try {
-            const response = await axios.post('http://localhost:8080/backend/api/Admin/deletecompany.php',selectedCompany.id);
+            const response = await axios.post('http://localhost:8080/backend/api/Admin/deletecompany.php',selectedCompany);
+            
             const data = response.data;
             console.log('data : ', data);
             if (data.success) {
