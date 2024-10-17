@@ -22,16 +22,19 @@ import { CompanyDashboard } from './components/Company/CompanyDashbord';
 import Review from './components/Company/review/Review';
 import ReviewLayout from './components/Company/review/ReviewLayout';
 import Dash from './components/Admin/Dash';
-import AdminOrder from './components/Admin/Order';
+import CompanyLayout from './components/Company/CompanyLayout';
 import Customerdetails from './components/Admin/Customerdetails';
 import Companydetails from './components/Admin/Companydetails';
 import CompanyProfile from './components/Company/CompanyProfile';
+import MessageList from './components/Company/MessageList';
+import MessageDetail  from './components/Company/MessageDetail';
+
 import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Home/Login';
 import AdminLayout from './components/Admin/AdminLayout';
-import CompanyLayout from './components/Company/CompanyLayout';
+import AdminOrder from './components/Admin/Order';
 import CustomerLayout from './components/Customer/CustomerLayout';
 import CartItems from './components/Customer/CartItems';
 // import PlaceOrder from './components/Customer/PlaceOrder';
@@ -43,8 +46,9 @@ import Setting from './components/Customer/Setting';
 import { useState } from 'react';
 import Payment from './components/Customer/Payment';
 import OrderSuccess from './components/Customer/OrderSuccess';
-import MessageList from './components/Company/MessageList';
-import MessageDetail  from './components/Company/MessageDetail';
+import MessageInfo from './components/Customer/Message/MessageInfo';
+import MessageCard from './components/Customer/Message/MessageCard';
+
 
 function App() {
   const [toggle, setToggle] = useState(false);
@@ -85,7 +89,8 @@ function App() {
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />
             <Route path="setting" element={<Setting />} />
- 
+            <Route path="message-list" element={<MessageCard />} />
+            <Route path="message-info/:contactID" element={<MessageInfo />} />
           </Route>
           {/* company */}
           <Route path="/company/*" element={<CompanyLayout setToggle={setToggle} />} >

@@ -452,7 +452,7 @@
 
 .notification-badge {
   position: absolute;
-  top: -0.1px;
+  top:3px;
   background-color: red;
   color: white;
   border-radius: 50%;
