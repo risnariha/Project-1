@@ -82,8 +82,10 @@ export const PieChart= () => {
   
 
   return (
-    <div className='d-flex justify-content-center'>
-      <Pie data={data} options={options} style={{ width: '60%' }} />
+    <div className="d-flex justify-content-center" style={{ height: '100%', maxHeight: '400px' }}>
+      <div style={{ width: '100%', maxWidth: '400px', height: '100%', position: 'relative' }}>
+        <Pie data={data} options={options} />
+      </div>
     </div>
   );
 }
