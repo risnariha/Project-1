@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return $randomPassword;
         }
         $password = generateRandomPassword(6);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $duplicatePassword = $password;
         // $password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -117,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $pstmt->bindParam(1, $ID);
             $pstmt->bindParam(2, $fname);
             $pstmt->bindParam(3, $email);
-            $pstmt->bindParam(4, $password);
+            $pstmt->bindParam(4, $hash);
             $pstmt->bindParam(5, $contact);
             $pstmt->bindParam(6, $shopname);
             $pstmt->bindParam(7, $address);

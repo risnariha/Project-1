@@ -53,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cpstmt->execute();
     $user = $cpstmt->fetch(PDO::FETCH_ASSOC);
     $cpwd = $user['password'];
-    if (($currentPassword=== $user['password'])) {
+    if (password_verify($currentPassword, $cpwd)) {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
     }else{
-        $response['message'] = "Current password $cpwd $currentPassword is incorrect ";
+        $response['message'] = "Current password  $currentPassword is incorrect ";
         echo json_encode($response);
         exit;
     }
