@@ -12,6 +12,7 @@ function Customerdetails() {
   const [showViewModal, setShowViewModal] = useState(false);
   const [showRequestAddModal, setShowRequestAddModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [requsetCount, setRequestCount] = useState(0);
 
   const handleShowViewModal = (customer) => {
     setSelectedCustomer(customer);
@@ -51,12 +52,25 @@ useEffect(()=>{
     
   };
 
-  // function handleFilter(event) {
-  //   const new = search.filter();
-  // }
+  // const fetchRequestCount = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:8080/backend/api/Admin/getCustomerRequestCount.php');
+  //     const jsonData = await response.json();
+  //     if (jsonData.success) {
+  //       setRequestCount(jsonData.request_count); // Set request count
+  //     } else {
+  //       setRequestCount(0);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching request count:', error);
+  //   }
+  // };
+
+  
 
   useEffect(() => {
     fetchCustomerData();
+    //fetchRequestCount();
     
 
   }, []);
@@ -75,7 +89,7 @@ useEffect(()=>{
                 </form>
                 <h1 className='h4 text-center'>Customers Details</h1>
                 <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
-                    Customer Request
+                    Customer Request 
                 </button>
               
             </div>
