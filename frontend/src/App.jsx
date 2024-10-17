@@ -45,6 +45,7 @@ import Payment from './components/Customer/Payment';
 import OrderSuccess from './components/Customer/OrderSuccess';
 import MessageList from './components/Company/MessageList';
 import MessageDetail  from './components/Company/MessageDetail';
+import ChangePassword from './components/Home/ChangePassword';
 
 function App() {
   const [toggle, setToggle] = useState(false);
@@ -66,6 +67,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/faqs" element={<Faqs />} />
           <Route path='/products' element={<Products />} />
+          <Route path='/ChangePassword' element={<ChangePassword />} />
           {/* admin */}
           <Route path="/admin" element={<AdminLayout setToggle={setToggle} />}>
             <Route path="dash" element={<Dash />} />
