@@ -26,10 +26,14 @@ require_once '../Connection/connection.php';
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
 
+    //$status = 'unavilable';
+
     try {
-        $delete_query = "DELETE FROM `products` WHERE productID=:product_id";
+        $delete_query = "Update `products` SET status ='unavailable' WHERE productID= ?";
         $delete_stmt = $conn->prepare($delete_query);
-        $delete_stmt->execute([':product_id' => $delete_id]);
+       // $delete_stmt->bindValue(1,$status);
+        $delete_stmt->bindValue(1,$delete_id);
+        $delete_stmt->execute();
 
         if ($delete_stmt->rowCount() > 0) {
             echo json_encode(["success" => "Product deleted successfully."]);
