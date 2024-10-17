@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 'admin':
             $cpsql = "SELECT password FROM admins WHERE email =?";
             break;
-        case 'customers':
+        case 'customer':
             $cpsql = "SELECT password FROM customers WHERE email =?";
             break;
         case 'company':
