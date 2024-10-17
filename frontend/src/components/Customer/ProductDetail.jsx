@@ -62,7 +62,7 @@ function ProductDetail({ sidebarToggle }) {
 
   return (
     <div className='container d-flex justify-content-center'>
-      <div className={`${sidebarToggle ? "ml-25" : ""} w-100 card-body d-flex flex-row mt-5`}>
+      <div className={`${sidebarToggle ? "ml-25" : ""} w-100 card-body d-flex flex-row mt-5`} >
         <div className="card m-5">
           <div className="row g-0 justify-content-center align-items-center d-flex p-4">
             <div className="col-md-4 col-sm-5 col-6">
@@ -85,7 +85,14 @@ function ProductDetail({ sidebarToggle }) {
                   </button>
                   <Link to="/customer/PlaceOrder" className='btn btn-danger bg-white text-danger rounded-pill md-w-75 sm-w-75 xs-w-100'>Buy Now</Link>
                 </div>
+                
               </div>
+              <button
+                    className="btn btn-secondary rounded-pill md-w-25 sm-w-25 xs-w-50 align-items-end"
+                    onClick={() => navigate(-1)} // Navigates to the previous page
+                  >
+                    Go Back
+                  </button>
             </div>
           </div>
         </div>

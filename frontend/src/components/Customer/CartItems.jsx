@@ -46,7 +46,7 @@ function CartItems() {
                 console.log("Invoice generated:", response.data);
 
                 // Navigate to payment page with invoice details
-                navigate('/customer/PaymentPage', { state: { invoice: response.data } });
+                navigate('/customer/payment', { state: { invoice: response.data } });
             }
         } catch (error) {
             console.error("Error proceeding to payment:", error);
@@ -180,7 +180,7 @@ function CartItems() {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
-                    <Button variant="primary" onClick={handleProceedToPayment}>Confirm & Generate Invoice</Button>
+                    <Button variant="primary" onClick={handleProceedToPayment}>Confirm </Button>
                 </Modal.Footer>
             </Modal>
         </div>
