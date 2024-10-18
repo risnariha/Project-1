@@ -14,11 +14,11 @@
     --color2: #7892ba;
     --color3: #9b95e4;
     --color4: #2cecf0;
-    --color5: #a09ebe;
+    --color5: #d6d5e4;
     --color6: #335f67d9;
     --black: #000;
     --white: #fff;
-    --lightgray: #e7d8d8;
+    --lightgray: #eedede;
     --red: rgb(245, 39, 67);
   }
   body {
@@ -120,6 +120,16 @@
   .submit_btn:hover {
     color: var(--color3);
   }
+
+  .edit_btn:hover {
+    color: var(--color3);
+    background-color: rgb(40, 50, 91);
+  }
+
+  .cancel_btn:hover {
+    color: var(--color3);
+    background-color: rgb(171, 70, 77);
+  }
   
   /* view_products ,Order , Customer tables  */
 
@@ -129,6 +139,7 @@
 
   }
 
+  
 
   .table_heading {
     display: flex;

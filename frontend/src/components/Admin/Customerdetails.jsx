@@ -12,6 +12,7 @@ function Customerdetails() {
   const [showViewModal, setShowViewModal] = useState(false);
   const [showRequestAddModal, setShowRequestAddModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [requsetCount, setRequestCount] = useState(0);
 
   const handleShowViewModal = (customer) => {
     setSelectedCustomer(customer);
@@ -25,6 +26,8 @@ function Customerdetails() {
     // Fetch updated records here if necessary
     setShowRequestAddModal(false);
   };
+
+  const [unreadRequestCount, setUnreadRequestsCount] = useState(0);
 
 useEffect(()=>{
   // if(showRequestAddModal){
@@ -51,15 +54,47 @@ useEffect(()=>{
     
   };
 
-  // function handleFilter(event) {
-  //   const new = search.filter();
-  // }
+  // const fetchRequestCount = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:8080/backend/api/Admin/getCustomerRequestCount.php');
+  //     const jsonData = await response.json();
+  //     if (jsonData.success) {
+  //       setRequestCount(jsonData.request_count); // Set request count
+  //     } else {
+  //       setRequestCount(0);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching request count:', error);
+  //   }
+  // };
+
+  
 
   useEffect(() => {
     fetchCustomerData();
+    //fetchRequestCount();
     
 
   }, []);
+
+  useEffect(() => {
+    const fetchUnreadRequest = async () => {
+      try {
+        
+          const response = await axios.post(
+            "http://localhost:8080/backend/api/Admin/requestcustomerCount.php", 
+          );
+          if (response.data.unreadCount !== undefined) {
+            setUnreadRequestsCount(response.data.unreadCount);
+          }
+      } catch (error) {
+        console.error('Error fetching unread messages:', error);
+      }
+    };
+
+    fetchUnreadRequest();
+
+  });
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -76,6 +111,9 @@ useEffect(()=>{
                 <h1 className='h4 text-center'>Customers Details</h1>
                 <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
                     Customer Request
+                    {unreadRequestCount > 0 && (
+                    <div className="notification-badge">{unreadRequestCount}</div> // Notification Badge
+          )}
                 </button>
               
             </div>
@@ -96,7 +134,7 @@ useEffect(()=>{
                     {customers.filter((customer)=>{
                       return search.toLowerCase() === '' ? customers : customer.customerName.toLowerCase().includes(search);
                     }).map((customer) => (
-                      <tr key={customer.customerID} style={{fontSize:'75%'}}>
+                      <tr key={customer.customerID} style={{fontSize:'55%'}}>
                         <td>{customer.customerName}</td>
                         <td>{customer.customerShopName}</td>
                         <td>{customer.email}</td>

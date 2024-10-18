@@ -26,11 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $companyOwnerID = $data['companyOwnerID'];
+    $status = 'available';
 
     try {
         // Fetch product count
-        $pstmt = $conn->prepare("SELECT COUNT(*) AS product_count FROM products WHERE companyOwnerID = ?");
+        $pstmt = $conn->prepare("SELECT COUNT(*) AS product_count FROM products WHERE companyOwnerID = ? and status = ?");
         $pstmt->bindParam(1, $companyOwnerID);
+        $pstmt->bindParam(2, $status);
         $pstmt->execute();
         $row = $pstmt->fetch(PDO::FETCH_ASSOC);
         $counts['products'] = $row['product_count'];

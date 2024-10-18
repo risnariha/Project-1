@@ -57,14 +57,14 @@
     backdrop-filter: blur(5px);
     
 }
-@media(min-width: 576px) and (max-width:768px){
+@media(min-width: 650px) and (max-width:912px){
     .form{
-        width: 48%;
+        width: 50%;
         margin-left: 26%;
         margin-top: -45px;
     }
 }
-@media(max-width: 576px){
+@media(max-width: 650px){
     .form{
         width: 68%;
         margin-left: 16%;

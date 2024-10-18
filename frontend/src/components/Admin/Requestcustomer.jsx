@@ -103,7 +103,7 @@ const Requestcustomer = ({ showRequestAddModal, handleCloseRequestAddModal, hand
     const confirmed = window.confirm("Are you sure you want to reject this customer");
     if(confirmed){
       try {
-        const response = await axios.post('http://localhost:8080/backend/api/Admin/deletecustomer.php', selectedCustomer.id);
+        const response = await axios.post('http://localhost:8080/backend/api/Admin/deletecustomer.php', selectedCustomer);
         const data = response.data;
         console.log('data : ', data);
         if (data.success) {

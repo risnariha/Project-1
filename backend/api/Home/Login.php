@@ -37,15 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($userType) {
+        $is_first_login = $user['is_first_login']; 
         $_SESSION['user'] = [
             'email' => $user['email'],
-            'type' => $userType
+            'type' => $userType,
+            'is_first_login' => $is_first_login
         ];
         $response['success'] = true;
         $response['userType'] = $userType;
         $response['message'] = 'Login successful';
+        $response['is_first_login'] = $is_first_login;
     } else {
-        $response['message'] = 'Please make sure that email and password are correct.';
+        $response['message'] = "Please make sure that email: $email and password: $password are correct. : $userType";
     }
 } else {
     $response['message'] = 'Invalid request';

@@ -133,9 +133,9 @@
     right: 0;
     bottom: 0;
     /* height: 100%;  */
-    background-size:cover;
-    background: url('../../../public/images/home/smart-inventory-management-system-1200x627.jpg') no-repeat center center ;
-    background-color: #fff;
+    background-size:auto;
+    background: url('../../../public/images/home/bg-elitez.jpg') no-repeat center center ;
+    /* background-color: #57d4ef; */
     opacity: 0.7; /* Set your desired opacity level */
     z-index: -1; /* Place the pseudo-element behind the content */
     /* background-repeat: no-repeat; */

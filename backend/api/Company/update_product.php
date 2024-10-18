@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product_id'])) 
     $update_product_name = htmlspecialchars($_POST['update_product_name']);
     $update_product_price = htmlspecialchars($_POST['update_product_price']);
     $update_product_quantity = htmlspecialchars($_POST['update_product_quantity']);
+    $update_product_netweight = htmlspecialchars($_POST['update_product_netweight']);
     $old_imagepath =$_POST['imagePath'];
 
     
@@ -71,12 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product_id'])) 
             if(!$imagePath){
                 $imagePath=$old_imagepath;
             }
-            $update_query = "UPDATE `products` SET productName = :product_name, productPrice = :product_price, productQuantity = :product_quantity, productImage =:product_image WHERE productID = :product_id";
+            $update_query = "UPDATE `products` SET productName = :product_name, productPrice = :product_price, productQuantity = :product_quantity, productNetweight = :product_netweight, productImage =:product_image WHERE productID = :product_id";
             $update_stmt = $conn->prepare($update_query);
             $update_success = $update_stmt->execute([
                 ':product_name' => $update_product_name,
                 ':product_price' => $update_product_price,
                 ':product_quantity' => $update_product_quantity,
+                ':product_netweight' => $update_product_netweight,
                 ':product_image' => $imagePath,
                 ':product_id' => $update_product_id
             ]);

@@ -48,6 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    $status = 'available';
+
     try {
         $check_existing_query = $conn->prepare("SELECT * FROM `products` WHERE (productName = ? AND productNetweight = ?) OR productImage = ?");
         $check_existing_query->execute([$product_name, $net_weight, $product_image]);
@@ -103,8 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
      
 
-            $insert_query = $conn->prepare("INSERT INTO `products` (productID, productName, productPrice, productImage, productQuantity, productCategory, productNetweight, companyOwnerID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $insert_success = $insert_query->execute([$new_id, $product_name, $product_price, $imagePath, $quantity, $product_category, $net_weight, $companyOwnerID]);
+            $insert_query = $conn->prepare("INSERT INTO `products` (productID, productName, productPrice, productImage, productQuantity, productCategory, productNetweight, companyOwnerID , status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $insert_success = $insert_query->execute([$new_id, $product_name, $product_price, $imagePath, $quantity, $product_category, $net_weight, $companyOwnerID, $status]);
 
             if ($insert_success) {
                 echo json_encode(['message' => 'Product inserted successfully.']);

@@ -54,7 +54,7 @@ export const Home = () => {
     };
 
     return (
-        <div>
+        <div className=''>
             <div className="homeHeader">
                 <div className="homeHeaderLinks">
                     <Link to="/" style={{ fontSize: '150%' }}>Home</Link>
