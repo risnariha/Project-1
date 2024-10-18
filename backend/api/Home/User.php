@@ -39,6 +39,51 @@ class User
         return false;
     }
 
+    public function is_it_user($email,$table){
+        $query = "SELECT * FROM $table WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public function getUserType($email){
+        $userType = null;
+        $user = new User();
+        if($user->is_it_user($email,'admins')){
+            $userType='admin';
+        }else if($user->is_it_user($email,'companyowners')){
+            $userType='company';
+        }else if($user->is_it_user($email,'customers')){
+            $userType='customer';
+        }
+        return $userType;
+    }
+    // public function is_it_user($email){
+    //     $sql = "SELECT 'admins' AS user_type FROM admins WHERE email = ?
+    //             UNION
+    //             SELECT 'companyowners' AS user_type FROM companyowners WHERE email = ?
+    //             UNION
+    //             SELECT 'customers' AS user_type FROM customers WHERE email = ?";
+    //     $stmt = $this->conn->prepare($sql);
+    //     $stmt->bindParam(1, $email);
+    //     $stmt->bindParam(2, $email);
+    //     $stmt->bindParam(3, $email);
+    //     $stmt->execute();
+    //     $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    //     $result = $stmt->fetch();
+    //     if($result){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
+
     public function register($userType, $username, $email, $businessName, $address, $contactNumber, $district, $status)
     {
 
