@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext , Link } from "react-router-dom";
 
 const MessageList = () => {
   const { user } = useOutletContext();
@@ -11,16 +10,16 @@ const MessageList = () => {
 
   useEffect(() => {
     fetchMessageData();
-  }, [user.companyOwnerID]);
+  }, [user.customerID]);
 
   const fetchMessageData = async () => {
     setLoading(true); // Start loading
     try {
       if (user) {
         const response = await axios.post(
-          "http://localhost:8080/backend/api/Company/Message/message_list.php",
+          "http://localhost:8080/backend/api/Customer/Message/message_list.php",
           {
-            companyOwnerID: user.companyOwnerID,
+            customerID: user.customerID,
           }
         );
         if (Array.isArray(response.data)) {
@@ -41,30 +40,29 @@ const MessageList = () => {
     }
   };
 
-  const markAsRead = async (contactID) => {
-    try {
-      // Send POST request to mark the message as read
-      const response = await axios.post(
-        "http://localhost:8080/backend/api/Company/Message/markAsRead.php",
-        {
-          contactID: contactID, 
-        }
-      );
+//   const markAsRead = async (contactID) => {
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:8080/backend/api/Company/Message/markAsRead.php",
+//         {
+//           contactID: contactID, 
+//         }
+//       );
 
-      if (response.data.success) {
-        // If the update is successful, update only the clicked message in the state
-        setMessages((prevMessages) =>
-          prevMessages.map((message) =>
-            message.contactID === contactID
-              ? { ...message, isRead: 1 } // Set isRead to 1 for the clicked message 
-              : message
-          )
-        );
-      }
-    } catch (error) {
-      console.error("Error marking message as read:", error);
-    }
-  };
+//       if (response.data.success) {
+//         // If the update is successful, update only the clicked message in the state
+//         setMessages((prevMessages) =>
+//           prevMessages.map((message) =>
+//             message.contactID === contactID
+//               ? { ...message, isRead: 1 } // Set isRead to 1 for the clicked message  // Set isRead to 1 for the clicked message
+//               : message
+//           )
+//         );
+//       }
+//     } catch (error) {
+//       console.error("Error marking message as read:", error);
+//     }
+//   };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -86,7 +84,7 @@ const MessageList = () => {
                 </div>
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title text-center">
-                    {message.customerName}
+                    {message.companyName}
                   </h5>
                   <p className="card-text text-end">
                     Date : {new Date(message.date).toLocaleDateString()}

@@ -120,6 +120,16 @@
   .submit_btn:hover {
     color: var(--color3);
   }
+
+  .edit_btn:hover {
+    color: var(--color3);
+    background-color: rgb(40, 50, 91);
+  }
+
+  .cancel_btn:hover {
+    color: var(--color3);
+    background-color: rgb(171, 70, 77);
+  }
   
   /* view_products ,Order , Customer tables  */
 
@@ -129,6 +139,7 @@
 
   }
 
+  
 
   .table_heading {
     display: flex;

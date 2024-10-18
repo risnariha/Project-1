@@ -63,7 +63,7 @@ const Register = () => {
         NorthWestern: ["Puttalam", "Kurunegala"],
         Western: ["Colombo", "Gampaha", "Kalutara"],
         NorthCentral: ["Anuradhapura", "Polonnaruwa"],
-        Central : ["Kandy", "Nuwara Eliya", "Matale"],
+        Central: ["Kandy", "Nuwara Eliya", "Matale"],
         Sabaragamuwa: ["Kegalle", "Ratnapura"],
         Eastern: ["Trincomalee", "Batticaloa", "Ampara"],
         Uva: ["Badulla", "Monaragala"],
