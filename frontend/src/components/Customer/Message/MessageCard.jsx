@@ -27,7 +27,7 @@ const MessageCard = () => {
         if (Array.isArray(response.data)) {
           setMessages(response.data);
           setError(null); // Clear any previous errors
-        } 
+        }
       } else {
         setError("User data is missing or invalid.");
       }
@@ -39,6 +39,19 @@ const MessageCard = () => {
       );
     } finally {
       setLoading(false); // Stop loading state
+    }
+  };
+
+  const markAsRead = async (contactID) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/backend/api/Customer/Message/message_read.php",
+        {
+          contactID: contactID,
+        }
+      );
+    } catch (error) {
+      console.error("Error marking message as read:", error);
     }
   };
 
@@ -71,9 +84,13 @@ const MessageCard = () => {
                     </p>
                     <Link
                       to={`/customer/message-info/${message.contactID}`}
-                      className="btn btn-danger mt-auto"
+                      className={`btn mt-auto w-40 ml-auto ${
+                        message.isRead ? "btn-danger" : "btn-success"
+                      }`}
+                      style={{ marginLeft: "auto" }}
+                      onClick={() => markAsRead(message.contactID)}
                     >
-                      Read more
+                      {message.isRead ? "Viewed" : "Read more"}
                     </Link>
                   </div>
                 </div>

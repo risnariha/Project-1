@@ -27,6 +27,8 @@ function Customerdetails() {
     setShowRequestAddModal(false);
   };
 
+  const [unreadRequestCount, setUnreadRequestsCount] = useState(0);
+
 useEffect(()=>{
   // if(showRequestAddModal){
   //   window.location.reload();
@@ -75,6 +77,25 @@ useEffect(()=>{
 
   }, []);
 
+  useEffect(() => {
+    const fetchUnreadRequest = async () => {
+      try {
+        
+          const response = await axios.post(
+            "http://localhost:8080/backend/api/Admin/requestcustomerCount.php", 
+          );
+          if (response.data.unreadCount !== undefined) {
+            setUnreadRequestsCount(response.data.unreadCount);
+          }
+      } catch (error) {
+        console.error('Error fetching unread messages:', error);
+      }
+    };
+
+    fetchUnreadRequest();
+
+  });
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -89,7 +110,10 @@ useEffect(()=>{
                 </form>
                 <h1 className='h4 text-center'>Customers Details</h1>
                 <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
-                    Customer Request 
+                    Customer Request
+                    {unreadRequestCount > 0 && (
+                    <div className="notification-badge">{unreadRequestCount}</div> // Notification Badge
+          )}
                 </button>
               
             </div>

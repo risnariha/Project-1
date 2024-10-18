@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { BiImageAdd } from "react-icons/bi";
+import { GiWeight } from "react-icons/gi";
 
 const UpdateProduct = () => {
   const { productID } = useParams();
@@ -19,7 +20,6 @@ const UpdateProduct = () => {
   const hiddenFileInput = useRef(null);
 
   useEffect(() => {
-  
     axios
       .get(
         `http://localhost:8080/backend/api/Company/view_product.php?product_id=${productID}`
@@ -95,23 +95,21 @@ const UpdateProduct = () => {
             encType="multipart/form-data"
             className="update_product product_container_box"
           >
-             <div className="justify-content-center d-flex w-100 align-items-center">
+            <div className="justify-content-center d-flex w-100 align-items-center image-container">
               {image ? (
                 <img
                   src={URL.createObjectURL(image)}
                   alt="upload image"
-                  className="w-50 rounded-circle"
-                  style={{ objectFit: "cover" }} // Optional: to handle aspect ratio
+                  className="rounded-circle product-image"
                 />
               ) : product.productImage ? (
                 <img
                   src={product.productImage}
                   alt=" image"
-                  className="w-25 rounded-circle"
-                  style={{ objectFit: "cover" }} // Optional: to handle aspect ratio
+                  className="rounded-circle product-image"
                 />
               ) : (
-                <BiImageAdd className="w-100 h-100 ps-2 rounded bg-white" />
+                <BiImageAdd className="w-50 h-100 ps-2 rounded bg-white" />
               )}
             </div>
             <input type="hidden" name="update_product_id" value={productID} />
