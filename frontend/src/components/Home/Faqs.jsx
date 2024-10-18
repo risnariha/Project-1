@@ -29,7 +29,7 @@ const FaqAccordion = ({ data }) => {
   return (
     <div className="faq-container">
       <div className="faq-accordion">
-        <h2>FAQs</h2>
+      <h2 style={{ backgroundColor: '#312c60' , margin:'5px',padding:'8px' , paddingLeft:'40px'}}>FAQs</h2>
         {data.map((item) => <FaqItem key={item.id} question={item.question} answer={item.answer} />)}
       </div>
     </div>

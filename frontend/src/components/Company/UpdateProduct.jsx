@@ -10,6 +10,7 @@ const UpdateProduct = () => {
     productName: "",
     productPrice: "",
     productQuantity: "",
+    productNetweight: "",
     productImage: "",
   });
   const [image, setImage] = useState(null);
@@ -29,6 +30,7 @@ const UpdateProduct = () => {
             productName: response.data.productName || "",
             productPrice: response.data.productPrice || "",
             productQuantity: response.data.productQuantity || "",
+            productNetweight: response.data.productNetweight || "",
             productImage: response.data.productImage || "",
           });
           setImagePath(response.data.productImage || "");
@@ -57,6 +59,7 @@ const UpdateProduct = () => {
     formData.append("update_product_name", product.productName);
     formData.append("update_product_price", product.productPrice);
     formData.append("update_product_quantity", product.productQuantity);
+    formData.append("update_product_netweight", product.productNetweight);
     formData.append("image", image);
     formData.append("imagePath", imagepath);
 
@@ -140,6 +143,14 @@ const UpdateProduct = () => {
               className="input_fields fields"
               name="productQuantity"
               value={product.productQuantity}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              className="input_fields fields"
+              name="productNetweight"
+              value={product.productNetweight}
               onChange={handleChange}
               required
             />
