@@ -30,11 +30,8 @@ const MessageList = () => {
         }
       }
     } catch (error) {
-      console.error("Error fetching messages:", error); // Log the error for debugging
       setError(
         error.response
-          ? error.response.data.error || "Error fetching messages"
-          : "Network error: Unable to reach the server"
       );
     } finally {
       setLoading(false); // Stop loading
@@ -51,16 +48,6 @@ const MessageList = () => {
         }
       );
 
-      if (response.data.success) {
-        // If the update is successful, update only the clicked message in the state
-        setMessages((prevMessages) =>
-          prevMessages.map((message) =>
-            message.contactID === contactID
-              ? { ...message, isRead: 1 } // Set isRead to 1 for the clicked message 
-              : message
-          )
-        );
-      }
     } catch (error) {
       console.error("Error marking message as read:", error);
     }
@@ -98,11 +85,14 @@ const MessageList = () => {
                       (message.message.split(" ").length > 6 ? "....." : "")}
                   </p>
                   <Link
-                    to={`/company/messageDetail/${message.contactID}`}
-                    className="btn btn-primary mt-auto"
-                    onClick={() => markAsRead(message.contactID)} 
-                  >
-                    Read more
+                     to={`/company/messageDetail/${message.contactID}`}
+                     className={`btn mt-auto w-40 ml-auto ${
+                       message.isRead ? "btn-danger" : "btn-success"
+                     }`} 
+                     style={{ marginLeft: "auto" }}
+                     onClick={() => markAsRead(message.contactID)} 
+                   >
+                    { message.isRead ? "Viewed" : "Read more" }
                   </Link>
                 </div>
               </div>

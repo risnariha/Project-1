@@ -9,19 +9,12 @@ include '../../Connection/connection.php'; // Adjust the path to your connection
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($data['contactID'])) {
-        echo json_encode(['error' => 'contactID is missing']);
-        exit;
-    }
-
     $contactID = $data['contactID'];
 
     try {
-        // Check if $conn is available
-        if (!$conn) {
-            throw new Exception('Database connection failed');
-        }
-        
+
+
+        // Update the message's isRead status to 1 (read) for the specific contactID
         $pstmt = $conn->prepare("UPDATE contact SET isRead = 1 WHERE contactID = ?");
         $pstmt->bindValue(1, $contactID);
         $pstmt->execute();
@@ -32,8 +25,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (PDOException $e) {
         error_log($e->getMessage());
         echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
-    } catch (Exception $e) {
-        error_log($e->getMessage());
-        echo json_encode(['error' => $e->getMessage()]);
     }
 }

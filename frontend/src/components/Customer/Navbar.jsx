@@ -1,12 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import {FaBars,FaUserCircle, FaSearch, FaBell} from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 import { MdOutlineMessage } from "react-icons/md";
+import axios from 'axios';
+
 export const Navbar = ({user,sidebarToggle,setSidebarToggle,search,setSearch,searchQuery, setSearchQuery}) => {
 
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
-  };
+
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
+
+  useEffect(() => {
+    const fetchUnreadMessages = async () => {
+      try {
+        if (user) {
+          const response = await axios.post(
+            "http://localhost:8080/backend/api/Customer/Message/message_unread.php", 
+            { customerID: user.customerID }
+          
+          );
+          if (response.data.unreadCount !== undefined) {
+            setUnreadMessagesCount(response.data.unreadCount);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching unread messages:', error);
+      }
+    };
+
+    fetchUnreadMessages();
+
+    const interval = setInterval(fetchUnreadMessages, 30000); 
+    return () => clearInterval(interval);
+  }, [user]);
+
   return (
     <nav className='d-flex w-full justify-content-between px-4 align-itmes-center navbar text-white'>
     <div className='d-flex align-items-center my-1 fs-5'>
@@ -17,6 +43,9 @@ export const Navbar = ({user,sidebarToggle,setSidebarToggle,search,setSearch,sea
     <div className='d-flex align-items-center'>
     <Link to="/customer/message-list" className='d-flex ms-2 align-items-center cursor-pointer'>
           <MdOutlineMessage style={{ height: '20px', width: '20px' }} />
+          {unreadMessagesCount > 0 && (
+            <div className="notification-badge">{unreadMessagesCount}</div> // Notification Badge
+          )}
         </Link>
         {/* <div className={`${search?"":"d-none"} position-relative align-items-center  `}>
           <span className='ms-0 sm-relative md-absolute  align-items-center bg-success rounded '>
