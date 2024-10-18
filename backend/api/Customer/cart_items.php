@@ -15,10 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['customer_id'])) {
         $customer_id = $_GET['customer_id'];
+        $status = 'pending'; // Define the status as a variable
 
-        $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id";
+        $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id AND status= :status";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':customer_id', $customer_id);
+        $stmt->bindParam(':status', $status);
         $stmt->execute();
 
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

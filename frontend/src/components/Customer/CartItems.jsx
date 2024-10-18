@@ -141,15 +141,16 @@ function CartItems() {
                     <tbody>
                         {Items.map((Item, index) => (
                             <tr key={index}>
-                                <td>
+                                <td className=''>
                                     <input
                                         type="checkbox"
                                         checked={selectedItems.some((selected) => selected.id === Item.id)}
                                         onChange={() => toggleItemSelection(Item)}
+                                        className='h-6 w-6 d-flex align-items-center'
                                     />
                                 </td>
-                                <td><img src={Item.product_image} className='w-100' /></td>
-                                <td>{Item.product_name}</td>
+                                <td><img src={Item.product_image} className='' /></td>
+                                <td className=''>{Item.product_name}</td>
                                 <td>{Item.price}</td>
                                 <td>
                                     <input
@@ -196,12 +197,12 @@ function CartItems() {
                                     <td>{item.product_name}</td>
                                     <td>{item.price}</td>
                                     <td>{item.quantity}</td>
-                                    <td>{item.price * item.quantity}</td>
+                                    <td>{item.price * item.quantity}.00</td>
                                 </tr>
                             ))}
                             <tr>
                                 <td colSpan={3} className="text-center"><strong>Total Amount:</strong></td>
-                                <td>{totalAmount}</td>
+                                <td className='bold'>{totalAmount}.00</td>
                             </tr>
                         </tbody>
                     </Table>
