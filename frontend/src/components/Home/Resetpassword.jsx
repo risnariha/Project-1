@@ -86,7 +86,7 @@ const Resetpassword = () => {
                 </div>
             )}
                 
-                <div className="mb-4">
+                <div className="mb-3">
                         <h6><label className="form-label">New Password</label></h6>
                         <input 
                         type="password" className="form-control mb-2" 

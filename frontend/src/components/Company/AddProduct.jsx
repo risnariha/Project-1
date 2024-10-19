@@ -182,7 +182,7 @@ function AddProduct() {
     };
 
     return (
-        <div className="maincontainer rounded mt-5 w-75">
+        <div className="add-container rounded mt-5 w-75">
             {isMessageVisible && message && (
                 <div className="display_message">
                     {message}
