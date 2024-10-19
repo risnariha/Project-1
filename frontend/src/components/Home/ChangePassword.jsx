@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const ChangePassword = () => {
     const [email, setEmail] = useState('');
     const [userType, setUserType] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
-import { Modal, Button } from 'react-bootstrap';
-import Requestcompany from './Requestcompany';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
+import Requestcompany from "./Requestcompany";
 
 function Companydetails() {
-  const[search,setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +17,10 @@ function Companydetails() {
   const handleShowViewModal = async (company) => {
     setSelectedCompany(company);
     try {
-      const response = await axios.post('http://localhost:8080/backend/api/Admin/Listproducts.php', { companyOwnerID: company.companyOwnerID });
+      const response = await axios.post(
+        "http://localhost:8080/backend/api/Admin/Listproducts.php",
+        { companyOwnerID: company.companyOwnerID }
+      );
       const jsonData = response.data;
       if (jsonData.error) {
         setError(jsonData.error);
@@ -37,12 +40,14 @@ function Companydetails() {
     // Fetch updated records here if necessary
     setShowRequestAddModal(false);
   };
-
+  const [unreadRequestCount, setUnreadRequestsCount] = useState(0);
 
   const fetchCompany = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/backend/api/Admin/Listcompany.php');
+      const response = await fetch(
+        "http://localhost:8080/backend/api/Admin/Listcompany.php"
+      );
       const jsonData = await response.json();
       if (jsonData.success) {
         setCompany(jsonData.data);
@@ -67,29 +72,56 @@ function Companydetails() {
     // return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const fetchUnreadRequest = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/backend/api/Admin/requestcompanyCounts.php"
+        );
+        if (response.data.unreadCount !== undefined) {
+          setUnreadRequestsCount(response.data.unreadCount);
+        }
+      } catch (error) {
+        console.error("Error fetching unread messages:", error);
+      }
+    };
+
+    fetchUnreadRequest();
+  });
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='container mt-5'>
-      <div className='row justify-content-center'>
-        <div className='col-md-11   col-lg-11'>
-          <div className='card'>
-            <div className='card-header bg-dark text-white d-flex justify-content-between align-items-center'>
-                <form className="d-flex" role="search">
-                    <input className="form-control" onChange={(e)=> setSearch(e.target.value)} placeholder="Search" aria-label="Search"/>
-                </form>
-                <h1 className='h4 text-center'>Company Details</h1>
-                <button className="btn btn-info text-dark m-2" onClick={handleShowRequestAddModal}>
-                    Company Request
-                </button>
-              
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-11   col-lg-11">
+          <div className="card">
+            <div className="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+              <form className="d-flex" role="search">
+                <input
+                  className="form-control"
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+              </form>
+              <h1 className="h4 text-center">Company Details</h1>
+              <button
+                className="btn btn-info text-dark m-2"
+                onClick={handleShowRequestAddModal}
+              >
+                Company Request
+                {unreadRequestCount > 0 && (
+                  <div className="notification-badge">{unreadRequestCount}</div> // Notification Badge
+                )}
+              </button>
             </div>
-            <div className='card-body p-0'>
-              <div className='table-responsive'>
-                <table className='table table-bordered table-striped'>
-                  <thead className='thead-dark'>
-                    <tr style={{fontSize:'105%'}}>
+            <div className="card-body p-0">
+              <div className="table-responsive">
+                <table className="table table-bordered table-striped">
+                  <thead className="thead-dark">
+                    <tr style={{ fontSize: "105%" }}>
                       <th>Company Name</th>
                       <th>Company Owner Name</th>
                       <th>Email</th>
@@ -98,21 +130,32 @@ function Companydetails() {
                     </tr>
                   </thead>
                   <tbody>
-                    {company.filter((company)=>{
-                      return search.toLowerCase() === '' ? company: company.companyName.toLowerCase().includes(search);
-                    }).map((company) => (
-                      <tr key={company.companyOwnerID} style={{fontSize:'55%'}}>
-                        <td>{company.companyName}</td>
-                        <td>{company.companyOwnerName}</td>
-                        <td>{company.email}</td>
-                        <td>{company.companyContactNumber}</td>
-                        
-                        <td className='d-flex justify-content-center'>
-                          <button className="btn btn-primary me-1" onClick={() => handleShowViewModal(company)}>View Products</button>
-                          
-                        </td>
-                      </tr>
-                    ))}
+                    {company
+                      .filter((company) => {
+                        return search.toLowerCase() === ""
+                          ? company
+                          : company.companyName.toLowerCase().includes(search);
+                      })
+                      .map((company) => (
+                        <tr
+                          key={company.companyOwnerID}
+                          style={{ fontSize: "55%" }}
+                        >
+                          <td>{company.companyName}</td>
+                          <td>{company.companyOwnerName}</td>
+                          <td>{company.email}</td>
+                          <td>{company.companyContactNumber}</td>
+
+                          <td className="d-flex justify-content-center">
+                            <button
+                              className="btn btn-primary me-1"
+                              onClick={() => handleShowViewModal(company)}
+                            >
+                              View Products
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -126,7 +169,7 @@ function Companydetails() {
           <Modal.Header closeButton>
             <Modal.Title>Company Products</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ fontSize: '135%' }}>
+          <Modal.Body style={{ fontSize: "135%" }}>
             {products.length > 0 ? (
               <table className="table table-bordered">
                 <thead>
@@ -153,7 +196,9 @@ function Companydetails() {
             )}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseViewModal}>Close</Button>
+            <Button variant="secondary" onClick={handleCloseViewModal}>
+              Close
+            </Button>
           </Modal.Footer>
         </Modal>
       )}

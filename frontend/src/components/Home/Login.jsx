@@ -7,7 +7,10 @@ import axios from 'axios';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
+    const [userType, setUserType] = useState('');
     const [password, setPassword] = useState('');
+    // const [code, setcode] = useState('');
+    
     const [errorMessage, setErrorMessage] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
@@ -21,6 +24,7 @@ export const Login = () => {
         }
         if (user) {
             setEmail(user.email);
+            setUserType(user.userType);
             
         }
     }, []);
@@ -68,8 +72,27 @@ export const Login = () => {
         }
     };
 
-    const handleforgotpassword = () =>{
+    const handleforgotpassword = async (e) =>{
+        e.preventDefault();
         
+        try {
+            const response = await axios.post("http://localhost:8080/backend/api/Home/forgotpassword.php",{email});
+            const data = response.data;
+            
+            console.log(data);
+           const code = data.message;
+            if(data.success){
+                
+                // sessionStorage.setItem('code', JSON.stringify(data.message));
+                console.log("login code : ", code);
+                navigate("/otp" , {state: { code }});
+            } else{
+                setErrorMessage(data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setErrorMessage('An error occurred. Please try again.');
+        }
     }
 
     return (
@@ -127,66 +150,18 @@ export const Login = () => {
                                     onChange={(e) => setRememberMe(e.target.checked)}
                                     /> 
                                     Remember me</label>
-                                    <Link to="/forgot-password" onClick={{handleforgotpassword}}>Forgot password?</Link>
+                                    <Link onClick={handleforgotpassword} to="#">Forgot password?</Link>
+
                                 </div>
                                 <button type='submit' className='submit mt-3'>Login</button>
                                 <div className='justify-content-center d-flex fs-6 mt-2'>
                                     <span className='text-white mt-3 mb-0'>Don't have an account ?<Link to="/register" className='register text-info ms-1'> Register</Link></span>
                                 </div>
-                                {/* <h2 id='h1'>Login</h2> */}
-                                {/* <div className="loginInputsContainer">
-                                     <label htmlFor="email">Email</label> 
-                                    <input type="text"
-                                        placeholder="Email"
-                                        className='rounded-pill'
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)} />
-                                </div>
-                                <div className="loginInputsContainer">
-                                    <label htmlFor="password">Password</label>
-                                    <input type="password"
-                                        placeholder="Password"
-                                        className='rounded-pill'
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)} />
-                                </div>
-                                <div className="loginButtonContainer">
-                                    <button type='submit'>Login</button>
-                                </div> */}
+                                
 
                             </form>
 
-                            {/* <form onSubmit={handleLoginSubmit}>
-                                <h1>Login</h1>
-                                <div className="input-box">
-                                    <input
-                                        type="text"
-                                        placeholder='email'
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                    <FaUser className='icon' />
-                                </div>
-                                <div className="input-box">
-                                    <input
-                                        type="password"
-                                        placeholder='Password'
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                    />
-                                    <FaLock className='icon' />
-                                </div>
-                                <div className="remember-forgot">
-                                    <label><input type='checkbox' /> Remember me</label>
-                                    <Link to="/forgot-password">Forgot password?</Link>
-                                </div>
-                                <button type='submit'>Login</button>
-                                <div className='register-link'>
-                                    <p>Don't have an account?<Link to="/register"> Register</Link></p>
-                                </div>
-                            </form> */}
+                            
                             <h1>EliteZ</h1>
                             <div className="homeHeaderLogo">
                                 <div id="logoContainer">

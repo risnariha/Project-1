@@ -4,10 +4,6 @@ import 'typeface-poppins';
 import emailjs from "emailjs-com";
 import { Link } from 'react-router-dom';
 
-
-
-
-
 const Contactus = () => {
   const form = useRef();
   const sendEmail = (event) => {
@@ -76,4 +72,4 @@ const Contactus = () => {
   )
 }
 
-export default Contactus
+export default Contactus 

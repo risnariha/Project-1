@@ -33,6 +33,7 @@ import Contactus from './components/Admin/Contactus';
 import Aboutus from './components/Admin/Aboutus';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Home/Login';
+import OTP from './components/Home/OTP';
 import AdminLayout from './components/Admin/AdminLayout';
 import AdminOrder from './components/Admin/Order';
 import CustomerLayout from './components/Customer/CustomerLayout';
@@ -53,6 +54,7 @@ import MessageCard from './components/Customer/Message/MessageCard';
 // import MessageDetail  from './components/Company/MessageDetail';
 import ChangePassword from './components/Home/ChangePassword';
 import Orders from './components/Customer/Orders';
+import Resetpassword from './components/Home/Resetpassword';
 
 function App() {
   const [toggle, setToggle] = useState(false);
@@ -71,6 +73,8 @@ function App() {
 
           <Route path='/' element={<Home />} />
           <Route path="/Login" element={<Login />} />
+          <Route path='/otp' element={<OTP />} />
+          <Route path='/Resetpassword' element={<Resetpassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/faqs" element={<Faqs />} />
           <Route path='/products' element={<Products />} />
