@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const OTP = () => {
   const location = useLocation();
@@ -11,6 +12,7 @@ const OTP = () => {
     
     const localUser = JSON.parse(localStorage.getItem('user'));
     const user = sessionUser || localUser;
+    
     
 }, []);
 
@@ -47,12 +49,13 @@ const OTP = () => {
     e.preventDefault();
     
     try {
-        const response = await axios.post("http://localhost:8080/backend/api/Home/forgotpassword.php",{email,userType});
+        const response = await axios.post("http://localhost:8080/backend/api/Home/forgotpassword.php",{email});
         const data = response.data;
         
         console.log(data);
         if(data.success){
-            //navigate("/otp");
+          console.log("login code : ", code);
+          navigate("" , {state: { code }});
         } else{
             setErrorMessage(data.message);
         }
@@ -63,37 +66,48 @@ const OTP = () => {
 }
 
   return (
-    <div className='vh-100  align-items-center justify-content-center ' style={{marginTop:'10%'}}>
-    <div className=" container card mt-5 p-2  shadow " style={{width:'50%'}}>
-       {errorMessage && (
-                <div id="errorMessage">
-                    <strong>ERROR: </strong> <p>{errorMessage}</p>
-                </div>
-            )}
-      <div className="card p-4 shadow" style={{ maxWidth: '400px', width: '100%' }}>
-        <h3 className="text-center mb-4 text-danger" >OTP VERIFICATION</h3>
-        <p style={{fontSize:'120%'}}>We've sent a password reset code to your email. Please check your email and enter the  Code number.</p>
-        
-        <div className="d-flex justify-content-between mb-3">
-          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v1} onChange= {(e) => setV1(e.target.value)} />
-          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v2} onChange= {(e) => setV2(e.target.value)} />
-          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v3} onChange= {(e) => setV3(e.target.value)} />
-          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v4} onChange= {(e) => setV4(e.target.value)} />
-          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v5} onChange= {(e) => setV5(e.target.value)} />
-          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v6} onChange= {(e) => setV6(e.target.value)} />
-        </div>
-
-        <p className="text-center" style={{fontSize:'110%'}}>
-          Didn't get the code?
-          <Link onClick={handleResend} className="ms-1" to = '#'>Resend</Link>
+    <div className="d-flex vh-100 align-items-center justify-content-center">
+    {errorMessage && (
+      <div id="errorMessage" className="text-danger mb-4 text-center">
+        <strong> </strong> <p>{errorMessage}</p>
+      </div>
+    )}
+  
+    <div className="card p-4 shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>
+      {/* Card Header */}
+      <div className="card-header text-center text-danger">
+        <h3>OTP VERIFICATION</h3>
+      </div>
+  
+      {/* Card Body */}
+      <div className="card-body">
+        <p className="mb-4" style={{ fontSize: '100%' }}>
+          We've sent a password reset code to your email. Please check your email and enter the code number.
         </p>
-
-        <div className="text-center">
-          <button  onClick={handleverify} className="btn btn-primary w-100">Verify</button>
+  
+        <div className="d-flex justify-content-between mb-4">
+          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v1} onChange={(e) => setV1(e.target.value)} />
+          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v2} onChange={(e) => setV2(e.target.value)} />
+          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v3} onChange={(e) => setV3(e.target.value)} />
+          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v4} onChange={(e) => setV4(e.target.value)} />
+          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v5} onChange={(e) => setV5(e.target.value)} />
+          <input type="text" maxLength="1" className="form-control text-center mx-1" style={{ width: '50px', fontSize: '24px' }} value={v6} onChange={(e) => setV6(e.target.value)} />
         </div>
+  
+        <p className="text-center mb-4" style={{ fontSize: '80%' }}>
+          Didn't get the code?
+          <Link onClick={handleResend} className="ms-1 text-primary" to="#">Resend</Link>
+        </p>
+      </div>
+  
+      {/* Card Footer */}
+      <div className="card-footer text-center">
+        <button onClick={handleverify} className="btn btn-primary btn-lg w-100">Verify</button>
       </div>
     </div>
-    </div>
+  </div>
+  
+
   );
 }
 

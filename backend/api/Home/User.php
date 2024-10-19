@@ -24,16 +24,16 @@ class User
             $user = $stmt->fetch();
             $hash = $user['password'];
 
-            if ($table === 'admins') {
-                if ($password === $hash) {
-                    return $user;  // Plaintext password matches
-                }
-            }
-            // For other users with hashed passwords, use password_verify
-            else {
+            // if ($table === 'admins') {
+            //     if ($password === $hash) {
+            //         return $user;  // Plaintext password matches
+            //     }
+            // }
+            // // For other users with hashed passwords, use password_verify
+            // else {
                 if (password_verify($password, $hash)) {
                     return $user;  // Hashed password matches
-                }
+                // }
             }
         }
         return false;

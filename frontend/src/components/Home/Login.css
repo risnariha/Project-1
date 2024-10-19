@@ -55,6 +55,8 @@
     margin-left: 32%;
     margin-top: -75px;
     backdrop-filter: blur(5px);
+    max-height: fit-content;
+    height: 82%;
     
 }
 @media(min-width: 650px) and (max-width:912px){

@@ -97,11 +97,7 @@ export const Login = () => {
 
     return (
         <div className="login">
-            {errorMessage && (
-                <div id="errorMessage">
-                    <strong>ERROR: </strong> <p>{errorMessage}</p>
-                </div>
-            )}
+            
             <div className="homeHeader">
 
                 <div className="homeHeaderLinks">
@@ -111,18 +107,19 @@ export const Login = () => {
                     <Link to="/Login" style={{fontSize:'150%'}}>Log in</Link>
                 </div>
             </div>
-            {/* <div className="loginContainer"> */}
-            {/* <div className="loginHeader">
-                    <h1>EliteZ</h1>
-                    <p>Inventory Fulfillment and Distribution</p>
-                </div> */}
+            
             <div className="loginBody">
-                <div className="homeBanner  background-opacity">
+            <div className="homeBanner  background-opacity">
                     <div className="homePageContainer">
                         <div className="homeBannerHeader form-box">
                             <form className='form'
                                 onSubmit={handleLogin}>
                                 <h2 id='h1' >Login</h2 >
+                                {errorMessage && (
+                                    <div className='loginnerror'>
+                                        <strong style={{fontSize:'115%', marginLeft:'25%'}}> {errorMessage}</strong>
+                                    </div>
+                                )}
                                 <div className="input-box ">
                                     <input
                                         type="text"
