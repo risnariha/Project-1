@@ -52,6 +52,7 @@ import MessageCard from './components/Customer/Message/MessageCard';
 // import MessageList from './components/Company/MessageList';
 // import MessageDetail  from './components/Company/MessageDetail';
 import ChangePassword from './components/Home/ChangePassword';
+import Orders from './components/Customer/Orders';
 
 function App() {
   const [toggle, setToggle] = useState(false);
@@ -88,7 +89,8 @@ function App() {
             <Route path="CartItems" element={<CartItems />} />
             {/* <Route path="cart" element={<CartItems />} /> */}
             <Route path="payment" element={<Payment/>} />
-            <Route path="order-success" element={<OrderSuccess/>} />
+            <Route path="orders" element={<Orders/>}/>
+            <Route path="OrderSuccess" element={<OrderSuccess/>} />
             {/* <Route path="PlaceOrder" element={<PlaceOrder />} /> */}
             <Route path="profile" element={<CustomerProfile />} />
             <Route path="productDetail" element={<ProductDetail />} />

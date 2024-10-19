@@ -9,11 +9,12 @@ try {
         if (isset($_GET['customer_id']) && isset($_GET['product_id'])) {
             $customer_id = $_GET['customer_id'];
             $product_id = $_GET['product_id'];
-
-            $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id AND product_id = :product_id";
+            $status = "pending";
+            $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id AND product_id = :product_id AND status = :status" ;
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':customer_id', $customer_id);
             $stmt->bindParam(':product_id', $product_id);
+            $stmt->bindParam(':status', $status);
 
             if ($stmt->execute()) {
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);

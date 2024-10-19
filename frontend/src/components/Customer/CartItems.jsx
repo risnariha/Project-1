@@ -22,7 +22,7 @@ function CartItems() {
                     });
                     if (response.data) {
                         setItems(response.data);
-                        calculateTotalAmount(response.data);
+                        // calculateTotalAmount(response.data);
                     }
                 } catch (error) {
                     console.error("Error fetching cart items:", error);
@@ -37,6 +37,8 @@ function CartItems() {
         if (selectedItems.length === 0) {
             alert('Please select items to proceed.');
             return;
+        
+            // console.log('select total:',t);
         }
 
         try {
@@ -58,7 +60,7 @@ function CartItems() {
         const updateItems = [...Items];
         updateItems[index].quantity = newQuantity;
         setItems(updateItems);
-        calculateTotalAmount(updateItems);
+        // calculateTotalAmount(updateItems);
     };
 
     const updateCartQuantity = async (item) => {
@@ -76,17 +78,23 @@ function CartItems() {
     };
 
     const handlePlaceOrder = () => {
+        const total = selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        const totals = total.toFixed(2);
+        console.log("total:",totals);
+        setTotalAmount(totals);
         setShowInvoiceModal(true);
     };
 
     const handleCloseModal = () => {
+        
         setShowInvoiceModal(false);
     };
 
-    const calculateTotalAmount = (items) => {
-        const total = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-        setTotalAmount(total);
-    };
+    // const calculateTotalAmount = (items) => {
+    //     const total = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    //     const totals = total.toFixed(2);
+    //     setTotalAmount(totals);
+    // };
 
     const toggleItemSelection = (item) => {
         const isSelected = selectedItems.find((selected) => selected.id === item.id);
@@ -95,6 +103,7 @@ function CartItems() {
         } else {
             setSelectedItems([...selectedItems, item]);
         }
+    
     };
 
     const handleRemoveItem = async (itemId) => {
@@ -165,7 +174,7 @@ function CartItems() {
                                         }}
                                     />
                                 </td>
-                                <td>{Item.price * Item.quantity}</td>
+                                <td>{Item.price * Item.quantity}.00</td>
                                 <td>
                                     <Button variant="danger" onClick={() => handleRemoveItem(Item.id)}>Remove</Button>
                                 </td>
@@ -202,7 +211,7 @@ function CartItems() {
                             ))}
                             <tr>
                                 <td colSpan={3} className="text-center"><strong>Total Amount:</strong></td>
-                                <td className='bold'>{totalAmount}.00</td>
+                                <td className='bold'>{totalAmount}</td>
                             </tr>
                         </tbody>
                     </Table>

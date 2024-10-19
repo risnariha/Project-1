@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($items as $item) {
             $totalAmount += $item['price'] * $item['quantity'];
         }
-
+        $totalAmount = number_format($totalAmount, 2, '.', '');
         // Execute invoice insert
         $invoiceStmt->execute([$customerId, $totalAmount]);
 
@@ -42,15 +42,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Prepare the invoice items insert statement
         // $invoiceItemStmt = $pdo->prepare("INSERT INTO invoice_items (invoice_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
         $invoiceItemStmt = $pdo->prepare("INSERT INTO orderitems (orderID, productID, quantity, price) VALUES (?, ?, ?, ?)");
-
+        $invoiceOrderItemStmt = $pdo->prepare("UPDATE cart_items SET status=? WHERE product_id = ? AND customer_id = ?");
         // Insert each item into the invoice_items table
+        $status = "ordered";
         foreach ($items as $item) {
             $invoiceItemStmt->execute([$invoiceId, $item['product_id'], $item['quantity'], $item['price']]);
+            
         }
-
+        foreach ($items as $item) {
+        $invoiceOrderItemStmt->execute( [$status, $item['product_id'], $customerId] );
+        }
         // Prepare response data
         $response = [
-            'id' => $invoiceId,
+            'orderID' => $invoiceId,
             'customer_id' => $customerId,
             'total_amount' => $totalAmount,
             'items' => $items

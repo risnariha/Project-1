@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaHome, FaCartPlus, FaShoppingCart, FaShoppingBag, FaCog, FaWindowClose, FaUser } from 'react-icons/fa';
+import { FaHome, FaCartPlus, FaShoppingCart, FaShoppingBag, FaCog, FaWindowClose, FaUser, FaList } from 'react-icons/fa';
 import { Dashboard } from './Dashboard';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -85,6 +85,11 @@ export const CustomerSidebar = ({ sidebarToggle, setSidebarToggle ,user,error,se
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
                         <Link to="/customer/shop" className='text-decoration-none text-white fs-5 px-2' onClick={(e)=>setSearch(true)}>
                             <FaShoppingBag className='w-6 h-6 mx-3 pb-1' />Shop
+                        </Link>
+                    </li>
+                    <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
+                        <Link to="/customer/orders" className='text-decoration-none text-white fs-5 px-2' onClick={(e)=>setSearch(true)}>
+                        <FaList className='w-6 h-6 mx-3 pb-1' />View Orders
                         </Link>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
