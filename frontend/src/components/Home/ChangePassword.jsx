@@ -69,8 +69,18 @@ const ChangePassword = () => {
         <div className=" container card mt-5 p-2justify-content-center shadow" style={{width:'50%'}}>
             <form className="form-box p-2" onSubmit={handleChangePassword}>
                 <h2 className='text-center mt-4'>Change Password</h2>
-                {errorMessage && <p className="error">{errorMessage}</p>}
-                {successMessage && <p className="success">{successMessage}</p>}
+                {errorMessage && (
+                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                    {errorMessage}
+                </div>
+            )}
+
+            {/* Success message */}
+            {successMessage && (
+                <div className="alert alert-success alert-dismissible fade show" role="alert">
+                    {successMessage}
+                </div>
+            )}
                 <div className="mb-3">
                         <h6 className=''><label className="form-label ">Current Password</label></h6>
                         <input 
