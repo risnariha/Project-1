@@ -53,7 +53,7 @@ const Products = () => {
         <div className='row gy-4'>
           {filteredItems.length > 0 ? (
             filteredItems.map((product) => (
-              <div key={product.productId} className='col-6 col-sm-6 col-md-3'>
+              <div key={product.productId} className='col-4 col-sm-3 col-md-2'>
                 <div className='card product-card'>
                   <img
                     src={product.productImage}
@@ -62,9 +62,12 @@ const Products = () => {
                   />
                   <div className='card-body text-center'>
                     <h5 className='card-title product-name'>{product.productName}</h5>
-                    <p className='card-title fs-6'>{product.productNetweight}</p>
-                    <p className='card-text fs-6'>{product.productCategory}</p>
-                    <p className='card-text fs-5'>Price: Rs.{product.productPrice}</p>
+                    <div>
+                    <p className='card-text-size'><b>{product.productNetweight}</b></p>
+                    <p className='card-text-size'>Price: Rs.{product.productPrice}</p>
+                    </div>
+                    
+                    {/* <p className='card-text-size'>Price: Rs.{product.productPrice}</p> */}
                   </div>
                 </div>
               </div>

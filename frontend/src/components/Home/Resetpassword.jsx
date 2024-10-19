@@ -16,22 +16,23 @@ const Resetpassword = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const sessionUser = JSON.parse(sessionStorage.getItem('user'));
-        const localUser = JSON.parse(localStorage.getItem('user'));
-        const user = sessionUser || localUser;
-        if (!user) {
-            setErrorMessage('User not logged in. Please log in again.');
-            navigate('/login'); // Redirect to login if no user is found
-        } else {
-            setEmail(user.email);
-            setUserType(user.userType);
-            
+        const userType = JSON.parse(sessionStorage.getItem('userType'));
+        const email = JSON.parse(sessionStorage.getItem('userEmail'));
+
+
+        if(userType && email){
+            setEmail(email);
+            setUserType(userType);
         }
+            
+            
+        
     }, []);
 
     const handleResetPassword = async (e) => {
         e.preventDefault();
-        
+        console.log("email",email);
+        console.log("userType",userType);
         // Validate new password and confirmation
         if (newPassword !== confirmPassword) {
             setErrorMessage('Passwords do not match');

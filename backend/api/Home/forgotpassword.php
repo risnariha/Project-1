@@ -103,7 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // $pstmtDelete->execute();
         
                     // $conn->commit();
-                    echo json_encode(['success' => true, 'message' => $duplicatepin]);
+                    echo json_encode(['success' => true, 
+                    'message' => $duplicatepin,
+                    'userType' => $userType,
+                    'email' => $email
+                ]);
                 } catch (Exception $e) {
                     // $sqlDelete = "DELETE FROM companyowners WHERE companyOwnerID = ?";
                     // $pstmtDelete = $conn->prepare($sqlDelete);
