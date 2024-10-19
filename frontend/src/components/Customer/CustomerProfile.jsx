@@ -134,10 +134,10 @@ function CustomerProfile() {
                 <div className='md-w-25 sm-w-50 xs-w-50'>Address</div>:
                 <div className='w-50 ps-2'>{user.customerAddress}</div>
               </div>
-              <div className='w-100 d-flex mb-1 justify-content-center'>
+              {/* <div className='w-100 d-flex mb-1 justify-content-center'>
                 <div className='md-w-25 sm-w-50 xs-w-50'>Reference No</div>:
                 <div className='w-50 ps-2'>{user.customerShopReferenceNo}</div>
-              </div>
+              </div> */}
               <div className='d-flex mt-5 justify-content-center'>
                 <button className='btn btn-secondary w-25' onClick={() => setEdit(true)}>Edit</button>
               </div>
@@ -211,10 +211,10 @@ function CustomerProfile() {
                     <label htmlFor="inputAddress" className="form-label" >Address</label>
                     <input type="text" className="form-control" id="address" value={address} onChange={(e) => setAddress(e.target.value)} />
                   </div>
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <label htmlFor="inputRefNo" className="form-label">Reffrence No</label>
                     <input type="text" className="form-control" id="refno" disabled value={user.customerShopReferenceNo} />
-                  </div>
+                  </div> */}
                   <button type="submit" className=" save w-50 m-auto justify-content-center d-flex align-items-center fs-4" onClick={handleSubmit}>Save</button>
                 </form>
               </div>

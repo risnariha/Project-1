@@ -30,15 +30,4 @@
   
   /* Search Input Styling */
   /* Search Input Styling */
-  .form-control {
-    border-radius: 5px; /* Set border radius to 5px */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add slight shadow for depth */
-    border: 1px solid #ccc; /* Light border color */
-    padding: 3px; /* Add some padding */
-    float: right;
-  }
   
-  .form-control:focus {
-    border-color: #007bff; /* Change border color on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
-  } 

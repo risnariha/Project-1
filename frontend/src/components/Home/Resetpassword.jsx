@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 const Resetpassword = () => {
@@ -69,35 +70,41 @@ const Resetpassword = () => {
     return (
         <div className='vh-100  align-items-center justify-content-center ' style={{marginTop:'10%'}}>
         <div className=" container card mt-5 p-2  shadow " style={{width:'50%'}}>
-            {errorMessage && (
-                <div id="errorMessage">
-                    <strong> </strong> <p>{errorMessage}</p>
-                </div>
-            )}
+            
             <form className="form-box p-2" onSubmit={handleResetPassword}>
                 <h2 className='text-center mt-4'>Reset Password</h2>
-                {errorMessage && <p className="error">{errorMessage}</p>}
-                {successMessage && <p className="success">{successMessage}</p>}
+                {errorMessage && (
+                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                    {errorMessage}
+                </div>
+            )}
+
+            {/* Success message */}
+            {successMessage && (
+                <div className="alert alert-success alert-dismissible fade show" role="alert">
+                    {successMessage}
+                </div>
+            )}
                 
-                <div class="mb-3">
+                <div className="mb-4">
                         <h6><label className="form-label">New Password</label></h6>
                         <input 
-                        type="password" className="form-control" 
+                        type="password" className="form-control mb-2" 
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         required
                         />
                 </div>
-                <div class="mb-3">
+                <div className="mb-4">
                         <h6><label className="form-label">Confirm Password</label></h6>
                         <input 
-                        type="password" className="form-control" 
+                        type="password" className="form-control mb-2" 
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required/>
                 </div>
                 
-                <button type="submit" className="submit mb-3">Update Password</button>
+                <button type="submit" className="submit mb-3 mt-3">Update Password</button>
             </form>
         </div>
         </div>
