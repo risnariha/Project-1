@@ -9,7 +9,7 @@ export default function Header() {
     navigate('/');
   };
   return (
-    <div className='d-flex w-full bg-light justify-content-between align-items-center'>
+    <div className='d-flex w-full bg-light justify-content-between align-items-center shadow'>
       <div className='d-flex cursor-pointer' onClick={handleLogo}>
         <div className='align-items-center d-flex'>
           <img src={logo} alt="" className='h-10 w-10 d-felx ms-3' />
