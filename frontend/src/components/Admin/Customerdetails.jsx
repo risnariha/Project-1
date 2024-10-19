@@ -82,7 +82,7 @@ useEffect(()=>{
       try {
         
           const response = await axios.post(
-            "http://localhost:8080/backend/api/Admin/requestcustomerCount.php", 
+            "http://localhost:8080/backend/api/Admin/requestcustomerCounts.php", 
           );
           if (response.data.unreadCount !== undefined) {
             setUnreadRequestsCount(response.data.unreadCount);

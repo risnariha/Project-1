@@ -77,9 +77,21 @@ const Register = () => {
     fetchData();
   }, []);
 
+
+  // useEffect(() =>{
+  //   if(messageType === 'error' || messageType === 'success'){
+  //     const timer = setTimeout(() => {
+  //       setMessage("");
+  //       setMessageType("");
+  //     },6000);
+
+  //     return () => clearTimeout(timer);
+  //   }
+  // },[messageType]);
+
   const handleFirstStepSubmit = async (event) => {
     event.preventDefault();
-    console.log(email);
+    //console.log(email);
     try {
       const response = await axios.post(
         "http://localhost:8080/backend/api/Home/emailVerification.php",
@@ -94,7 +106,7 @@ const Register = () => {
       );
 
       if (data) {
-        console.log(data.message);
+        //console.log(data.message);
       }
       if (data.success) {
 
@@ -102,11 +114,12 @@ const Register = () => {
         setMessage("");
         // console.log('step : ', step);
       } else {
+        
         setMessage("email validation failed");
         setMessageType("error");
       }
     } catch (error) {
-      console.error("Error during validation:", error);
+      //console.error("Error during validation:", error);
       setMessage("Network error. Please check your connection.");
       setMessageType("error");
     }
@@ -131,7 +144,7 @@ const Register = () => {
       );
 
       if (response.data) {
-        console.log(response.data);
+        //console.log(response.data);
         const data = response.data;
         if (data.success) {
           // localStorage.setItem('companyName', companyName); // Save company name to local storage
@@ -149,7 +162,7 @@ const Register = () => {
         setMessageType("error");
       }
     } catch (error) {
-      console.error("Error during registration:", error);
+      //console.error("Error during registration:", error);
       setMessage("Network error. Please check your connection.");
       setMessageType("error");
     }
@@ -183,13 +196,13 @@ const Register = () => {
         <div className="homeBanner  background-opacity">
           <div className="homePageContainer">
             <div className="homeBannerHeader form-box">
-              {message && (
-                <div className={`message ${messageType} option`}>{message}</div>
-              )}
+              
               {step === 1 && (
                 <form onSubmit={handleFirstStepSubmit} className="form">
                   <h2 id="h1">Registration</h2>
-
+                   {message && (
+                <div className={`message ${messageType} option`}>{message}</div>
+              )} 
                   {/* <h3>Validation Form</h3> */}
                   <div className="input-box">
                     <input
@@ -236,6 +249,9 @@ const Register = () => {
               {step === 2 && (
                 <form onSubmit={handleRegisterSubmit} className="form">
                   <h2 id="h1">Registration</h2>
+                  {message && (
+                <div className={`message ${messageType} option`}>{message}</div>
+              )} 
                   <div className="input-box">
                     <input
                       type="text"
@@ -290,17 +306,7 @@ const Register = () => {
                     />
                     <FaPhone className="icon" />
                   </div>
-                  {/* <div className="input-box">
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <FaLock className="icon" />
-                  </div> */}
-
+                  
                   <div className="input-box">
                     <div className="option">
                       <select
@@ -345,13 +351,13 @@ const Register = () => {
                       </select>
                     </div>
                   </div>
-                  <button type="submit" className="submit">
+                  <button type="submit" className="submit" >
                     Send Registration Request
                   </button>
                   <button
                     type="submit"
                     className="mt-2 text-white bg-secondary"
-                    onClick={() => setStep(1)}
+                    onClick={() => setStep(1)} style={{marginBottom:'0%'}}
                   >
                     Back
                   </button>

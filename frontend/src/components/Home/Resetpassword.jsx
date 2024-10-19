@@ -70,7 +70,7 @@ const Resetpassword = () => {
         <div className=" container card mt-5 p-2  shadow " style={{width:'50%'}}>
             {errorMessage && (
                 <div id="errorMessage">
-                    <strong>ERROR: </strong> <p>{errorMessage}</p>
+                    <strong> </strong> <p>{errorMessage}</p>
                 </div>
             )}
             <form className="form-box p-2" onSubmit={handleResetPassword}>

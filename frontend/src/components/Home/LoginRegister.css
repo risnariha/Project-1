@@ -82,6 +82,7 @@
 form h1{
     font-size: 36px;
     text-align:center ;
+    
 }
 
 /* form h3{
@@ -250,19 +251,51 @@ form .register-link{
   }
   
   .message.success {
-    background-color: rgba(18, 168, 7, 0.7); /* Adding opacity (0.7) */
-    color: #ffffff; /* Text color remains solid */
-    font-size: 0.8rem;
+    color: rgb(221, 216, 216);
+    background-color: rgb(26, 170, 62);
+    border: 1px solid rgb(238, 249, 240);
+    padding: 12px;
     border-radius: 15px;
-    border: 1px solid #ffffff;
-    outline: none;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-left: 3%;
+    font-size: small;
 }
 
 .message.error {
-    background-color: rgba(241, 236, 236, 0.4); 
-    color: #ff0000;
-    font-size: 0.8rem;
-    border-radius: 15px;
-    border: 1px solid #ff0000;
-    outline: none;
-}
+
+        color: red;
+        background-color: #f8d7da;
+        border: 1px solid red;
+        padding: 12px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-left: 3%;
+        font-size: small;
+     
+
+}  
+
+.loginnerror {
+    
+        color: red;
+        background-color: #f8d7da;
+        border: 1px solid red;
+        padding: 12px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        
+        display: flex;
+        align-items: center;
+        
+    
+    
+}  
+
+
+

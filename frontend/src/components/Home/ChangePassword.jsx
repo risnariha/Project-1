@@ -24,7 +24,7 @@ const ChangePassword = () => {
         } else {
             setEmail(user.email);
             setUserType(user.userType);
-            if(localUser) setRememberMe(true);
+            
         }
     }, []);
 
@@ -71,7 +71,7 @@ const ChangePassword = () => {
                 <h2 className='text-center mt-4'>Change Password</h2>
                 {errorMessage && <p className="error">{errorMessage}</p>}
                 {successMessage && <p className="success">{successMessage}</p>}
-                <div class="mb-3">
+                <div className="mb-3">
                         <h6 className=''><label className="form-label ">Current Password</label></h6>
                         <input 
                         type="password" className="form-control"
@@ -79,7 +79,7 @@ const ChangePassword = () => {
                         onChange={(e) => setCurrentPassword(e.target.value)}
                         required/>
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                         <h6><label className="form-label">New Password</label></h6>
                         <input 
                         type="password" className="form-control" 
@@ -88,7 +88,7 @@ const ChangePassword = () => {
                         required
                         />
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                         <h6><label className="form-label">Confirm Password</label></h6>
                         <input 
                         type="password" className="form-control" 
