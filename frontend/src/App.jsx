@@ -49,6 +49,7 @@ import Payment from './components/Customer/Payment';
 import OrderSuccess from './components/Customer/OrderSuccess';
 import MessageInfo from './components/Customer/Message/MessageInfo';
 import MessageCard from './components/Customer/Message/MessageCard';
+import ReviewMainLayout from './components/Customer/Review/ReviewMainLayout';
 
 // import MessageList from './components/Company/MessageList';
 // import MessageDetail  from './components/Company/MessageDetail';
@@ -101,6 +102,7 @@ function App() {
             <Route path="setting" element={<Setting />} />
             <Route path="message-list" element={<MessageCard />} />
             <Route path="message-info/:contactID" element={<MessageInfo />} />
+            <Route exact path="review-layout/:productID" element={<ReviewMainLayout />} />
           </Route>
           {/* company */}
           <Route path="/company/*" element={<CompanyLayout setToggle={setToggle} />} >

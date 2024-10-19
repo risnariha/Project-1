@@ -42,16 +42,24 @@
   }
   
   /* Add product.js css */
-  
-   .maincontainer {
+ 
+    .maincontainer {
     margin: auto;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 40px;
+    margin-left: 40px;
+    margin-top:20px ;
+    padding-bottom: 5rem;
+    height: 100%;
+    background-color: var(--lightgray);
+  }  
+  
+  .add-container {
+    margin: auto;
     padding-bottom: 5rem;
     height: 100%;
     background-color: var(--lightgray);
   } 
-  
+
   /* display message css */
 
   .display_message {
@@ -207,6 +215,7 @@
     border-radius: 4px;
     border: 1px solid #ccc;
     margin-right: 10px;
+    font-size: 0.8rem;
   }
   
   .search_icon {
