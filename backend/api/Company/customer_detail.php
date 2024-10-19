@@ -12,21 +12,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Check if companyOwnerID is set
     if (!isset($data['companyOwnerID'])) {
-        echo json_encode(['error' => $data]);
+        echo json_encode(['error' => 'companyOwnerID is required']);
         exit;
     }
     
     $companyOwnerID = $data['companyOwnerID'];
     
     try {
-        // Prepare the SQL query to get customer details based on companyOwnerID
-        $pstmt = $conn->prepare("SELECT customers.*
+        // Prepare the SQL query to get distinct customer details based on companyOwnerID
+        $pstmt = $conn->prepare("
+            SELECT *
             FROM customers
             JOIN orders ON customers.customerID = orders.customerID
             JOIN orderItems ON orders.orderID = orderItems.orderID
             JOIN products ON orderItems.productID = products.productID
             WHERE products.companyOwnerID = ?
-            ;
+            GROUP BY customers.customerID
         ");
         
         $pstmt->bindParam(1, $companyOwnerID);
@@ -37,5 +38,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);
     }
-    }
-?>
+}
