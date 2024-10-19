@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import "./cartitems.css";
 
 function CartItems() {
     const [Items, setItems] = useState([]);
@@ -38,15 +39,15 @@ function CartItems() {
             alert('Please select items to proceed.');
             return;
         }
-    
+
         const total = selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    
+
         try {
             const response = await axios.post('http://localhost:8080/backend/api/Customer/generate_invoice.php', {
                 customer_id: userID,
                 items: selectedItems
             });
-    
+
             if (response.data) {
                 setInvoice(response.data);
                 axios.get(`http://localhost:8080/backend/api/Customer/get_order_details.php`, {
@@ -55,17 +56,17 @@ function CartItems() {
                     },
                     withCredentials: true
                 })
-                .then((response) => {
-                    setTotalAmount(total.toFixed(2)); // Set total amount in state
-                    navigate('/customer/payment', { state: { invoice: response.data, totalAmount: total.toFixed(2), customer_id: userID } });
-                })
-                .catch((error) => console.error('Error fetching order items:', error));
+                    .then((response) => {
+                        setTotalAmount(total.toFixed(2)); // Set total amount in state
+                        navigate('/customer/payment', { state: { invoice: response.data, totalAmount: total.toFixed(2), customer_id: userID } });
+                    })
+                    .catch((error) => console.error('Error fetching order items:', error));
             }
         } catch (error) {
             console.error("Error proceeding to payment:", error);
         }
     };
-    
+
 
     const handleQuantityChange = (index, newQuantity) => {
         const updateItems = [...Items];
@@ -132,21 +133,21 @@ function CartItems() {
     };
 
     return (
-        <div className={`card`}>
-            <div className="card-header">
-                <div className="row">
-                    <div className="col-md-6 "><h5><b>CART ITEMS</b></h5></div>
-                    <div className="col-md-6">
-                        <div
-                            className={`${selectedItems.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
-                            aria-disabled={!selectedItems.length}
-                            onClick={handlePlaceOrder}
-                        >Place Order</div>
-                    </div>
+        <div className="cart-items-container cart-items-card">
+            <div className="cart-header">
+                <div className="cart-title">
+                    <h5><b>CART ITEMS</b></h5>
+                </div>
+                <div className="cart-action">
+                    <div
+                        className={`place-order-btn ${selectedItems.length > 0 ? "" : "disabled"}`}
+                        aria-disabled={!selectedItems.length}
+                        onClick={handlePlaceOrder}
+                    >Place Order</div>
                 </div>
             </div>
-            <div className="card-body">
-                <table className="table table-bordered">
+            <div className="cart-body">
+                <table className="cart-table">
                     <thead>
                         <tr>
                             <th>Select</th>
@@ -160,34 +161,37 @@ function CartItems() {
                     </thead>
                     <tbody>
                         {Items.map((Item, index) => (
-                            <tr key={index}>
-                                <td className=''>
+                            <tr key={index} className="cart-item-row">
+                                <td>
                                     <input
                                         type="checkbox"
                                         checked={selectedItems.some((selected) => selected.id === Item.id)}
                                         onChange={() => toggleItemSelection(Item)}
-                                        className='h-6 w-6 d-flex align-items-center'
+                                        className='item-checkbox'
                                     />
                                 </td>
-                                <td><img src={Item.product_image} className='' /></td>
-                                <td className=''>{Item.product_name}</td>
+                                <td><img src={Item.product_image} className='product-image' /></td>
+                                <td className='product-name'>{Item.product_name}</td>
                                 <td>{Item.price}</td>
                                 <td>
+                                    <label className="quantity-label"></label>
                                     <input
                                         type="number"
                                         value={Item.quantity}
                                         min='1'
-                                        className='form-control text-center'
+                                        className='quantity-input'
                                         onChange={(e) => {
                                             const newQuantity = e.target.value;
                                             handleQuantityChange(index, newQuantity);
                                             updateCartQuantity(Item);
                                         }}
+                                        placeholder="1" // Optional placeholder
                                     />
                                 </td>
+
                                 <td>{Item.price * Item.quantity}.00</td>
                                 <td>
-                                    <Button variant="danger" onClick={() => handleRemoveItem(Item.id)}>Remove</Button>
+                                    <button className="remove-button" onClick={() => handleRemoveItem(Item.id)}>Remove</button>
                                 </td>
                             </tr>
                         ))}
@@ -202,7 +206,7 @@ function CartItems() {
                 </Modal.Header>
                 <Modal.Body>
                     <p>Are you sure you want to confirm this order?</p>
-                    <Table bordered>
+                    <table className="invoice-table" bordered>
                         <thead>
                             <tr>
                                 <th>Product Name</th>
@@ -221,19 +225,20 @@ function CartItems() {
                                 </tr>
                             ))}
                             <tr>
-                                <td colSpan={3} className="text-center"><strong>Total Amount:</strong></td>
-                                <td className='bold'>{totalAmount}</td>
+                                <td colSpan={3} className="total-amount-cell"><strong>Total Amount:</strong></td>
+                                <td className='total-amount'>{totalAmount}</td>
                             </tr>
                         </tbody>
-                    </Table>
+                    </table>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
-                    <Button variant="primary" onClick={handleProceedToPayment}>Confirm</Button>
+                    <button className="cancel-button" onClick={handleCloseModal}>Cancel</button>
+                    <button className="confirm-button" onClick={handleProceedToPayment}>Confirm</button>
                 </Modal.Footer>
             </Modal>
         </div>
-    );
+
+    )
 }
 
 export default CartItems;
