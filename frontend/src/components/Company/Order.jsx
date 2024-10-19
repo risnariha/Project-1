@@ -6,6 +6,7 @@ import { MdOutlineHomeWork } from "react-icons/md";
 import axios from "axios";
 import { Modal, Button } from 'react-bootstrap';
 import { useOutletContext } from "react-router-dom";
+import { SlCalender } from "react-icons/sl";
 
 function Order() {
   const { user } = useOutletContext(); 
@@ -212,8 +213,9 @@ function Order() {
                       <button onClick={() => {
                         setCurrentOrderId(order.orderID);
                         setEditingDeliveryDate(new Date(order.deliveryDate)); // Set  delivery date
-                      }}>
-                        📅 
+                      }} className="calender-icon">
+                      
+                        <SlCalender/>
                       </button>
                     </>
                   )}</td>
@@ -240,9 +242,9 @@ function Order() {
                     >
                       view
                     </button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(order.orderId)}>
+                  {/* <button className="btn btn-danger" onClick={() => handleDelete(order.orderId)}>
                     <FaTrash />
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}
@@ -250,7 +252,7 @@ function Order() {
           <tfoot>
               <tr>
                 <td
-                  colSpan="6"
+                  colSpan="8"
                   style={{ textAlign: "center", fontWeight: "bold" }}
                 >
                   Total Orders: {filteredOrder.length}
