@@ -37,24 +37,35 @@ function CartItems() {
         if (selectedItems.length === 0) {
             alert('Please select items to proceed.');
             return;
-        
-            // console.log('select total:',t);
         }
-
+    
+        const total = selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    
         try {
             const response = await axios.post('http://localhost:8080/backend/api/Customer/generate_invoice.php', {
                 customer_id: userID,
                 items: selectedItems
             });
-
+    
             if (response.data) {
                 setInvoice(response.data);
-                navigate('/customer/payment', { state: { invoice: response.data, totalAmount } });
+                axios.get(`http://localhost:8080/backend/api/Customer/get_order_details.php`, {
+                    params: {
+                        order_id: response.data.orderID
+                    },
+                    withCredentials: true
+                })
+                .then((response) => {
+                    setTotalAmount(total.toFixed(2)); // Set total amount in state
+                    navigate('/customer/payment', { state: { invoice: response.data, totalAmount: total.toFixed(2), customer_id: userID } });
+                })
+                .catch((error) => console.error('Error fetching order items:', error));
             }
         } catch (error) {
             console.error("Error proceeding to payment:", error);
         }
     };
+    
 
     const handleQuantityChange = (index, newQuantity) => {
         const updateItems = [...Items];
@@ -80,13 +91,13 @@ function CartItems() {
     const handlePlaceOrder = () => {
         const total = selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
         const totals = total.toFixed(2);
-        console.log("total:",totals);
+        console.log("total:", totals);
         setTotalAmount(totals);
         setShowInvoiceModal(true);
     };
 
     const handleCloseModal = () => {
-        
+
         setShowInvoiceModal(false);
     };
 
@@ -103,7 +114,7 @@ function CartItems() {
         } else {
             setSelectedItems([...selectedItems, item]);
         }
-    
+
     };
 
     const handleRemoveItem = async (itemId) => {
