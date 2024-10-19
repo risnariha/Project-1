@@ -81,9 +81,11 @@ export const Login = () => {
             
             console.log(data);
            const code = data.message;
+           
             if(data.success){
                 
-                // sessionStorage.setItem('code', JSON.stringify(data.message));
+                sessionStorage.setItem('userType', JSON.stringify(data.userType));
+                sessionStorage.setItem('userEmail', JSON.stringify(data.email));
                 console.log("login code : ", code);
                 navigate("/otp" , {state: { code }});
             } else{

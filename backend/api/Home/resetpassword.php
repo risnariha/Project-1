@@ -5,18 +5,10 @@ session_start();
 // header('Access-Control-Allow-Headers: Content-Type, Authorization');
 // header('Access-Control-Allow-Methods: POST, OPTIONS');
 include '../config/cors.php';
-$response = array('success' => false, 'message' => '');
-
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include('../Connection/connection.php');
-    include('User.php'); 
+    include('./User.php'); 
     
     $data = json_decode(file_get_contents('php://input'), true);
     $confirmPassword = $data['confirmPassword'];
@@ -32,40 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // switch($userType) {
-    //     case 'admin':
-    //         $cpsql = "SELECT password FROM admins WHERE email =?";
-    //         break;
-    //     case 'customer':
-    //         $cpsql = "SELECT password FROM customers WHERE email =?";
-    //         break;
-    //     case 'company':
-    //         $cpsql = "SELECT password FROM companyowners WHERE email =?";
-    //         break;
-    //     default:
-    //         $response['message'] = "Invalid user type $userType cheking current password ";
-    //         echo json_encode($response);
-    //         exit;
-    // }
-
-    // $cpstmt = $conn->prepare($cpsql);
-    // $cpstmt->bindParam(1,$email);
-    // $cpstmt->execute();
-    // $user = $cpstmt->fetch(PDO::FETCH_ASSOC);
-    // $cpwd = $user['password'];
-    // if (password_verify($newPassword, $cpwd)) {
-    //     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-    // }else{
-    //     $response['message'] = "Current password  $currentPassword is incorrect ";
-    //     echo json_encode($response);
-    //     exit;
-    // }
-
-    
-    
-    
-
-    // Update the password and set is_first_login to false in the respective table
     switch ($userType) {
         case 'admin':
             $sql = "UPDATE admins SET password = ? WHERE email = ?";

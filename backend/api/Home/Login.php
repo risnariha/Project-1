@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $response['message'] = 'Invalid email or password';
     }
+    $userT = $User->getUserType($email);
 
     if ($userType) {
         $is_first_login = $user['is_first_login']; 
@@ -48,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['message'] = 'Login successful';
         $response['is_first_login'] = $is_first_login;
     } else {
-        $response['message'] = "Please make sure that email: $email and password: $password are correct. : $userType";
-        $response['message'] = "Incorrect Email or Password";
+        // $response['message'] = "Please make sure that email: $email and password: $password are correct. : $userType";
+        $response['message'] = "Incorrect Email or Password : $userType";
     }
 } else {
     $response['message'] = 'Invalid request';

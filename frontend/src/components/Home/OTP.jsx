@@ -7,14 +7,7 @@ const OTP = () => {
   const location = useLocation();
   const code = location.state?.code;
   console.log("code is : ", code);
-  useEffect(() => {
-    const sessionUser = JSON.parse(sessionStorage.getItem('user'));
-    
-    const localUser = JSON.parse(localStorage.getItem('user'));
-    const user = sessionUser || localUser;
-    
-    
-}, []);
+
 
   const [v1, setV1] = useState('');
   const [v2, setV2] = useState('');
