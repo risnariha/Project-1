@@ -17,11 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contactID = $data['contactID'];
 
     try {
-        // Check if $conn is available
-        if (!$conn) {
-            throw new Exception('Database connection failed');
-        }
-        
+
         $pstmt = $conn->prepare("UPDATE contact SET isRead = 1 WHERE contactID = ?");
         $pstmt->bindValue(1, $contactID);
         $pstmt->execute();

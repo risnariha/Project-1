@@ -57,7 +57,7 @@ export const CompanyNavbar = ({ sidebarToggle, setSidebarToggle, user }) => {
             <div className="notification-badge">{unreadMessagesCount}</div> // Notification Badge
           )}
         </Link>
-        <div className='d-flex ms-2 align-items-center cursor-pointer' onClick={handleLogout}>
+        <div className='d-flex ms-2 align-items-center cursor-pointer logout-btn' onClick={handleLogout}>
           <IoLogOut style={{ height: '20px', width: '20px' }} />
           <span className='px-1 d-none d-md-block d-flex'>Log Out</span>
         </div>

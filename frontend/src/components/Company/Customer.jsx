@@ -181,7 +181,7 @@ function Customer() {
                       view
                     </button>
                     <button
-                      className="btn btn-info me-1"
+                      className="btn btn-info me-1 customer-btn"
                       onClick={() => handleShowMessageModal(customer)}
                     >
                       <BiSolidMessageEdit />

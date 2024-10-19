@@ -18,14 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = "customer";
 
     try {
-        if (!$conn) {
-            throw new Exception('Database connection failed');
-        }
 
         // Count unread messages
         $pstmt = $conn->prepare("SELECT COUNT(*) as unreadCount FROM contact WHERE companyOwnerID = ? AND sender = ? AND isRead = 0");
-        $pstmt->bindParam(1, $companyOwnerID, PDO::PARAM_INT);
-        $pstmt->bindParam(2, $type, PDO::PARAM_STR);
+        $pstmt->bindParam(1, $companyOwnerID);
+        $pstmt->bindParam(2, $type);
         $pstmt->execute();
 
         $result = $pstmt->fetch(PDO::FETCH_ASSOC);

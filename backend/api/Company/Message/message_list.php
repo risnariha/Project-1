@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
- // Adjust the path to your connection file
+// Adjust the path to your connection file
 include '../../Connection/connection.php'; // Adjust the path to your connection file
 
 
@@ -21,14 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = "customer";
 
     try {
-        // Check if $conn is available
-        if (!$conn) {
-            throw new Exception('Database connection failed');
-        }
 
         $pstmt = $conn->prepare("SELECT * FROM contact WHERE companyOwnerID = ? AND sender = ? ORDER BY date DESC");
-        $pstmt->bindParam(1, $companyOwnerID, PDO::PARAM_INT);
-        $pstmt->bindParam(2, $type, PDO::PARAM_STR);
+        $pstmt->bindParam(1, $companyOwnerID);
+        $pstmt->bindParam(2, $type);
         $pstmt->execute();
 
         $messages = $pstmt->fetchAll(PDO::FETCH_ASSOC);
