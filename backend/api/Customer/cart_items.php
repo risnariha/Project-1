@@ -1,9 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Content-Type: application/json; charset=UTF-8");
-
+include('../config/cors.php');
 include('../Connection/connection.php');
 
 // Handle preflight requests
@@ -15,10 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['customer_id'])) {
         $customer_id = $_GET['customer_id'];
+        $status = 'pending'; // Define the status as a variable
 
-        $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id";
+        $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id AND status= :status";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':customer_id', $customer_id);
+        $stmt->bindParam(':customer_id', $customer_id, PDO::PARAM_STR);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
         $stmt->execute();
 
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

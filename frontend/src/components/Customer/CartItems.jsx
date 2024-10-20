@@ -1,16 +1,18 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import "./cartitems.css";
 
 function CartItems() {
     const [Items, setItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState([]);
     const [invoice, setInvoice] = useState(null);
     const [showInvoiceModal, setShowInvoiceModal] = useState(false);
     const { user } = useOutletContext();
     const userID = JSON.parse(sessionStorage.getItem('userID'));
     const navigate = useNavigate();
-    const [totalAmount, setTotalAmount] = useState();
+    const [totalAmount, setTotalAmount] = useState(0);
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -21,11 +23,10 @@ function CartItems() {
                     });
                     if (response.data) {
                         setItems(response.data);
-                        calculateTotalAmount(response.data);
-                        console.log("get cart:", response.data);
+                        // calculateTotalAmount(response.data);
                     }
                 } catch (error) {
-                    console.error("There was an error fetching the cart items:", error);
+                    console.error("Error fetching cart items:", error);
                 }
             }
         };
@@ -34,126 +35,178 @@ function CartItems() {
     }, [userID]);
 
     const handleProceedToPayment = async () => {
+        if (selectedItems.length === 0) {
+            alert('Please select items to proceed.');
+            return;
+        }
+
+        const total = selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
         try {
-            // Make a request to generate the invoice based on the cart items
             const response = await axios.post('http://localhost:8080/backend/api/Customer/generate_invoice.php', {
                 customer_id: userID,
-                items: Items
+                items: selectedItems
             });
 
             if (response.data) {
                 setInvoice(response.data);
-                console.log("Invoice generated:", response.data);
-
-                // Navigate to payment page with invoice details
-                navigate('/customer/PaymentPage', { state: { invoice: response.data } });
+                axios.get(`http://localhost:8080/backend/api/Customer/get_order_details.php`, {
+                    params: {
+                        order_id: response.data.orderID
+                    },
+                    withCredentials: true
+                })
+                    .then((response) => {
+                        setTotalAmount(total.toFixed(2)); // Set total amount in state
+                        navigate('/customer/payment', { state: { invoice: response.data, totalAmount: total.toFixed(2), customer_id: userID } });
+                    })
+                    .catch((error) => console.error('Error fetching order items:', error));
             }
         } catch (error) {
             console.error("Error proceeding to payment:", error);
         }
     };
+
+
     const handleQuantityChange = (index, newQuantity) => {
         const updateItems = [...Items];
         updateItems[index].quantity = newQuantity;
         setItems(updateItems);
-        calculateTotalAmount(updateItems);
+        // calculateTotalAmount(updateItems);
     };
 
     const updateCartQuantity = async (item) => {
         try {
             const response = await axios.post('http://localhost:8080/backend/api/Customer/update_cart_quantity.php', {
-                // customer_id: userID,
                 id: item.id,
                 quantity: item.quantity
-
             });
-            if (response.data.success) {
-                console.log("cart item successfully updated");
-            } else {
-                console.log("cart item error updated");
-
+            if (!response.data.success) {
+                console.error("Error updating cart item.");
             }
-        }
-        catch (error) {
-            console.error("error updating cart : ", error);
+        } catch (error) {
+            console.error("Error updating cart item:", error);
         }
     };
 
     const handlePlaceOrder = () => {
+        const total = selectedItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        const totals = total.toFixed(2);
+        console.log("total:", totals);
+        setTotalAmount(totals);
         setShowInvoiceModal(true);
-        // document.body.classList.add('blur-background'); 
     };
-    const handleCloseModal = ()=>{
+
+    const handleCloseModal = () => {
+
         setShowInvoiceModal(false);
-        // document.body.classList.remove('blur-background'); 
-    }
+    };
 
-    const calculateTotalAmount = (items)=>{
-        const total = items.reduce((acc, item) => acc + item.price*item.quantity, 0);
-        setTotalAmount(total);
-    }
+    // const calculateTotalAmount = (items) => {
+    //     const total = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    //     const totals = total.toFixed(2);
+    //     setTotalAmount(totals);
+    // };
 
+    const toggleItemSelection = (item) => {
+        const isSelected = selectedItems.find((selected) => selected.id === item.id);
+        if (isSelected) {
+            setSelectedItems(selectedItems.filter((selected) => selected.id !== item.id));
+        } else {
+            setSelectedItems([...selectedItems, item]);
+        }
+
+    };
+
+    const handleRemoveItem = async (itemId) => {
+        try {
+            await axios.delete('http://localhost:8080/backend/api/Customer/remove_cart_item.php', {
+                data: {
+                    customer_id: userID, // Pass customer ID
+                    item_id: itemId      // Pass item ID
+                }
+            });
+            setItems(Items.filter((item) => item.id !== itemId));
+        } catch (error) {
+            console.error("Error removing item:", error);
+        }
+    };
 
     return (
-        <div className={`card`} >
-            <div className="card-header">
-                <div className="row">
-                    <div className="col-md-6 "><h5><b>CART ITEMS</b></h5></div>
-                    <div className="col-md-6">
-                        <div
-                            className={`${Items.length > 0 ? "" : "disabled"} btn btn-success btn-sm float-end`}
-                            aria-disabled={!Items.length}
-                            onClick={handlePlaceOrder}
-                        >Place Order</div>
-                    </div>
+        <div className="cart-items-container cart-items-card">
+            <div className="cart-header">
+                <div className="cart-title">
+                    <h5><b>CART ITEMS</b></h5>
+                </div>
+                <div className="cart-action">
+                    <div
+                        className={`place-order-btn ${selectedItems.length > 0 ? "" : "disabled"}`}
+                        aria-disabled={!selectedItems.length}
+                        onClick={handlePlaceOrder}
+                    >Place Order</div>
                 </div>
             </div>
-            <div className="card-body">
-                <table className="table table-bordered">
+            <div className="cart-body">
+                <table className="cart-table">
                     <thead>
                         <tr>
-                            <th style={{ fontSize: '130%' }}>Product</th>
-                            <th style={{ fontSize: '130%' }}>Product Name</th>
-                            <th style={{ fontSize: '130%', alignItems: 'center' }}>Price per Product</th>
-                            <th style={{ fontSize: '130%', justifyContent: 'center', alignItems: 'center ', display: 'flex' }}>Quantity</th>
-                            <th style={{ fontSize: '130%' }}>Total Price</th>
+                            <th>Select</th>
+                            <th>Product</th>
+                            <th>Product Name</th>
+                            <th>Price per Product</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Items.map((Item, index) => (
-                            <tr key={index} className=''>
-                                <td className='col-1'><img src={Item.product_image} className='w-100' /></td>
-                                <td className='d-flex align-items-center'>{Item.product_name}</td>
+                            <tr key={index} className="cart-item-row">
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedItems.some((selected) => selected.id === Item.id)}
+                                        onChange={() => toggleItemSelection(Item)}
+                                        className='item-checkbox'
+                                    />
+                                </td>
+                                <td><img src={Item.product_image} className='product-image' /></td>
+                                <td className='product-name'>{Item.product_name}</td>
                                 <td>{Item.price}</td>
-                                <td className='w-20'>
+                                <td>
+                                    <label className="quantity-label"></label>
                                     <input
                                         type="number"
                                         value={Item.quantity}
                                         min='1'
-                                        className='form-control text-center'
+                                        className='quantity-input'
                                         onChange={(e) => {
                                             const newQuantity = e.target.value;
                                             handleQuantityChange(index, newQuantity);
-                                            updateCartQuantity(Item)
+                                            updateCartQuantity(Item);
                                         }}
-                                    // onBlur={() => updateCartQuantity(Item)}
+                                        placeholder="1" // Optional placeholder
                                     />
                                 </td>
-                                <td className='justify-content-end d-flex'>{Item.price * Item.quantity}.00</td>
+
+                                <td>{Item.price * Item.quantity}.00</td>
+                                <td>
+                                    <button className="remove-button" onClick={() => handleRemoveItem(Item.id)}>Remove</button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
 
-            {/* Invoice Modal or Invoice Section */}
+            {/* Invoice Modal */}
             <Modal show={showInvoiceModal} onHide={handleCloseModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirm Your Order</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <p>Are you sure you want to confirm this order?</p>
-                    <Table bordered>
+                    <table className="invoice-table" bordered>
                         <thead>
                             <tr>
                                 <th>Product Name</th>
@@ -163,28 +216,29 @@ function CartItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {Items.map((item, index) => (
+                            {selectedItems.map((item, index) => (
                                 <tr key={index}>
                                     <td>{item.product_name}</td>
                                     <td>{item.price}</td>
                                     <td>{item.quantity}</td>
-                                    <td>{item.price * item.quantity}</td>
+                                    <td>{item.price * item.quantity}.00</td>
                                 </tr>
                             ))}
                             <tr>
-                                <td colSpan={3} className="text-center"><strong>Total Amount:</strong></td>
-                                <td>{totalAmount}.00</td>
+                                <td colSpan={3} className="total-amount-cell"><strong>Total Amount:</strong></td>
+                                <td className='total-amount'>{totalAmount}</td>
                             </tr>
                         </tbody>
-                    </Table>
+                    </table>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
-                    <Button variant="primary" onClick={handleProceedToPayment}>Confirm & Generate Invoice</Button>
+                    <button className="cancel-button" onClick={handleCloseModal}>Cancel</button>
+                    <button className="confirm-button" onClick={handleProceedToPayment}>Confirm</button>
                 </Modal.Footer>
             </Modal>
         </div>
-    );
+
+    )
 }
 
 export default CartItems;

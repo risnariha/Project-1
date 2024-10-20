@@ -112,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return $randomPassword;
         }
         $password = generateRandomPassword(6);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $duplicatePassword = $password;
 
         try {
@@ -128,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $pstmt->bindParam(4, $district);
             $pstmt->bindParam(5, $fname);
             $pstmt->bindParam(6, $email);
-            $pstmt->bindParam(7, $password);
+            $pstmt->bindParam(7, $hash);
             $pstmt->bindParam(8, $contact);
             $r = $pstmt->execute();
 

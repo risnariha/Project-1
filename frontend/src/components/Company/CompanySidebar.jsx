@@ -97,17 +97,17 @@ const CompanySidebar = ({ sidebarToggle, setSidebarToggle,error, user,setToggle}
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
                         <a href="/company/order" className='text-decoration-none text-white fs-5 px-2'>
-                            <MdViewComfyAlt className='w-6 h-6 mx-3 pb-1' />Order Details
+                            <MdViewComfyAlt className='w-6 h-6 mx-3 pb-1' />Orders
                         </a>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
                         <a href="/company/customer" className='text-decoration-none text-white fs-5 px-2'>
-                            <FaUser className='w-6 h-6 mx-3 pb-1' />Customer Details
+                            <FaUser className='w-6 h-6 mx-3 pb-1' />Customers
                         </a>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center'>
                         <a href="/company/review" className='text-decoration-none text-white fs-5 px-2'>
-                            <RiMessage2Fill className='w-6 h-6 mx-3 pb-1' />Review
+                            <RiMessage2Fill className='w-6 h-6 mx-3 pb-1' />Reviews
                         </a>
                     </li>
                     <li className='mb-2 hover-bg-blue-500 py-1 rounded align-items-center' >

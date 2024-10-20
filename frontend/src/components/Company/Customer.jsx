@@ -58,7 +58,7 @@ function Customer() {
       const formData = new FormData();
       formData.append("companyOwnerID", user.companyOwnerID);
       formData.append("customerID", selectedCustomer.customerID);
-      formData.append("email", selectedCustomer.email);
+      formData.append("email", user.email);
       formData.append("companyName", user.companyName); // Assuming companyName is available in user context
       formData.append("customerName", selectedCustomer.customerName);
       formData.append("message", message);
@@ -181,7 +181,7 @@ function Customer() {
                       view
                     </button>
                     <button
-                      className="btn btn-info me-1"
+                      className="btn btn-info me-1 customer-btn"
                       onClick={() => handleShowMessageModal(customer)}
                     >
                       <BiSolidMessageEdit />
@@ -260,18 +260,18 @@ function Customer() {
               <Form.Control type="text" value={user.companyName} readOnly />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label style={{ fontSize: '1.2rem' }}>Customer Name</Form.Label>
+              <Form.Label style={{ fontSize: '1.2rem' }}>Email</Form.Label>
               <Form.Control
-                type="text"
-                value={selectedCustomer.customerName}
+                type="email"
+                value={user.email}
                 readOnly
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label style={{ fontSize: '1.2rem' }}>Email</Form.Label>
+              <Form.Label style={{ fontSize: '1.2rem' }}>Customer Name</Form.Label>
               <Form.Control
-                type="email"
-                value={selectedCustomer.email}
+                type="text"
+                value={selectedCustomer.customerName}
                 readOnly
               />
             </Form.Group>
@@ -293,7 +293,7 @@ function Customer() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseMessageModal}>
+          <Button variant="secondary" onClick={handleCloseMessageModal}> 
             Cancel
           </Button>
           <Button variant="primary" onClick={handleSubmitMessage}>

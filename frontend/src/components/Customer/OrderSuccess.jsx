@@ -1,73 +1,80 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './orderSuccess.css'; // Import your CSS file
 
 function OrderSuccess() {
-    const { state } = useLocation();
-    const { invoice } = state || {};
+    const location = useLocation();
     const navigate = useNavigate();
+    const { invoice, totalAmount, paymentMethod, cardDetails, customer_id } = location.state;
 
-    // Redirect to cart if no invoice details are provided
-    if (!invoice) {
-        return (
-            <div className="container mt-5">
-                <h3>No order details found. Please go back to the cart and place an order.</h3>
-                <button 
-                    className="btn btn-primary mt-3"
-                    onClick={() => navigate('/customer/cart')}
-                >
-                    Back to Cart
-                </button>
-            </div>
-        );
-    }
+    const formattedExpiryDate = cardDetails?.expiryDate instanceof Date 
+    ? `${cardDetails.expiryDate.getMonth() + 1}/${cardDetails.expiryDate.getFullYear()}` 
+    : cardDetails?.expiryDate;
 
     return (
-        <div className="container mt-5">
-            <div className="card">
-                <div className="card-header">
-                    <h3>Order Successful!</h3>
-                </div>
-                <div className="card-body">
-                    <h4>Thank you for your order!</h4>
-                    <p>Your order has been successfully placed. Here are your order details:</p>
+        <div className="order-success-container">
+            <div className="order-success-card">
+                <div className="order-success-body">
+                    <h2 className="order-success-title">Order Successful!</h2>
+                    <p className="order-success-message">Your payment was successfully processed.</p>
 
-                    <div className="card mt-3">
-                        <div className="card-header">
-                            <h5>Invoice Details</h5>
+                    <h5 className="order-detail"><strong>Invoice ID:</strong> {invoice.orderID}</h5>
+                    <h5 className="order-detail"><strong>Total Amount Paid:</strong> Rs. {totalAmount}</h5>
+                    <h5 className="order-detail"><strong>Payment Method:</strong> {paymentMethod === 'credit_card' ? 'Credit Card' : 'Cash on Delivery'}</h5>
+
+                    {paymentMethod === 'credit_card' && cardDetails && (
+                        <div>
+                            <h5 className="card-detail">Card Number: **** **** **** {cardDetails.cardNumber.slice(-4)}</h5>
+                            <p className="card-detail">Expiry Date: {formattedExpiryDate}</p>
                         </div>
-                        <div className="card-body">
-                            <p><strong>Customer ID:</strong> {invoice.customer_id}</p>
-                            <p><strong>Total Amount:</strong> Rs. {invoice.total_amount}</p>
+                    )}
+                    <div className="invoice-details-card">
+                        <div className="invoice-header">
+                            <h5 className="invoice-title">Invoice Details</h5>
+                        </div>
+                        <div className="invoice-body">
+                            <p className="invoice-detail"><strong>Customer ID:</strong> {customer_id}</p>
+                            <p className="invoice-detail"><strong>Total Amount:</strong> Rs. {totalAmount}</p>
 
-                            <table className="table table-bordered mt-3">
+                            <table className="invoice-table">
                                 <thead>
                                     <tr>
-                                        <th>Product Name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
+                                        <th className="invoice-table-header">Product Name</th>
+                                        <th className="invoice-table-header">Price</th>
+                                        <th className="invoice-table-header">Quantity</th>
+                                        <th className="invoice-table-header">Total Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {invoice.items.map((item, index) => (
                                         <tr key={index}>
-                                            <td>{item.product_name}</td>
-                                            <td>{item.price}</td>
-                                            <td>{item.quantity}</td>
-                                            <td>Rs. {item.total_price}</td>
+                                            <td className="invoice-table-cell">{item.productName}</td>
+                                            <td className="invoice-table-cell">{item.price}</td>
+                                            <td className="invoice-table-cell">{item.quantity}</td>
+                                            <td className="invoice-table-cell">Rs. {item.price * item.quantity}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
 
-                            <button 
-                                className="btn btn-primary mt-3"
-                                onClick={() => navigate('/customer/cart')}
+                            <button
+                                className="btn btn-secondary mt-2"
+                                onClick={() => navigate('/customer/CartItems')}
                             >
                                 Back to Cart
                             </button>
+                            <button
+                                className=" btn btn-primary mx-2 mt-2"
+                                onClick={() => navigate('/customer/orders')}
+                            >
+                                View Orders
+                            </button>
                         </div>
                     </div>
+
+                    <button className="navigation-button" onClick={() => navigate('/customer/dash')}>
+                        Back to Dashboard
+                    </button>
                 </div>
             </div>
         </div>

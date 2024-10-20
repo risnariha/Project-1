@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         try {
             // Prepare the SQL query to fetch the product by its ID
-            $query = $conn->prepare("SELECT * FROM `products` WHERE productID = ?");
-            $query->execute([$productID]);
-            $product = $query->fetch(PDO::FETCH_ASSOC);
+            $pstmt = $conn->prepare("SELECT * FROM `products` WHERE productID = ?");
+            $pstmt->execute([$productID]);
+            $product = $pstmt->fetch(PDO::FETCH_ASSOC);
 
             
             if ($product) {
@@ -57,14 +57,18 @@ if (!isset($data['companyOwnerID'])) {
 }
 
 $companyOwnerID = $data['companyOwnerID'];
+$status = 'available';
 
 try {
-    $stmt = $conn->prepare("SELECT * FROM `products` WHERE companyOwnerID = ?");
-    $stmt->execute([$companyOwnerID]);
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $pstmt = $conn->prepare("SELECT * FROM `products` WHERE companyOwnerID = ? and status = ?");
+    $pstmt->bindParam(1, $companyOwnerID);
+    $pstmt->bindParam(2, $status);
+    $pstmt->execute();
+    $products = $pstmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($products);
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
 }
 ?>
+

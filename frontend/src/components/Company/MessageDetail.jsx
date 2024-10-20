@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useOutletContext } from "react-router-dom";
 import {
   Container,
   Card,
@@ -19,6 +20,7 @@ import { Modal, Form } from "react-bootstrap";
 
 const MessageDetail = () => {
   const { contactID } = useParams();
+  const { user } = useOutletContext();
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -88,7 +90,7 @@ const MessageDetail = () => {
     const formData = new FormData();
       formData.append("companyOwnerID", message.companyOwnerID);
       formData.append("customerID", selectedCustomer.customerID);
-      formData.append("email", selectedCustomer.email);
+      formData.append("email", user.email);
       formData.append("companyName", message.companyName); // Assuming companyName is available in user context
       formData.append("customerName", selectedCustomer.customerName);
       formData.append("message", replyMessage);
@@ -202,7 +204,7 @@ const MessageDetail = () => {
 
      {/* Message Modal */}
       {selectedCustomer && (
-      <Modal show={showMessageModal} onHide={handleCloseMessageModal}>
+      <Modal show={showMessageModal} onHide={handleCloseMessageModal}  centered > 
         <Modal.Header closeButton>
           <Modal.Title style={{ fontSize: "1.5rem" }}>
             Send Message to {selectedCustomer.customerName}
@@ -217,20 +219,20 @@ const MessageDetail = () => {
               <Form.Control type="text" value={message.companyName} readOnly />
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label style={{ fontSize: "1.2rem" }}>Email</Form.Label>
+              <Form.Control
+                type="email"
+                value={user.email}
+                readOnly
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label style={{ fontSize: "1.2rem" }}>
                 Customer Name
               </Form.Label>
               <Form.Control
                 type="text"
                 value={selectedCustomer.customerName}
-                readOnly
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label style={{ fontSize: "1.2rem" }}>Email</Form.Label>
-              <Form.Control
-                type="email"
-                value={selectedCustomer.email}
                 readOnly
               />
             </Form.Group>
@@ -253,11 +255,12 @@ const MessageDetail = () => {
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
+        <Modal.Footer >
+          <Button 
             variant="secondary"
             onClick={handleCloseMessageModal}
-            style={{ backgroundColor: "#6c757d", color: "white" }} // Secondary color
+            style={{ backgroundColor: "#6c757d", color: "white" }} 
+             className="me-2"
           >
             Cancel
           </Button>

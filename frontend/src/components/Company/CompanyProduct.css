@@ -1,7 +1,7 @@
 /* src/App.css */
 
 * {
-    margin: 0;
+    
     padding: 0;
     box-sizing: border-box;
     outline: none;
@@ -9,16 +9,31 @@
     text-decoration: none;
     font-family: "Poppins", sans-serif;
   }
-  :root {
+
+  /* :root {
     --color1: #0f124b;
     --color2: #7892ba;
     --color3: #9b95e4;
     --color4: #2cecf0;
-    --color5: #a09ebe;
+    --color5: #d6d5e4;
     --color6: #335f67d9;
     --black: #000;
     --white: #fff;
-    --lightgray: #e7d8d8;
+    --lightgray: #eedede;
+    --red: rgb(245, 39, 67);
+  } */
+
+  :root {
+    --color1: #0f124b;
+    --color2: #4a709d;
+    --color3: #9b95e4;
+    --color4: #2cecf0;
+    --color5: #d6d5e4;
+    --color6: #335f67d9;
+    --black: #000;
+    --color8: #0e0b0b;
+    --white: #ffffff;
+    --lightgray: #ffffff;
     --red: rgb(245, 39, 67);
   }
   body {
@@ -27,14 +42,25 @@
   }
   
   /* Add product.js css */
+ 
+    .maincontainer {
+    margin: auto;
+    margin-right: 40px;
+    margin-left: 40px;
+    margin-top:20px ;
+    padding-bottom: 5rem;
+    height: 100%;
+    /* background-color: var(--lightgray); */
+    background-color: #f4f6f9;
+  }  
   
-   .maincontainer {
+  .add-container {
     margin: auto;
     padding-bottom: 5rem;
     height: 100%;
     background-color: var(--lightgray);
   } 
-  
+
   /* display message css */
 
   .display_message {
@@ -120,6 +146,22 @@
   .submit_btn:hover {
     color: var(--color3);
   }
+
+  .edit_btn:hover {
+    color: var(--color3);
+    background-color: rgb(40, 50, 91);
+  }
+
+  .cancel_btn:hover {
+    color: var(--color3);
+    background-color: rgb(171, 70, 77);
+  }
+
+  .customer-btn:hover {
+    background-color: #17a2b8; 
+    color: white; 
+    border-color: #138496;
+  }
   
   /* view_products ,Order , Customer tables  */
 
@@ -129,8 +171,9 @@
 
   }
 
-
   .table_heading {
+    box-shadow: 0px 0px 2px 8px rgba(154, 153, 153, 0.4); 
+    border-collapse: collapse;
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -172,9 +215,16 @@
   
   .search_input {
     padding: 5px 10px;
-    border-radius: 4px;
+    border-radius: 7px;
     border: 1px solid #ccc;
     margin-right: 10px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+  }
+
+  .search_input:focus {
+    outline: none;
+    border-color: #ff9800;
   }
   
   .search_icon {
@@ -182,7 +232,10 @@
     font-size: 20px;
   }
   
-
+/* table some css add */
+  .display_details table{
+     background-color: white;
+  }
   .display_details table thead th {
     padding: 1.5rem;
     font-size: 1.3rem;
@@ -191,14 +244,25 @@
   }
 
   .display_details table tr{
-    border: 1px solid var(--white);
+    border: 2px solid rgb(113, 112, 112);
   }
+
+  .display_details tfoot {
+    background-color: #9b9a9a;
+    font-size: 1.1rem;
+  }
+
+  .display_details{
+    box-shadow: 0px 5px 4px 8px rgba(154, 153, 153, 0.4); 
+    border-collapse: collapse; 
+  }
+  
 
   td {
     padding: 1rem;
     font-size: 1.2rem;
     color: var(--color1);
-    border: 1px solid var(--white);
+    border: 1px solid var(--color8);
     text-transform: capitalize;
   }
 
@@ -209,6 +273,8 @@
     text-align: center;
   }
 
+
+  /* buttons */
 
   .btns {
     display: flex;
@@ -234,6 +300,16 @@
     color: var(--color2);
   }
 
+  .update_product_btn:hover{
+    color:rgb(121, 100, 228);
+  }
+
+  .delete_product_btn:hover{
+    color:rgb(224, 114, 114);
+  }
+
+
+  /* update product input container */
   .price_container {
     display: flex;
     align-items: center;
@@ -253,6 +329,7 @@
     height: 70%;
   }
   
+
   img {
     width: 20%;
     margin: 0 auto;
@@ -274,6 +351,33 @@
     margin-right: auto;
     animation: slide 1s forwards; /* Slide animation for error message */
   }
+
+  /* order table calender icon  */
+
+  .calender-icon {
+    color: rgb(83, 19, 174);
+    border: none;
+    cursor: pointer;
+    padding:10px ;
+
+  }
+  
+  .calender-icon:hover {
+    color: #007bff;
+  }
+  
+  .calendar-icon {
+    font-size: 18px;
+    color: #007bff;
+    transition: color 0.3s ease;
+  }
+  
+  .calendar-icon:hover {
+    color: #0056b3;
+  }
+
+
+  /* Responsive css */
   
   @keyframes slide {
     0% {
@@ -286,11 +390,22 @@
     }
   }
   
-
   
   @media (max-width: 991px) {
     html {
       font-size: 90%;
+    }
+  }
+
+  @media (max-width: 912px) {
+    html {
+      font-size: 88%;
+    }
+  }
+
+  @media (max-width: 850px) {
+    html {
+      font-size: 85%;
     }
   }
   
@@ -364,8 +479,6 @@
     }
   }
   
-
-
   @media (max-width: 450px) {
     html {
       font-size: 50%;
@@ -388,10 +501,11 @@
   }
 
   
+  /* table row wise hover */
   
   table tbody tr:hover {
-    background-color: #e7e0e3; /* Change this to your desired hover color */
-    transition: background-color 0.3s; /* Optional: smooth transition */
+    background-color: #e5e3e3; 
+    transition: background-color 0.3s; 
 }
 
 /* Optional: Style for empty text */
@@ -452,7 +566,7 @@
 
 .notification-badge {
   position: absolute;
-  top: -0.1px;
+  top:3px;
   background-color: red;
   color: white;
   border-radius: 50%;
@@ -461,4 +575,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+
+/* log-out css */
+.logout-btn:hover {
+   background-color: #f8f9fa;
+  color: #dc3545; 
+  border-radius: 5px; 
 }

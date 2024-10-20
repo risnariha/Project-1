@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { BiImageAdd } from "react-icons/bi";
+import { GiWeight } from "react-icons/gi";
 
 const UpdateProduct = () => {
   const { productID } = useParams();
@@ -10,6 +11,7 @@ const UpdateProduct = () => {
     productName: "",
     productPrice: "",
     productQuantity: "",
+    productNetweight: "",
     productImage: "",
   });
   const [image, setImage] = useState(null);
@@ -18,7 +20,6 @@ const UpdateProduct = () => {
   const hiddenFileInput = useRef(null);
 
   useEffect(() => {
-  
     axios
       .get(
         `http://localhost:8080/backend/api/Company/view_product.php?product_id=${productID}`
@@ -29,6 +30,7 @@ const UpdateProduct = () => {
             productName: response.data.productName || "",
             productPrice: response.data.productPrice || "",
             productQuantity: response.data.productQuantity || "",
+            productNetweight: response.data.productNetweight || "",
             productImage: response.data.productImage || "",
           });
           setImagePath(response.data.productImage || "");
@@ -57,6 +59,7 @@ const UpdateProduct = () => {
     formData.append("update_product_name", product.productName);
     formData.append("update_product_price", product.productPrice);
     formData.append("update_product_quantity", product.productQuantity);
+    formData.append("update_product_netweight", product.productNetweight);
     formData.append("image", image);
     formData.append("imagePath", imagepath);
 
@@ -92,23 +95,21 @@ const UpdateProduct = () => {
             encType="multipart/form-data"
             className="update_product product_container_box"
           >
-             <div className="justify-content-center d-flex w-100 align-items-center">
+            <div className="justify-content-center d-flex w-100 align-items-center image-container">
               {image ? (
                 <img
                   src={URL.createObjectURL(image)}
                   alt="upload image"
-                  className="w-50 rounded-circle"
-                  style={{ objectFit: "cover" }} // Optional: to handle aspect ratio
+                  className="rounded-circle product-image"
                 />
               ) : product.productImage ? (
                 <img
                   src={product.productImage}
                   alt=" image"
-                  className="w-25 rounded-circle"
-                  style={{ objectFit: "cover" }} // Optional: to handle aspect ratio
+                  className="rounded-circle product-image"
                 />
               ) : (
-                <BiImageAdd className="w-100 h-100 ps-2 rounded bg-white" />
+                <BiImageAdd className="w-50 h-100 ps-2 rounded bg-white" />
               )}
             </div>
             <input type="hidden" name="update_product_id" value={productID} />
@@ -140,6 +141,14 @@ const UpdateProduct = () => {
               className="input_fields fields"
               name="productQuantity"
               value={product.productQuantity}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              className="input_fields fields"
+              name="productNetweight"
+              value={product.productNetweight}
               onChange={handleChange}
               required
             />

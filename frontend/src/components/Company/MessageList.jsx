@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useOutletContext } from "react-router-dom";
+import {  FaSearch } from 'react-icons/fa';
 
 const MessageList = () => {
   const { user } = useOutletContext();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filteredMessage, setFilteredMessage] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(''); 
 
   useEffect(() => {
     fetchMessageData();
@@ -25,16 +28,14 @@ const MessageList = () => {
         );
         if (Array.isArray(response.data)) {
           setMessages(response.data);
+          setFilteredMessage(response.data);
         } else {
           setError("Error fetching messages: Invalid response format");
         }
       }
     } catch (error) {
-      console.error("Error fetching messages:", error); // Log the error for debugging
       setError(
         error.response
-          ? error.response.data.error || "Error fetching messages"
-          : "Network error: Unable to reach the server"
       );
     } finally {
       setLoading(false); // Stop loading
@@ -51,18 +52,20 @@ const MessageList = () => {
         }
       );
 
-      if (response.data.success) {
-        // If the update is successful, update only the clicked message in the state
-        setMessages((prevMessages) =>
-          prevMessages.map((message) =>
-            message.contactID === contactID
-              ? { ...message, isRead: 1 } // Set isRead to 1 for the clicked message  // Set isRead to 1 for the clicked message
-              : message
-          )
-        );
-      }
     } catch (error) {
       console.error("Error marking message as read:", error);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value === '') {
+      setFilteredMessage(messages); // Show all products if search is empty
+    } else {
+      const filtered = messages.filter((message) =>
+        message.customerName.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setFilteredMessage(filtered);
     }
   };
 
@@ -74,10 +77,22 @@ const MessageList = () => {
       <div className="maincontainer">
        <div className="table_heading">
       <h1 className="text-center my-3">Message Details</h1>
+       {/* Search bar and icon */}
+       <div className="search_container">
+          <input
+            type="text"
+            placeholder="Search by product name"
+            value={searchTerm}
+            onChange={handleSearch}
+            className="search_input"
+          />
+          <FaSearch className="search_icon" />
+        </div>
       </div>
+      {filteredMessage.length > 0 ? (
       <div className="container">
         <div className="row">
-          {messages.map((message) => (
+        {filteredMessage.map((message) => (
             <div className="col-md-6 mb-2 mt-3" key={message.contactID}>
               <div className="card h-100">
               <div className="card-color">
@@ -98,11 +113,14 @@ const MessageList = () => {
                       (message.message.split(" ").length > 6 ? "....." : "")}
                   </p>
                   <Link
-                    to={`/company/messageDetail/${message.contactID}`}
-                    className="btn btn-primary mt-auto"
-                    onClick={() => markAsRead(message.contactID)} 
-                  >
-                    Read more
+                     to={`/company/messageDetail/${message.contactID}`}
+                     className={`btn mt-auto w-40 ml-auto ${
+                       message.isRead ? "btn-danger" : "btn-success"
+                     }`} 
+                     style={{ marginLeft: "auto" }}
+                     onClick={() => markAsRead(message.contactID)} 
+                   >
+                    { message.isRead ? "Viewed" : "Read more" }
                   </Link>
                 </div>
               </div>
@@ -111,7 +129,10 @@ const MessageList = () => {
           ))}
         </div>
       </div>
-      </div>
+       ) : (
+        <div className="empty_text">No Messages Available</div>
+      )}
+      </div> 
     </div>
   );
 };
