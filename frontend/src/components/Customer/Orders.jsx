@@ -21,7 +21,7 @@ function Orders() {
                 try {
                     const response = await axios.get('http://localhost:8080/backend/api/Customer/orders.php', {
                         params: {
-                            status: 'pending',
+                            status: 'processing',
                             customer_id: userID // Assuming `userID` is already defined
                         },
                         withCredentials: true // Including credentials (e.g., cookies or auth tokens)
@@ -38,7 +38,7 @@ function Orders() {
                 try {
                     const response = await axios.get('http://localhost:8080/backend/api/Customer/orders.php', {
                         params: {
-                            status: 'succeeded',
+                            status: 'pending',
                             customer_id: userID // Assuming `userID` is already defined
                         },
                         withCredentials: true // Including credentials (e.g., cookies or auth tokens)
@@ -58,7 +58,7 @@ function Orders() {
     }, [userID]);
 
     // Handle order click to display items
-    const handleOrderClick = (orderID,status,total) => {
+    const handleOrderClick = (orderID, status, total) => {
         setSelectedOrderID(orderID);
         axios.get(`http://localhost:8080/backend/api/Customer/get_order_details.php`, {
             params: {
@@ -69,31 +69,31 @@ function Orders() {
             .then((response) => {
                 console.log("Fetched order details: ", response.data); // Log the fetched data
                 if (response.data) {
-                    if(status == 'view'){
-                    setSelectedOrder(response.data.items); // Set selected order details
-                    }
+                    
+                        setSelectedOrder(response.data.items); // Set selected order details
+                    
                     // Show modal with order items
-                    if(status == 'pay'){
-                        console.log("total: ",total);
-                        navigate('/customer/payment', { state: { invoice: response.data , totalAmount: total} })
+                    if (status == 'pay') {
+                        console.log("total: ", total);
+                        navigate('/customer/payment', { state: { invoice: response.data, totalAmount: total, customer_id: userID } })
                     }
                 }
-                if(selectedOrder && (status == 'view')){
+                if (selectedOrder && (status == 'view')) {
                     setShowModal(true);
                 }
-                if(invoice && (status == 'pay')){
-                    navigate('/customer/payment', { state: { invoice: invoice , totalAmount: total} })
-                }
-                
+                // if (invoice && (status == 'pay')) {
+                //     navigate('/customer/payment', { state: { invoice: invoice, totalAmount: total } })
+                // }
+
             })
             .catch((error) => console.error('Error fetching order items:', error));
     };
-    
+
 
 
     // Close the modal
     const handleCloseModal = () => {
-        console.log("close: ",selectedOrder);
+        console.log("close: ", selectedOrder);
         setShowModal(false);
         setSelectedOrder(null);
         setSelectedOrder(null); // Reset selected order
@@ -125,11 +125,11 @@ function Orders() {
                                         <td>Rs. {order.total}</td>
                                         <td>{order.orderDate}</td>
                                         <td>
-                                            <Button variant="primary" onClick={() => handleOrderClick(order.orderID,'pay', order.total)}>
-                                            {/* <Button variant="primary" onClick={() => navigate('/customer/payment', { state: { invoice: order , totalAmount: order.total} })}> */}
+                                            <Button variant="primary" onClick={() => handleOrderClick(order.orderID, 'pay', order.total)}>
+                                                {/* <Button variant="primary" onClick={() => navigate('/customer/payment', { state: { invoice: order , totalAmount: order.total} })}> */}
                                                 Pay Now
                                             </Button>
-                                            <Button variant="info" className="ml-2" onClick={() => handleOrderClick(order.orderID,'view' , order.total)}>
+                                            <Button variant="info" className="ml-2" onClick={() => handleOrderClick(order.orderID, 'view', order.total)}>
                                                 View Items
                                             </Button>
                                         </td>
@@ -160,12 +160,12 @@ function Orders() {
                             </thead>
                             <tbody>
                                 {succeededOrders.map((order) => (
-                                    <tr key={order.D}>
-                                        <td>{order.D}</td>
-                                        <td>Rs. {order.total_amount}</td>
-                                        <td>{order.date}</td>
+                                    <tr key={order.orderID}>
+                                        <td>{order.orderID}</td>
+                                        <td>Rs. {order.total}</td>
+                                        <td>{order.orderDate}</td>
                                         <td>
-                                            <Button variant="info" onClick={() => handleOrderClick(order.orderID)}>
+                                            <Button variant="info" className="ml-2" onClick={() => handleOrderClick(order.orderID, 'view', order.total)}>
                                                 View Items
                                             </Button>
                                         </td>

@@ -83,7 +83,12 @@ function ProductDetail({ sidebarToggle }) {
                   >
                     Add to Cart
                   </button>
+                  
                   <Link to="/customer/PlaceOrder" className='btn btn-danger bg-white text-danger rounded-pill md-w-75 sm-w-75 xs-w-100'>Buy Now</Link>
+                   {/* Review Button */}
+                <Link to={`/customer/review-layout/${product.productID}`} className='btn btn-secondary rounded-pill md-w-75 sm-w-75 xs-w-100 mt-3'>
+                  View Reviews
+                </Link>
                 </div>
                 
               </div>

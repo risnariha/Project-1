@@ -5,3 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
 })
+// export default {
+//   optimizeDeps: {
+//     exclude: ['chunk-AEXSP3BR'] // Add the module causing the issue here
+//   }
+// }

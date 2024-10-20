@@ -146,9 +146,8 @@ function Order() {
         order.customerShopName
           .toLowerCase()
           .includes(e.target.value.toLowerCase()) ||
-        order.orderID
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase())
+          order.orderID
+          .toString().includes(e.target.value)
       );
       setFilteredOrder(filtered);
     }
