@@ -111,7 +111,7 @@ function CustomerProfile() {
             </div>
             <div className='md-w-75 sm-w-100 xs-w-100 d-flex m-auto flex-column justify-content-center fs-5 p-4'>
               <div className='w-100 d-flex mb-1 justify-content-center'>
-                <div className='md-w-25 sm-w-50 xs-w-50'>Name </div>:
+                <div className='md-w-25 sm-w-50 xs-w-50 fw-blod'>Name </div>:
                 <div className='w-50 ps-2'>{user.customerName} </div>
               </div>
               <div className='w-100 d-flex mb-1 justify-content-center'>
