@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         $query = "SELECT * FROM cart_items WHERE customer_id = :customer_id AND status= :status";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':customer_id', $customer_id);
-        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':customer_id', $customer_id, PDO::PARAM_STR);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
         $stmt->execute();
 
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
